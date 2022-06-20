@@ -16,7 +16,7 @@ public class MainUI extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			System.out.println("Call Main UI");
+			System.out.println("Call Main UI XX");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
