@@ -9,6 +9,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.rekest.dao.IDao;
+import com.rekest.entities.Service;
+import com.rekest.entities.employes.Employe;
+import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
 import com.rekest.utils.HibernateSession;
 
@@ -139,6 +142,43 @@ public class HibernateDao implements IDao{
 		} catch (Exception e) {
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
+	}
+	
+	@Override
+	public void enableAccount(Utilisateur entity) throws DAOException{
+		entity.setEnable(true);
+		this.update(entity);
+	}
+
+	@Override
+	public void disableAccount(Utilisateur entity) throws DAOException{
+		entity.setEnable(false);
+		this.update(entity);
+		
+	}
+
+	@Override
+	public void associateService(Employe employe, Service service) throws DAOException{
+		service.addEmploye(employe);
+		this.update(service);
+	}
+
+	@Override
+	public Object validateCredential(String login, String password)  throws DAOException{
+		Object utilisateur = null;
+		try {
+			String whereClause = "where login = " + "'"+login+"'"+ " and password = " +"'"+password+"'"; 
+			session = HibernateSession.getSession();
+			@SuppressWarnings("deprecation")
+			Query<?> query = session.createQuery("From Utilisateur " + whereClause); 
+			utilisateur =  query.uniqueResult();
+			if (utilisateur != null) logger.info("Utilisateur trouver !");
+			else logger.info("utilisateur non");
+		} catch (Exception e) {
+			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
+		}
+		
+		return utilisateur;
 	}
 
 	public static void closeSession() {
