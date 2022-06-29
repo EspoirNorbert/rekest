@@ -44,10 +44,8 @@ public class HibernateDao implements IDao{
 
 	@Override
 	public void delete(Object entity) throws DAOException{
-
 		try {
 			session = HibernateSession.getSession();
-
 			//Creating Transaction Object
 			transaction = session.beginTransaction();
 			logger.info("Begin transaction.");

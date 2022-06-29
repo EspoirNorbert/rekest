@@ -1,34 +1,28 @@
 package com.rekest.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@AllArgsConstructor()
+@AllArgsConstructor
 @NoArgsConstructor
-public class Departement {
+@Data
+public class Role {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
-	@Column(name="id_departement")
-	
+	@Column(name="id_role")
 	private int id;
-	private String nom;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="departement_id")
-	private List<Service> services = new ArrayList<>();
+	private String intitule;
 	
+	public Role(String intitule) {
+		this.intitule = intitule;
+	}
+
 }
