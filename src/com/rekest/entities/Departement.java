@@ -30,5 +30,9 @@ public class Departement {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="departement_id")
 	private List<Service> services = new ArrayList<>();
+
+	public static void copy(Departement departement, Departement newPerson) {
+		
+	}
 	
 }
