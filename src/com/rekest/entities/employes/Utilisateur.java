@@ -35,6 +35,12 @@ public class Utilisateur extends Employe {
 		this.password = password;
 	}
 	
+	public Utilisateur(String nom, String prenom, String login, String password) {
+		super(nom, prenom);
+		this.login = login;
+		this.password = password;
+	}
+	
 	public Utilisateur(String nom, String prenom, String telephone, 
 			String email, String adresse,String employeProfil , String login , 
 			String password) {

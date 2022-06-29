@@ -10,6 +10,12 @@ public class Directeur extends Manager {
 			String employeProfil, String login, String password) {
 		super(nom, prenom, telephone, email, adresse, employeProfil, login, password);
 	}
+
+	public Directeur(String nom, String prenom, String login, String password) {
+		super(nom, prenom, login, password);
+	}
+	
+	
 	
 	
 }

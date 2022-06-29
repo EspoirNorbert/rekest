@@ -43,4 +43,10 @@ public class Employe {
 		this.employeProfil = employeProfil;
 	}
 	
+	public Employe(String nom, String prenom) {
+		this.nom = nom;
+		this.prenom = prenom;
+	}
+	
+	
 }

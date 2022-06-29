@@ -10,5 +10,9 @@ public class Administrateur extends Utilisateur {
 			String employeProfil, String login, String password) {
 		super(nom, prenom, telephone, email, adresse, employeProfil, login, password);
 	}
+	
+	public Administrateur(String nom, String prenom, String login, String password) {
+		super(nom, prenom, login, password);		
+	}
 		
 }
