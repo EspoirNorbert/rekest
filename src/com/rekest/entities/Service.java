@@ -46,4 +46,6 @@ public class Service {
 		employes.add(employe);
 	}
 
+	public static void copy(Service service, Service entity) {}
+
 }

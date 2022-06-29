@@ -25,4 +25,9 @@ public class Role {
 		this.intitule = intitule;
 	}
 
+	public static void copy(Role role, Role entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

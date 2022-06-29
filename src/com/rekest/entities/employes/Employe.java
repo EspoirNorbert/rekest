@@ -74,5 +74,10 @@ public class Employe {
 	public void addDemandeSoumise (Demande demande) {
 		this.demandes_soumises.add(demande);
 	}
+
+	public static void copy(Employe employe, Employe entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

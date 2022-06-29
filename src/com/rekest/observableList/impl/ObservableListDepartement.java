@@ -12,8 +12,7 @@ import javafx.collections.ObservableList;
 
 public class ObservableListDepartement implements IObservableList<Departement> {    
 	
-    private ObservableList<Departement> departementData = 
-    		FXCollections.observableArrayList();
+    private ObservableList<Departement> departementData = FXCollections.observableArrayList();
 
 	@Override
 	public ObservableList<Departement> getData() {
@@ -68,5 +67,4 @@ public class ObservableListDepartement implements IObservableList<Departement> {
 	@Override
 	public void refresh() {}
 
-    
 }
