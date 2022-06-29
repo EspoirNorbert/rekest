@@ -93,4 +93,5 @@ public interface IDao {
 	 */
 	public default void associateService(Employe employe, Service service) throws DAOException{};
 	
+	public default void refresh() {}
 }

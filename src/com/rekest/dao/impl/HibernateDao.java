@@ -1,5 +1,6 @@
 package com.rekest.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +16,7 @@ import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
 import com.rekest.utils.HibernateSession;
 
-public class HibernateDao implements IDao{
+public class HibernateDao implements IDao  {
 
 	public final static Logger logger = LogManager.getLogger(HibernateDao.class);
 
@@ -23,7 +24,7 @@ public class HibernateDao implements IDao{
 	private static Transaction transaction = null;
 	private static HibernateDao daoInstance = null;
 
-	private HibernateDao() {}
+	protected HibernateDao() {}
 
 	public static HibernateDao getCurrentInstance () {
 		if (daoInstance == null) daoInstance = new HibernateDao();
@@ -32,7 +33,6 @@ public class HibernateDao implements IDao{
 
 	@Override
 	public void save(Object entity) throws DAOException{
-
 		try {
 			session = HibernateSession.getSession();
 			transaction = session.beginTransaction();
@@ -109,11 +109,10 @@ public class HibernateDao implements IDao{
 		return entities;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object> list (Object entityClass) throws DAOException{
-		List<Object> entities = null;
+		List<Object> entities = new ArrayList<>();
 		try {
 			session = HibernateSession.getSession();
 			@SuppressWarnings("deprecation")
@@ -126,7 +125,6 @@ public class HibernateDao implements IDao{
 		}
 		return entities;
 	}
-
 
 	@Override
 	public void update(Object entity) throws DAOException {
