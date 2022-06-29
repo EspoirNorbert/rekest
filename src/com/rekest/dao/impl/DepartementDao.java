@@ -15,9 +15,15 @@ import lombok.EqualsAndHashCode;
 public class DepartementDao extends HibernateDao {
 
 	private ObservableListDepartement departmentData;
+	private static DepartementDao daoInstance = null;
 
 	private DepartementDao() {
 		departmentData = new ObservableListDepartement();
+	}
+	
+	public static DepartementDao getCurrentInstance () {
+		if (daoInstance == null) daoInstance = new DepartementDao();
+		return daoInstance;
 	}
 
 	@Override

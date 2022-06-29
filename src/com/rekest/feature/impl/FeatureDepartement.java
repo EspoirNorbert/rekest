@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rekest.dao.IDao;
-import com.rekest.dao.impl.HibernateDao;
+import com.rekest.dao.impl.DepartementDao;
 import com.rekest.entities.Departement;
 import com.rekest.exeptions.DAOException;
 import com.rekest.feature.IFeature;
@@ -15,7 +15,7 @@ public class FeatureDepartement implements IFeature {
 	private IDao dao;
 	
 	private FeatureDepartement () {
-		dao = HibernateDao.getCurrentInstance();
+		dao = DepartementDao.getCurrentInstance();
 	}
 
 	public static FeatureDepartement getCurrentInstance  () {
@@ -33,7 +33,6 @@ public class FeatureDepartement implements IFeature {
 				objs.add ( (Departement) obj);
 			}
 		}
-		
 		return objs;
 	}
 
@@ -54,22 +53,17 @@ public class FeatureDepartement implements IFeature {
 
 	@Override
 	public void supprimerDepartement (Departement departement) throws DAOException {
-		
 		  dao.delete ( departement);
-		
 	}
 
 	@Override
 	public void modifierDepartement (Departement departement) throws DAOException {
-		
 		  dao.update ( departement);
 	}
 
 	@Override
 	public void creerDepartement (Departement departement) throws DAOException  {
-
 		  dao.save ( departement);
-		
 	}
 
 	@Override
