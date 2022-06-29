@@ -22,7 +22,11 @@ public class Notification {
 	private int id;
 	
 	private String message;
+	
+	@Column(name = "is_read")
 	private boolean isRead = false;
+	
+	@Column(name = "created_at")
 	private Date createAt;
 	
 	public Notification(String message) {

@@ -13,63 +13,33 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import lombok.Data;
 
 @Entity
+@Data
 public class Demande {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_demande")
 	private int id;
-	
 	private String etat;
-	private Date  createdAt;
-	private Date updatedAt;
 	
-	@OneToOne(targetEntity=Produit.class)
+	@OneToOne(targetEntity = Produit.class , cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_produit")
 	private Produit produit;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="demande_id")
+	@JoinColumn(name="id_demande")
 	private List<Note> notes = new ArrayList<>();
 
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="demande_id")
+	@JoinColumn(name="id_demande")
 	private List<Notification> notifications = new ArrayList<>();
 	
-	public int getId() {
-		return id;
-	}
+	@Column(name = "created_at")
+	private Date  createdAt;
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	public String getEtat() {
-		return etat;
-	}
-
-	public void setEtat(String etat) {
-		this.etat = etat;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
+	@Column(name = "updated_at")
+	private Date updatedAt;
 	
 }

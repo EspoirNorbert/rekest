@@ -21,7 +21,6 @@ public class TestDataBase {
 			Service serviceEntreprise = new Service ("Service Informatique");		
 			dao.save(serviceEntreprise);
 
-
 			Utilisateur utilisateur = new Utilisateur("AKINOCHO", "Ghislain", "ghislain-a", "q@$$m0rb");
 			dao.save(utilisateur);
 
@@ -49,7 +48,5 @@ public class TestDataBase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
 	}
 }

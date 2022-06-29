@@ -11,6 +11,7 @@ import com.rekest.entities.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -57,8 +58,16 @@ public class Utilisateur extends Employe {
 	@JoinColumn(name="id_utilisateur")
 	private List<Demande> demandesCreees = new ArrayList<>();
 	
-	@ManyToMany(targetEntity=Role.class, cascade=CascadeType.ALL)
+	@ManyToMany(targetEntity =Role.class , cascade = CascadeType.ALL)
+	@JoinTable(
+			joinColumns = 		 { @JoinColumn(name = "id_utilisateur") }, 
+			inverseJoinColumns = { @JoinColumn(name = "id_role") }
+			)
 	protected List<Role> roles = new ArrayList<>();
+	
+	public void addRole (Role role) {
+		this.roles.add(role);
+	}
 	
 	public void addDemandeCreee (Demande demande) {
 		demandesCreees.add(demande);

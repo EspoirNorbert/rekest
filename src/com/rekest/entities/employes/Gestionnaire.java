@@ -14,7 +14,7 @@ import jakarta.persistence.OneToMany;
 public class Gestionnaire extends Utilisateur {
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="gestionnaire_id")
+	@JoinColumn(name="id_gestionnaire")
 	private List<Demande> demandes_assignees = new ArrayList<>();
 	
 	public Gestionnaire(String nom, String prenom, String telephone, String email, String adresse,

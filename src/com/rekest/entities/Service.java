@@ -35,6 +35,7 @@ public class Service {
 	private List<Employe> employes = new ArrayList<>();
 
 	@OneToOne(targetEntity=ChefService.class)
+	@JoinColumn(name = "id_chefservice")
 	private ChefService chefService;
 	
 	public Service(String nom) {
