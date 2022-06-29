@@ -42,6 +42,7 @@ public class DepartementDao extends HibernateDao {
 	public List<Object> list(Object entityClass) throws DAOException {
 		departmentData.clear();
 		departmentData.addAll(super.list(entityClass));
+		System.out.println("Callinggggggggggggggggggggggggggg");
 		return super.list(entityClass);
 	}
 

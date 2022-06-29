@@ -7,6 +7,7 @@ import com.rekest.entities.Service;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Utilisateur;
+import com.rekest.feature.impl.Feature;
 
 public class TestDataBase {
 
@@ -44,6 +45,8 @@ public class TestDataBase {
 			
 			Administrateur seynabou = new Administrateur("Seynabou","Diagne","nabou","nabou");
 			dao.save(seynabou);
+			
+			Feature.initDepartement();
 
 		} catch (Exception e) {
 			e.printStackTrace();

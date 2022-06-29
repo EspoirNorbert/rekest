@@ -1,5 +1,7 @@
 package com.rekest.utils;
 
+import com.rekest.entities.employes.Utilisateur;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Window;
@@ -19,4 +21,11 @@ public class Utilitaire {
 	        // Fatal Error, exit System !
 	        System.exit(-1);     		
 	}
+	
+	public void generateLoginAndPassword(Utilisateur utilisateur) {
+		utilisateur.setLogin(utilisateur.getNom() + "." +utilisateur.getPrenom()+ "@rekest.sn");
+		utilisateur.setPassword(utilisateur.getEmployeProfil().toUpperCase());
+	}
+
+	
 }

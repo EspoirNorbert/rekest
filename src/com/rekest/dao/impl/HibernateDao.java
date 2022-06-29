@@ -1,6 +1,5 @@
 package com.rekest.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -112,7 +111,7 @@ public class HibernateDao implements IDao  {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object> list (Object entityClass) throws DAOException{
-		List<Object> entities = new ArrayList<>();
+		List<Object> entities = null;
 		try {
 			session = HibernateSession.getSession();
 			@SuppressWarnings("deprecation")

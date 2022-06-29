@@ -30,6 +30,10 @@ public class Departement {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_departement")
 	private List<Service> services = new ArrayList<>();
+	
+	public Departement(String nom) {
+		this.nom = nom;
+	}
 
 	public static void copy(Departement departement, Departement newPerson) {
 		
