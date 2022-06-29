@@ -32,7 +32,7 @@ public class TestDataBase {
 			dao.update(gerant);
 			dao.delete(superviseur);
 
-			/*
+		
 			dao.associateService(utilisateur, serviceEntreprise);
 			Service infographie = new Service("Infographie");
 			dao.associateService(utilisateur, infographie);
@@ -40,7 +40,7 @@ public class TestDataBase {
 
 			dao.enableAccount(utilisateur);
 			dao.disableAccount(chefService);
-			*/
+			
 			
 			Administrateur seynabou = new Administrateur("Seynabou","Diagne","nabou","nabou");
 			dao.save(seynabou);

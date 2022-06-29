@@ -456,3 +456,48 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 29 juin 2022 12:12:37,577 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successfully deleted. 
 29 juin 2022 12:12:37,579 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
 29 juin 2022 12:12:37,584 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successully created 
+29 juin 2022 12:17:05,155 [main] INFO  {org.hibernate.Version} - HHH000412: Hibernate ORM core version 6.0.2.Final 
+29 juin 2022 12:17:07,137 [main] WARN  {org.hibernate.orm.connections.pooling} - HHH10001002: Using built-in connection pool (not intended for production use) 
+29 juin 2022 12:17:07,152 [main] INFO  {org.hibernate.orm.connections.pooling} - HHH10001005: Loaded JDBC driver class: com.mysql.cj.jdbc.Driver 
+29 juin 2022 12:17:07,152 [main] INFO  {org.hibernate.orm.connections.pooling} - HHH10001012: Connecting with JDBC URL [jdbc:mysql://localhost:3306/rekest_db?serverTimezone=UTC] 
+29 juin 2022 12:17:07,154 [main] INFO  {org.hibernate.orm.connections.pooling} - HHH10001001: Connection properties: {password=****, user=root} 
+29 juin 2022 12:17:07,154 [main] INFO  {org.hibernate.orm.connections.pooling} - HHH10001003: Autocommit mode: false 
+29 juin 2022 12:17:07,168 [main] INFO  {org.hibernate.orm.connections.pooling} - HHH10001115: Connection pool size: 20 (min=1) 
+29 juin 2022 12:17:07,587 [main] INFO  {SQL dialect} - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect 
+29 juin 2022 12:17:07,590 [main] WARN  {org.hibernate.orm.deprecation} - HHH90000026: MySQL5Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead 
+29 juin 2022 12:17:09,292 [main] INFO  {org.hibernate.metamodel.internal.EntityInstantiatorPojoStandard} - HHH000182: No default (no-argument) constructor for class: com.rekest.entities.employes.DirecteurGeneral (class must be instantiated by Interceptor) 
+29 juin 2022 12:17:09,335 [main] INFO  {org.hibernate.metamodel.internal.EntityInstantiatorPojoStandard} - HHH000182: No default (no-argument) constructor for class: com.rekest.entities.employes.Directeur (class must be instantiated by Interceptor) 
+29 juin 2022 12:17:09,408 [main] INFO  {org.hibernate.metamodel.internal.EntityInstantiatorPojoStandard} - HHH000182: No default (no-argument) constructor for class: com.rekest.entities.employes.ChefService (class must be instantiated by Interceptor) 
+29 juin 2022 12:17:09,471 [main] INFO  {org.hibernate.metamodel.internal.EntityInstantiatorPojoStandard} - HHH000182: No default (no-argument) constructor for class: com.rekest.entities.employes.Manager (class must be instantiated by Interceptor) 
+29 juin 2022 12:17:09,534 [main] INFO  {org.hibernate.metamodel.internal.EntityInstantiatorPojoStandard} - HHH000182: No default (no-argument) constructor for class: com.rekest.entities.employes.Administrateur (class must be instantiated by Interceptor) 
+29 juin 2022 12:17:09,573 [main] INFO  {org.hibernate.metamodel.internal.EntityInstantiatorPojoStandard} - HHH000182: No default (no-argument) constructor for class: com.rekest.entities.employes.Gestionnaire (class must be instantiated by Interceptor) 
+29 juin 2022 12:17:09,995 [main] INFO  {org.hibernate.orm.connections.access} - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@9147ba2] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode. 
+29 juin 2022 12:17:10,036 [main] INFO  {org.hibernate.orm.connections.access} - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@430d3021] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode. 
+29 juin 2022 12:17:10,363 [main] INFO  {org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator} - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform] 
+29 juin 2022 12:17:10,394 [main] INFO  {com.rekest.utils.HibernateSession} - HibernateSession created. 
+29 juin 2022 12:17:10,523 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,670 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successully created 
+29 juin 2022 12:17:10,672 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,685 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successully created 
+29 juin 2022 12:17:10,686 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,693 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successully created 
+29 juin 2022 12:17:10,694 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,698 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successully created 
+29 juin 2022 12:17:10,699 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,702 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successully created 
+29 juin 2022 12:17:10,711 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,717 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record Successfully updated. 
+29 juin 2022 12:17:10,717 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,732 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successfully deleted. 
+29 juin 2022 12:17:10,733 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,745 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record Successfully updated. 
+29 juin 2022 12:17:10,746 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,753 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record Successfully updated. 
+29 juin 2022 12:17:10,753 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,757 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record Successfully updated. 
+29 juin 2022 12:17:10,758 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,761 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record Successfully updated. 
+29 juin 2022 12:17:10,762 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,765 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record Successfully updated. 
+29 juin 2022 12:17:10,766 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Begin transaction. 
+29 juin 2022 12:17:10,770 [main] INFO  {com.rekest.dao.impl.HibernateDao} - Record is Successully created 
