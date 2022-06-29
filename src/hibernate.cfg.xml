@@ -19,5 +19,12 @@
 		<mapping  class="com.rekest.entities.employes.ChefService" />
 		<mapping  class="com.rekest.entities.employes.Directeur" />
 		<mapping  class="com.rekest.entities.employes.DirecteurGeneral" />
+		<mapping  class="com.rekest.entities.Demande" />
+		<mapping  class="com.rekest.entities.Produit" />
+		<mapping  class="com.rekest.entities.Notification" />
+		<mapping  class="com.rekest.entities.Note" />
+		<mapping  class="com.rekest.entities.Role" />
+		<mapping  class="com.rekest.entities.Service" />
+		<mapping  class="com.rekest.entities.Departement" />
 	</session-factory>
 </hibernate-configuration>
