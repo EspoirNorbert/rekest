@@ -1,34 +1,101 @@
 package com.rekest.views;
 
-import javafx.event.ActionEvent;
+import com.rekest.entities.Departement;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+import lombok.Data;
 
+@Data
 public class DepartementEditDialogController {
 
-    @FXML
-    private Button btnAnnuler;
+	@FXML
+	private Label labelDepartement;
 
-    @FXML
-    private Button btnOk;
+	@FXML
+	private TextField textFieldNom;
 
-    @FXML
-    private Label labelDepartement;
+	private Stage dialogStage;
+	private Departement departement;
+	private boolean okClicked = false;
 
-    @FXML
-    private TextField textFieldNom;
+	/**
+	 * Sets the stage of this dialog.
+	 * @param dialogStage
+	 */
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
+	}
 
-    @FXML
-    void handleClickedOk(ActionEvent event) {
+	/**
+	 * Sets the person to be edited in the dialog.
+	 *
+	 * @param person
+	 */
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
+		textFieldNom.setText(departement.getNom());
+	}
 
-    }
+	/**
+	 * Returns true if the department clicked OK, false otherwise.
+	 *
+	 * @return
+	 */
+	public boolean isOkClicked() {
+		return okClicked;
+	}
 
-    @FXML
-    void handleClicledAnnuler(ActionEvent event) {
+	/**
+	 * Called when the department clicks ok.
+	 */
+	@FXML
+	private void handleClickedOk() {
+		if (isInputValid()) {
+			departement.setNom(textFieldNom.getText());
+			okClicked = true;
+			dialogStage.close();
+		}
+	}
 
-    }
+	/**
+	 * Called when the user clicks cancel.
+	 */
+	@FXML
+	private void handleClicledAnnuler() {
+		dialogStage.close();
+	}
+
+	/**
+	 * Validates the user input in the text fields.
+	 *
+	 * @return true if the input is valid
+	 */
+	private boolean isInputValid() {
+		String errorMessage = "";
+
+		if (textFieldNom.getText() == null || textFieldNom.getText().length() == 0) {
+			errorMessage += "Le nom du departement est invalid!\n";
+		}
+
+
+		if (errorMessage.length() == 0) {
+			return true;
+		} else {
+			// Show the error message.
+			com.rekest.utils.Utilitaire.alert(AlertType.WARNING, 
+					dialogStage, 
+					"Invalid Fields", 
+					"Please correct invalid fields", 
+					errorMessage);
+
+			return false;
+		}
+	}
+
 
 }
 
