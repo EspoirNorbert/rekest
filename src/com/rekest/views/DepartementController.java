@@ -3,13 +3,18 @@ package com.rekest.views;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.rekest.entities.Departement;
-import com.rekest.entities.employes.Utilisateur;
+import com.rekest.feature.IFeature;
+import com.rekest.feature.impl.FeatureDepartement;
 import com.rekest.utils.Utilitaire;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -18,7 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
-public class DepartementController {
+public class DepartementController implements Initializable {
 
 	@FXML
 	private TableColumn<Departement, String> columnNom;
@@ -34,7 +39,14 @@ public class DepartementController {
 	
 	public Stage primaryStage;
 	
+	private IFeature service;
+	
 	private DepartementEditDialogController departementEditDialogController;
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.service = FeatureDepartement.getInstance();
+	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -132,4 +144,6 @@ public class DepartementController {
         
         return false;
     }
+
+	
 }

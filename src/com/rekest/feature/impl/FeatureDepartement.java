@@ -11,15 +11,14 @@ import com.rekest.feature.IFeature;
 
 public class FeatureDepartement implements IFeature {
 
-	private static FeatureDepartement instance = null;
+	private static IFeature instance = new FeatureDepartement();
 	private IDao dao;
 	
 	private FeatureDepartement () {
 		dao = DepartementDao.getCurrentInstance();
 	}
 
-	public static FeatureDepartement getCurrentInstance  () {
-		if (instance == null) instance = new FeatureDepartement ();
+	public static IFeature getInstance  () {
 		return instance;
 	}
 	
