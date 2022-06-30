@@ -1,5 +1,52 @@
-.label {
-	-fx-font-size: 18pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #C67709;
+/* .label {
+//	-fx-font-size: 18pt;
+//    -fx-font-family: "Segoe UI Semibold";
+//    -fx-text-fill: #C67709;
+}*/
+
+.parent{
+	-fx-background-color: #fff;
+} 
+
+.search{
+	-fx-text-fill: white;
 }
+
+.sidebar{
+	-fx-background-color: #272924;
+	-fx-border-color: #D8DBDE;
+	-fx-border-width: 0px 1px 0px 0px;
+} 
+
+.rightSide{
+	-fx-background-color: #272924;
+}
+
+.profil {
+	-fx-border-color: #D8DBDE;
+	-fx-border-width: 0px 0px 1px 0px;
+}
+
+.jfxbutton{
+	-fx-color: black;
+}
+
+.rounded {
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+}
+
+.btns{
+	-fx-background-color: transparent;
+} 
+
+.btns:hover{
+	-fx-background-color: #202332;
+} 
+
+.box {
+	-fx-border-color: #D8DBDE;
+	-fx-border-width: 1px 0px 0px 0px;
+}
+
+

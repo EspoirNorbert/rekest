@@ -1,31 +1,28 @@
 package com.rekest.runtime;
 
+import com.rekest.views.MainController;
+
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainUI extends Application {
 
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			
-			System.out.println("Call Main UI XX");
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		} 
+	//public static final String APPLICATION_ICON_URL = "file:resources/images/address_book_32.png"; 	
+    private Stage primaryStage;
+    private MainController mainController;
+    
+    public MainUI() {
+    	mainController = new MainController();
 	}
-	
-	public static void main(String[] args) {
-		launch(args);
-		
-		
-	}
+    
+    @Override
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("REKEST - Authentication");
+        mainController.initAuthentication(primaryStage);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
