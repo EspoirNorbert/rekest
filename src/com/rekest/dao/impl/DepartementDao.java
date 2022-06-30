@@ -46,8 +46,10 @@ public class DepartementDao extends HibernateDao {
 		return super.list(entityClass);
 	}
 
-	public ObservableList<Departement> listObservable() throws DAOException {
-		return this.departmentData.getData();
+	
+	@Override
+	public ObservableList<Departement> departementlistObservable() throws DAOException {
+	    return this.departmentData.getData();
 	}
 	
 }

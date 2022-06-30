@@ -22,8 +22,8 @@ public interface IFeature {
 	default Utilisateur rechercherUtilisateur(Integer primaryKey) throws DAOException {return null;};
 
 	/**************Departement**************/
-	default ObservableList<Departement> loadDepartementObservableList() {return null;}
-	default ObservableList<Departement> getCurrentDepartmentObservableList() {return null;}
+	default ObservableList<Departement> loadDepartementObservableList() throws DAOException {return null;}
+	default ObservableList<Departement> getCurrentDepartmentObservableList() throws DAOException {return null;}
 	default void clearDepartementList() throws DAOException {};
 	default void setDepartmentList(List<Departement> departements) throws DAOException {}
 	default List<Departement> listerDepartements() throws DAOException {return null;}

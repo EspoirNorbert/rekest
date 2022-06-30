@@ -9,11 +9,15 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.rekest.dao.IDao;
+import com.rekest.entities.Departement;
 import com.rekest.entities.Service;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
 import com.rekest.utils.HibernateSession;
+
+import javafx.collections.ObservableList;
+
 
 public class HibernateDao implements IDao  {
 
@@ -182,4 +186,9 @@ public class HibernateDao implements IDao  {
 		HibernateSession.close();		
 	}
 
+	@Override
+	public ObservableList<Departement> departementlistObservable() throws DAOException {
+		return null;
+	}
+	
 }

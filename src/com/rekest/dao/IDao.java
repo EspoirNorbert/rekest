@@ -2,10 +2,13 @@ package com.rekest.dao;
 
 import java.util.List;
 
+import com.rekest.entities.Departement;
 import com.rekest.entities.Service;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
+
+import javafx.collections.ObservableList;
 
 public interface IDao {
 	
@@ -94,4 +97,7 @@ public interface IDao {
 	public default void associateService(Employe employe, Service service) throws DAOException{};
 	
 	public default void refresh() {}
+	
+	default ObservableList<Departement> departementlistObservable() throws DAOException{
+		return null;}
 }
