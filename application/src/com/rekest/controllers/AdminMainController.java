@@ -19,7 +19,7 @@ public class AdminMainController  {
     
     // controllers
 	private AdminRootLayoutController adminRootLayoutController;
-	private AdminOverviewController adminAcceuilController;
+	private AdminOverviewController adminOverviewController;
 	
 	/**
 	 * 
@@ -42,7 +42,8 @@ public class AdminMainController  {
      */
     public void showAdminOverview() {
         Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview");
-		adminAcceuilController.setPrimaryStage(primaryStage);
+        adminOverviewController = new AdminOverviewController();
+        adminOverviewController.setPrimaryStage(primaryStage);
     }
     
     
