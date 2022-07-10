@@ -42,6 +42,10 @@ public class Departement {
 		this.spdNom = new SimpleStringProperty(nom);
 	}
 
+	public Departement() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public static void copy(Departement oldDepartement, Departement newDepartment) {
 		oldDepartement.setNom(newDepartment.getNom());
 	}
