@@ -1,8 +1,4 @@
-/* .label {
-//	-fx-font-size: 18pt;
-//    -fx-font-family: "Segoe UI Semibold";
-//    -fx-text-fill: #C67709;
-}*/
+
 
 .parent{
 	-fx-background-color: #fff;
@@ -15,7 +11,7 @@
 .sidebar{
 	-fx-background-color: #272924;
 	-fx-border-color: #D8DBDE;
-	-fx-border-width: 0px 1px 0px 0px;
+	-fx-border-width: 0.0px 1.0px 0.0px 0.0px;
 } 
 
 .rightSide{
@@ -24,7 +20,7 @@
 
 .profil {
 	-fx-border-color: #D8DBDE;
-	-fx-border-width: 0px 0px 1px 0px;
+	-fx-border-width: 0.0px 0.0px 1.0px 0.0px;
 }
 
 .jfxbutton{
@@ -32,8 +28,8 @@
 }
 
 .rounded {
-    -fx-border-radius: 20 20 20 20;
-    -fx-background-radius: 20 20 20 20;
+    -fx-border-radius: 20.0 20.0 20.0 20.0;
+    -fx-background-radius: 20.0 20.0 20.0 20.0;
 }
 
 .btns{
@@ -46,7 +42,7 @@
 
 .box {
 	-fx-border-color: #D8DBDE;
-	-fx-border-width: 1px 0px 0px 0px;
+	-fx-border-width: 1.0px 0.0px 0.0px 0.0px;
 }
 
 

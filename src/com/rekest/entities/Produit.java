@@ -20,9 +20,13 @@ public class Produit {
 	@Column(name="id_produit")
 	private int id;
 	private String nom;
-	public static void copy(Produit produit, Produit entity) {
-		// TODO Auto-generated method stub
-		
-	}
+	private double prix;
+	private int quantite;
+	private String type;
+	
+	@Column(columnDefinition = "TEXT")
+	private String description;
+	
+	public static void copy(Produit produit, Produit entity) {}
 	
 }

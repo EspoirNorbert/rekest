@@ -14,6 +14,10 @@ public class ObservableListDepartement implements IObservableList<Departement> {
 	
     private ObservableList<Departement> departementData = FXCollections.observableArrayList();
 
+    public ObservableListDepartement() {
+    	displayDepartementData();
+    }
+    
 	@Override
 	public ObservableList<Departement> getData() {
 		return departementData;
@@ -66,5 +70,11 @@ public class ObservableListDepartement implements IObservableList<Departement> {
 
 	@Override
 	public void refresh() {}
+	
+	private void displayDepartementData() {
+		for (Departement departement : departementData) {
+			System.out.println(departement);
+		}
+	}
 
 }

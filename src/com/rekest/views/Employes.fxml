@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="parent" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.views.RoleController">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="parent" stylesheets="@../assets/css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.EmployeController">
    <children>
       <VBox layoutX="238.0" layoutY="-1.0" prefHeight="450.0" prefWidth="1078.0" styleClass="rightSide" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -22,7 +22,7 @@
                   <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
                <children>
-                  <Label alignment="TOP_LEFT" prefHeight="27.0" prefWidth="137.0" text="Rôles" textFill="WHITE">
+                  <Label alignment="TOP_LEFT" prefHeight="27.0" prefWidth="137.0" text="Employés" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="10.0" right="150.0" />
                      </HBox.margin>
@@ -38,7 +38,7 @@
                         <Insets right="1.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="countRoles" text="Count" textFill="WHITE">
+                  <Label fx:id="countEmployes" text="Count" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -50,7 +50,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="800.0">
                <children>
-                  <TextField fx:id="textRecherche" prefHeight="28.0" prefWidth="190.0" promptText="Entrer le nom du rôle" style="-fx-background-color: transparent; -fx-border-color: #D8DBDE;" styleClass="search">
+                  <TextField fx:id="textRecherche" prefHeight="28.0" prefWidth="190.0" promptText="Entrer le nom de l'employé" style="-fx-background-color: transparent; -fx-border-color: #D8DBDE;" styleClass="search">
                      <font>
                         <Font name="Calibri Light" size="14.0" />
                      </font>
@@ -79,12 +79,19 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="tableViewRoles" prefHeight="350.0" prefWidth="200.0">
+            <TableView fx:id="tableViewEmployes" prefHeight="350.0" prefWidth="200.0">
                <columns>
                   <TableColumn fx:id="columnNom" prefWidth="75.0" text="Nom" />
+                  <TableColumn fx:id="columnPrenom" prefWidth="75.0" text="Prénom" />
+                  <TableColumn fx:id="columnAdresse" prefWidth="75.0" text="Adresse" />
+                  <TableColumn fx:id="columnTelephone" prefWidth="75.0" text="Téléphone" />
+                  <TableColumn fx:id="columnEmail" prefWidth="75.0" text="E-mail" />
+                  <TableColumn fx:id="columnLogin" prefWidth="75.0" text="Login" />
+                  <TableColumn fx:id="columnProfil" prefWidth="75.0" text="Profil" />
+                  <TableColumn fx:id="columnService" prefWidth="75.0" text="Service" />
                </columns>
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="20.0" />
@@ -98,7 +105,7 @@
                   <Insets bottom="5.0" left="20.0" right="20.0" />
                </VBox.margin>
                <children>
-                  <ButtonBar prefHeight="50.0" prefWidth="238.0">
+                  <ButtonBar prefHeight="50.0" prefWidth="250.0">
                      <buttons>
                         <Button fx:id="btnModifier" mnemonicParsing="false" onAction="#handleClickedModifier" style="-fx-background-color: #52A4D1;" text="Modifier" textFill="WHITE">
                            <font>

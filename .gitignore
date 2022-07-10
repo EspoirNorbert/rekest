@@ -1,2 +1,7 @@
 /bin/
 /target/
+.classpath
+.project
+.build.fxbuild
+rekest.log
+.settings

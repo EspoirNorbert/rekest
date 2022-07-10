@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="525.0" prefWidth="700.0" style="-fx-background-color: #272924;" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.views.EmployeEditDialogController">
+<AnchorPane prefHeight="525.0" prefWidth="700.0" style="-fx-background-color: #272924;" stylesheets="@../assets/css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.EmployeEditDialogController">
    <children>
       <Circle fx:id="circlePhoto" fill="WHITE" layoutX="350.0" layoutY="67.0" radius="46.0" stroke="WHITE" strokeType="INSIDE" AnchorPane.topAnchor="21.0" />
       <GridPane layoutX="25.0" layoutY="192.0" prefWidth="650.0" AnchorPane.bottomAnchor="89.80000000000001" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">

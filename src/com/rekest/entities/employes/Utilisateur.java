@@ -7,6 +7,7 @@ import java.util.List;
 import com.rekest.entities.Demande;
 import com.rekest.entities.Notification;
 import com.rekest.entities.Role;
+import com.rekest.utils.Utilitaire;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -31,23 +32,14 @@ public class Utilisateur extends Employe {
 	protected boolean isEnable = true;
 	protected Date createdAt;
 	
-	public Utilisateur (String login , String password) {
-		this.login = login;
-		this.password = password;
-	}
-	
-	public Utilisateur(String nom, String prenom, String login, String password) {
+	public Utilisateur(String nom, String prenom) {
 		super(nom, prenom);
-		this.login = login;
-		this.password = password;
+		Utilitaire.generateLoginAndPassword(this);
 	}
 	
-	public Utilisateur(String nom, String prenom, String telephone, 
-			String email, String adresse,String employeProfil , String login , 
-			String password) {
-		super(nom, prenom, telephone, email, adresse, employeProfil);
-		this.login = login;
-		this.password = password;
+	public Utilisateur(String nom, String prenom, String telephone, String email, String adresse) {
+		super(nom, prenom, telephone, email, adresse, null);
+		Utilitaire.generateLoginAndPassword(this);
 	}
 	
 	@OneToMany(cascade=CascadeType.ALL)

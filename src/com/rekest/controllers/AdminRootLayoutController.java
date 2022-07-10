@@ -1,11 +1,13 @@
-package com.rekest.views;
+package com.rekest.controllers;
 
 import javafx.stage.Stage;
 import lombok.Data;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.rekest.utils.Utilitaire;
 
@@ -13,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,19 +23,21 @@ import javafx.scene.shape.Circle;
 
 /**
  * RootLayout des windows Admins
- * @author hp
+ * @author Fatoumata DICKO
  */
 @Data
 public class AdminRootLayoutController implements Initializable {
+	
+	public final static Logger logger = LogManager.getLogger(AdminRootLayoutController.class);
 
-	private DepartementController departementController; // MainController de UI Department
-	private ServiceController serviceController;         // MainController de UI Servicr
+	private DepartementController departementController; 
+	private ServiceController serviceController;      
 	private MainController mainController;
-	
+
 	private Stage primaryStage;
-	
+
 	private BorderPane rootLayout;
-	
+
 	@FXML
 	private AnchorPane anchorPaneCenter;
 
@@ -85,103 +88,58 @@ public class AdminRootLayoutController implements Initializable {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Espace d'administration - Admin connecté");
 	}
-	
+
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
-	     try {
-			Utilitaire.loadPageInRootLayout(rootLayout, "Acceuil", this.getClass());
-		} catch (Exception e) {
-			Utilitaire.alert(AlertType.WARNING, 
-					null, 
-					"REKEST ERROR","Echec ",e.getMessage());
-		}
+		Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview");
 	}
 
 	@FXML
 	void handleClickedDemande(MouseEvent event) {
-		 try {
-				Utilitaire.loadPageInRootLayout(rootLayout, "Demandes", this.getClass());
-			} catch (IOException e) {
-				Utilitaire.alert(AlertType.ERROR, 
-						null, 
-						"REKEST ERROR","Echec ",e.getMessage());
-			}
+		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
 	}
 
 	@FXML
 	void handleClickedDepartement(MouseEvent event) {
-		 try {
-				Utilitaire.loadPageInRootLayout(rootLayout, "Departement", this.getClass());
-			} catch (IOException e) {
-				Utilitaire.alert(AlertType.ERROR, 
-						null, 
-						"REKEST ERROR","Echec ",e.getMessage());
-			}
+		Utilitaire.loadPageInRootLayout(rootLayout, "Departement");
+
 	}
 
 	@FXML
 	void handleClickedEmploye(MouseEvent event) {
-		 try {
-				Utilitaire.loadPageInRootLayout(rootLayout, "Employes", this.getClass());
-			} catch (IOException e) {
-				Utilitaire.alert(AlertType.ERROR, 
-						null, 
-						"REKEST ERROR","Echec ",e.getMessage());
-			}
+		Utilitaire.loadPageInRootLayout(rootLayout, "Employes");
 	}
+
 
 	@FXML
 	void handleClickedParametre(MouseEvent event) {
-		 try {
-				Utilitaire.loadPageInRootLayout(rootLayout, "Parametres", this.getClass());
-			} catch (IOException e) {
-				Utilitaire.alert(AlertType.ERROR, 
-						null, 
-						"REKEST ERROR","Echec ",e.getMessage());
-			}
+
+		Utilitaire.loadPageInRootLayout(rootLayout, "Parametres");
+
 	}
 
 	@FXML
 	void handleClickedProduit(MouseEvent event) {
-		 try {
-				Utilitaire.loadPageInRootLayout(rootLayout, "Produits", this.getClass());
-			} catch (IOException e) {
-				Utilitaire.alert(AlertType.ERROR, 
-						null, 
-						"REKEST ERROR","Echec ",e.getMessage());
-			}
+		Utilitaire.loadPageInRootLayout(rootLayout, "Produits");
 	}
 
 	@FXML
 	void handleClickedRole(MouseEvent event) {
-		 try {
-				Utilitaire.loadPageInRootLayout(rootLayout, "Roles", this.getClass());
-			} catch (IOException e) {
-				Utilitaire.alert(AlertType.ERROR, 
-						null, 
-						"REKEST ERROR","Echec ",e.getMessage());
-			}
+		Utilitaire.loadPageInRootLayout(rootLayout, "Roles");
 	}
 
 	@FXML
 	void handleClickedService(MouseEvent event) {
-		 try {
-				Utilitaire.loadPageInRootLayout(rootLayout, "Services", this.getClass());
-			} catch (IOException e) {
-				Utilitaire.alert(AlertType.ERROR, 
-						null, 
-						"REKEST ERROR","Echec ",e.getMessage());
-			}
+		Utilitaire.loadPageInRootLayout(rootLayout, "Services");
 	}
 
 	@FXML
-	void handleClicledNotification(MouseEvent event) {
-		
-	}
-	
+	void handleClicledNotification(MouseEvent event) {}
+
 	@FXML
 	void handleClickedLogOut(MouseEvent event) {
 		mainController.initAuthentication(primaryStage);
+		
 	}
 
 	@Override
@@ -189,4 +147,4 @@ public class AdminRootLayoutController implements Initializable {
 		mainController = new MainController();
 	}
 
-}
+	}

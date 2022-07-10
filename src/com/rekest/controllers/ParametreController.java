@@ -1,4 +1,4 @@
-package com.rekest.views;
+package com.rekest.controllers;
 
 public class ParametreController {
 

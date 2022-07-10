@@ -96,8 +96,16 @@ public interface IDao {
 	 */
 	public default void associateService(Employe employe, Service service) throws DAOException{};
 	
+	/**
+	 * 
+	 */
 	public default void refresh() {}
 	
-	default ObservableList<Departement> departementlistObservable() throws DAOException{
-		return null;}
+	/**
+	 * @return
+	 * @throws DAOException
+	 */
+	public default ObservableList<Departement> departementlistObservable() throws DAOException {
+		return null;
+	}
 }

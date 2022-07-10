@@ -1,4 +1,4 @@
-package com.rekest.views;
+package com.rekest.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

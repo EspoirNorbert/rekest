@@ -1,40 +1,34 @@
-package com.rekest.views;
+package com.rekest.controllers;
 
-import java.io.IOException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MainController {
 
+	public final static Logger logger = LogManager.getLogger(MainController.class);
+
 	private Stage primaryStage;
 	private AuthenticationController authenticationController;
-	
-	public void initAuthentication(Stage primaryStage) {
-		try {
-			this.primaryStage = primaryStage;
-			// Load person overview.
-	    	FXMLLoader loader = new FXMLLoader ();
-	    	loader.setLocation(MainController.class.getResource("Authentification.fxml"));
-	    	AnchorPane root = (AnchorPane) loader.load();
 
-	        // Show the scene containing the root layout.
-	        Scene scene = new Scene(root);
-	        this.primaryStage.setScene(scene);
-
-	        // Give the controller access to the main app.
-	        authenticationController = loader.getController();       
-	        authenticationController.setPrimaryStage(primaryStage);
-
-	        // show UI
-	        this.primaryStage.show();
-		} catch (IOException e) {
-			System.err.println("Erroor " + e.getMessage());
-			e.printStackTrace();
-		}
+	public MainController() {
+		logger.info("An instance of {} was created" , this);
 	}
 
-	
+	public void initAuthentication(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		FXMLLoader loader =	Utilitaire.initFXMLoader("Authentication");
+		AnchorPane root = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
+		Utilitaire.createScene(root, primaryStage, "Rekest - Authentication");
+		authenticationController = loader.getController();       
+		authenticationController.setPrimaryStage(this.primaryStage);
+		Utilitaire.showStage(this.primaryStage);
+	}
+
 }

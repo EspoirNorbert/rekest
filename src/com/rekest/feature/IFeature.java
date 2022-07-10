@@ -1,6 +1,7 @@
 package com.rekest.feature;
 
 import com.rekest.entities.Departement;
+import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
 
@@ -38,4 +39,14 @@ public interface IFeature {
 	 * Others methodes
 	 */
 	default void refresh() {};
+	default void initDepartement() {}
+	default void initEmploye() {}
+	default void initService() {}
+	default void initRole() {}
+	default void initProduit() {}
+	default void initAdmin() {}
+	default  void initManagers() {}
+	default Administrateur createDefaultAdmin() {return null;}
+	default void initAllEntity() {}
+	
 }

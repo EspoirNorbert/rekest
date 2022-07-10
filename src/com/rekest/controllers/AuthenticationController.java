@@ -1,16 +1,26 @@
-package com.rekest.views;
+package com.rekest.controllers;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.rekest.feature.IFeature;
 import com.rekest.utils.Utilitaire;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-public class AuthenticationController {
+public class AuthenticationController implements Initializable {
+	
+	public final static Logger logger = LogManager.getLogger(AuthenticationController.class);
 	
 	public Stage primaryStage;
 	private AdminMainController adminMainController;
@@ -29,6 +39,8 @@ public class AuthenticationController {
 
 	@FXML
 	private PasswordField txtPassword;
+	
+	private IFeature service;
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -70,6 +82,16 @@ public class AuthenticationController {
 	@FXML
 	void handleClickedQuitter(ActionEvent event) {
 		System.exit(0);
+	}
+	
+	public AuthenticationController() {
+		logger.info("Instance of {} is created" , this.getClass().getName());
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		//service = Feature.getCurrentInstance();
+		//service.initAllEntity();
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.rekest.views;
+package com.rekest.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import lombok.Data;
 
 @Data
-public class AdminAcceuilController implements Initializable {
+public class AdminOverviewController implements Initializable {
 
 	@FXML
 	private Label countDemandes;

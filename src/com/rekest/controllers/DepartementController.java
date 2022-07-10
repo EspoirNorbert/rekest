@@ -1,4 +1,4 @@
-package com.rekest.views;
+package com.rekest.controllers;
 
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -7,10 +7,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.rekest.entities.Departement;
+import com.rekest.exeptions.DAOException;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.FeatureDepartement;
 import com.rekest.utils.Utilitaire;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +48,30 @@ public class DepartementController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.service = FeatureDepartement.getInstance();
-	}
+		// Initialize the department table.
+        columnNom.setCellValueFactory(cellData -> cellData.getValue().getSpdNom());
+        // add to ObservableList
+        addDepartmentObservableListToTheTable();
+     }
+     
+     private void addDepartmentObservableListToTheTable() {
+     	// Add observable list data to the table
+     	ObservableList<Departement> departements;
+		try {
+			departements = service.loadDepartementObservableList();
+	     	tableViewDepartement.setItems(departements);
+	         //Service.getInstance().refresh();
+	 		if (departements.size() > 0)
+	 			tableViewDepartement.getSelectionModel().select(0);	
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			Utilitaire.alert(AlertType.INFORMATION, primaryStage,
+        			"Echec de recuperation de données ", 
+        			"Data Error", 
+        			e.getMessage());
+		}
+   					
+ 	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -58,6 +83,14 @@ public class DepartementController implements Initializable {
 	      boolean okClicked = showDepartmentEditDialog(tempDepartment);
 	        if (okClicked) {
 	        	//Service.getInstance().createPerson(tempPerson);
+	        	try {
+					service.creerDepartement(tempDepartment);
+				} catch (DAOException e) {
+					Utilitaire.alert(AlertType.INFORMATION, primaryStage,
+		        			"Echec de creation", 
+		        			"Echec de creation d'un department", 
+		        			e.getMessage());
+				}
 	        }
 	}
 
@@ -69,8 +102,14 @@ public class DepartementController implements Initializable {
 	        if (selectedDepartement != null) {
 	            boolean okClicked = this.showDepartmentEditDialog(selectedDepartement);
 	            if (okClicked) {
-	                //show(selectedDepartement);
-	                //Service.getInstance().updatePerson(selectedPerson);
+	            	try {
+						service.modifierDepartement(selectedDepartement);
+					} catch (DAOException e) {
+						Utilitaire.alert(AlertType.INFORMATION, primaryStage,
+			        			"Echec de modification", 
+			        			"Echec de modification d'un department", 
+			        			e.getMessage());
+					}
 	            }
 	        } else {
 	            // Nothing selected.

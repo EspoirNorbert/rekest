@@ -1,24 +1,27 @@
 package com.rekest.runtime;
 
-import com.rekest.views.MainController;
+import com.rekest.controllers.MainController;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+//import javafx.stage.StageStyle;
 
-public class MainUI extends Application {
+public class Main extends Application {
 
-	//public static final String APPLICATION_ICON_URL = "file:resources/images/address_book_32.png"; 	
+	public static final String APPLICATION_ICON_URL = "com/rekest/assets/images/rekest_logo.png"; 	
     private Stage primaryStage;
     private MainController mainController;
     
-    public MainUI() {
+    public Main() {
     	mainController = new MainController();
 	}
     
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("REKEST - Authentication");
+        this.primaryStage.getIcons().add(new Image(APPLICATION_ICON_URL));
+        this.primaryStage.setResizable(false);
         mainController.initAuthentication(primaryStage);
     }
 

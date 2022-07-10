@@ -7,7 +7,7 @@ import com.rekest.entities.Service;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Utilisateur;
-import com.rekest.feature.impl.Feature;
+
 
 public class TestDataBase {
 
@@ -22,7 +22,7 @@ public class TestDataBase {
 			Service serviceEntreprise = new Service ("Service Informatique");		
 			dao.save(serviceEntreprise);
 
-			Utilisateur utilisateur = new Utilisateur("AKINOCHO", "Ghislain", "ghislain-a", "q@$$m0rb");
+			Utilisateur utilisateur = new Utilisateur("AKINOCHO", "Ghislain");
 			dao.save(utilisateur);
 
 			Role gerant = new Role("Gerant system");
@@ -43,10 +43,10 @@ public class TestDataBase {
 			dao.disableAccount(chefService);
 			
 			
-			Administrateur seynabou = new Administrateur("Seynabou","Diagne","nabou","nabou");
+			Administrateur seynabou = new Administrateur("Seynabou","Diagne");
 			dao.save(seynabou);
 			
-			Feature.initDepartement();
+			//Feature.initDepartement();
 
 		} catch (Exception e) {
 			e.printStackTrace();
