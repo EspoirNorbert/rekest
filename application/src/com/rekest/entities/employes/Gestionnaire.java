@@ -24,6 +24,14 @@ public class Gestionnaire extends Utilisateur {
 	public Gestionnaire(String nom, String prenom) {
 		super(nom, prenom);		
 	}
+
+	public List<Demande> getDemandes_assignees() {
+		return demandes_assignees;
+	}
+
+	public void setDemandes_assignees(List<Demande> demandes_assignees) {
+		this.demandes_assignees = demandes_assignees;
+	}
 	
 		
 }
