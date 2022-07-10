@@ -33,4 +33,37 @@ public class Notification {
 		this.message = message;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public boolean isRead() {
+		return isRead;
+	}
+
+	public void setRead(boolean isRead) {
+		this.isRead = isRead;
+	}
+
+	public Date getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
+	}
+	
+
 }
