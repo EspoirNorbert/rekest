@@ -27,7 +27,7 @@ import javafx.scene.shape.Circle;
  */
 @Data
 public class AdminRootLayoutController implements Initializable {
-	
+
 	public final static Logger logger = LogManager.getLogger(AdminRootLayoutController.class);
 
 	private DepartementController departementController; 
@@ -86,7 +86,7 @@ public class AdminRootLayoutController implements Initializable {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Espace d'administration - Admin connecté");
+		this.primaryStage.setTitle("Espace d'administration - Admin connectï¿½");
 	}
 
 	@FXML
@@ -139,7 +139,7 @@ public class AdminRootLayoutController implements Initializable {
 	@FXML
 	void handleClickedLogOut(MouseEvent event) {
 		mainController.initAuthentication(primaryStage);
-		
+
 	}
 
 	@Override
@@ -147,4 +147,49 @@ public class AdminRootLayoutController implements Initializable {
 		mainController = new MainController();
 	}
 
+	public DepartementController getDepartementController() {
+		return departementController;
 	}
+
+	public void setDepartementController(DepartementController departementController) {
+		this.departementController = departementController;
+	}
+
+	public ServiceController getServiceController() {
+		return serviceController;
+	}
+
+	public void setServiceController(ServiceController serviceController) {
+		this.serviceController = serviceController;
+	}
+
+	public MainController getMainController() {
+		return mainController;
+	}
+
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
+	}
+
+	public BorderPane getRootLayout() {
+		return rootLayout;
+	}
+
+	public void setRootLayout(BorderPane rootLayout) {
+		this.rootLayout = rootLayout;
+	}
+
+	public AnchorPane getAnchorPaneCenter() {
+		return anchorPaneCenter;
+	}
+
+	public void setAnchorPaneCenter(AnchorPane anchorPaneCenter) {
+		this.anchorPaneCenter = anchorPaneCenter;
+	}
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	
+}
