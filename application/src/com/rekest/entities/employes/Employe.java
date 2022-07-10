@@ -74,6 +74,79 @@ public class Employe {
 	public void addDemandeSoumise (Demande demande) {
 		this.demandes_soumises.add(demande);
 	}
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getEmployeProfil() {
+		return employeProfil;
+	}
+
+	public void setEmployeProfil(String employeProfil) {
+		this.employeProfil = employeProfil;
+	}
+
+	public List<Demande> getDemandes_soumises() {
+		return demandes_soumises;
+	}
+
+	public void setDemandes_soumises(List<Demande> demandes_soumises) {
+		this.demandes_soumises = demandes_soumises;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
 
 	public static void copy(Employe employe, Employe entity) {
 		// TODO Auto-generated method stub
