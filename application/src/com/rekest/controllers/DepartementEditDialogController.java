@@ -7,9 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import lombok.Data;
 
-@Data
+
+
 public class DepartementEditDialogController {
 
 	@FXML

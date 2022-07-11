@@ -18,8 +18,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -50,6 +52,9 @@ public class Utilitaire {
 		alert.setTitle(title);
 		alert.setHeaderText(headerText);
 		alert.setContentText(contentText);
+		Image image = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
+		ImageView imageView = new ImageView(image);
+		alert.setGraphic(imageView);
 
 		alert.showAndWait();
 
@@ -127,9 +132,8 @@ public class Utilitaire {
 
 	/**
 	 * Init FXMLoader setting location
-	 * @param fxmlLoader FXMLLoader to load
-	 * @param filename Name of file to load
-	 * @return Object charged
+	 * @param filename
+	 * @return
 	 */
 	public static FXMLLoader initFXMLoader(String filename){
 	    FXMLLoader	fxmlLoader = new FXMLLoader ();
@@ -145,16 +149,16 @@ public class Utilitaire {
 	public static void saveLogError() {}
 
 	/**
-	 * Create Scene 
+	 * Create Scene
 	 * @param root
 	 * @param stage
 	 * @param title
-	 * @return Stage
+	 * @return scene created
 	 */
 	public static Stage createScene(Parent root , Stage stage , String title) {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
-		stage.setTitle(title);
+		stage.setTitle(title + "- Rekest");
 		return stage;
 	}
 	
@@ -167,7 +171,7 @@ public class Utilitaire {
 	 */
 	public static Stage createDialog(Parent root , Stage primaryStage , String title) {
 		  Stage dialogStage = new Stage();
-          dialogStage.setTitle(title);
+          dialogStage.setTitle(title + "- Rekest");
           dialogStage.getIcons().add(new Image(APPLICATION_ICON_URL));
           dialogStage.initModality(Modality.WINDOW_MODAL);
           dialogStage.initOwner(primaryStage);
@@ -192,4 +196,18 @@ public class Utilitaire {
 		stage.show();
 	}
 
+	public static int getCurrentIndexTableView(TableView<?> tableView , Stage stage) {
+    	int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            return selectedIndex;
+        } else {
+            // Nothing selected.
+        	Utilitaire.alert(AlertType.WARNING, stage,
+        			"No Selection", 
+        			"No Item Selected", 
+        			"Please select a item in the table.");
+        	return 0;
+        }
+	}
+	
 }

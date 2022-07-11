@@ -5,13 +5,12 @@ import com.rekest.utils.Utilitaire;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import lombok.Data;
+
 
 /***
  * MainController For admin Files
  * @author Fatoumata DICKO
  */
-@Data
 public class AdminMainController  {
 	
 	private Stage primaryStage;

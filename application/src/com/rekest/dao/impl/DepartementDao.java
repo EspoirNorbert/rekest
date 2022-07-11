@@ -7,11 +7,8 @@ import com.rekest.exeptions.DAOException;
 import com.rekest.observableList.impl.ObservableListDepartement;
 
 import javafx.collections.ObservableList;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
+
 public class DepartementDao extends HibernateDao {
 
 	private ObservableListDepartement departmentData;

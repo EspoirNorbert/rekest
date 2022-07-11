@@ -30,7 +30,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="testFieldNom">
+            <TextField fx:id="textFieldNom">
                <VBox.margin>
                   <Insets bottom="25.0" left="10.0" right="10.0" />
                </VBox.margin>

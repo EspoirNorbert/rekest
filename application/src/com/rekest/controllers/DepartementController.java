@@ -41,6 +41,12 @@ public class DepartementController implements Initializable {
 	
 	private IFeature service;
 	
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
+
+	
 	private DepartementEditDialogController departementEditDialogController;
 	
 	@Override
@@ -70,10 +76,6 @@ public class DepartementController implements Initializable {
 		}
    					
  	}
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
 
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
@@ -138,7 +140,6 @@ public class DepartementController implements Initializable {
 	void handleClickedRecherche(ActionEvent event) {}
 
 	
-
     /**
      * Opens a dialog to edit details for the specified person. If the user
      * clicks OK, the changes are saved into the provided person object and true

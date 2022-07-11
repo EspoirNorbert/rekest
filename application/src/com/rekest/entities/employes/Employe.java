@@ -20,16 +20,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="employe_profil", discriminatorType=DiscriminatorType.STRING, length=64)
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Employe {
 	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO) 

@@ -1,7 +1,6 @@
 package com.rekest.controllers;
 
 import javafx.stage.Stage;
-import lombok.Data;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +24,6 @@ import javafx.scene.shape.Circle;
  * RootLayout des windows Admins
  * @author Fatoumata DICKO
  */
-@Data
 public class AdminRootLayoutController implements Initializable {
 
 	public final static Logger logger = LogManager.getLogger(AdminRootLayoutController.class);
