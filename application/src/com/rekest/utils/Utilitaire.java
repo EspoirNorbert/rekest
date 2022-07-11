@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -28,9 +29,13 @@ import javafx.stage.Window;
 public class Utilitaire {
 
 	public final static Logger logger = LogManager.getLogger(HibernateDao.class);
+	public static final String PATH_VIEWS_FILES = "/com/rekest/views/";
+	public static final String APPLICATION_ICON_URL = "com/rekest/assets/images/rekest_logo.png"; 	
 
-	public static String PATH_VIEWS_FILES = "/com/rekest/views/";
-
+	public static String getApplicationIconUrl() {
+		return APPLICATION_ICON_URL;
+	}
+	
 	/**
 	 * Alert Function for javaFX
 	 * @param alertType
@@ -163,6 +168,7 @@ public class Utilitaire {
 	public static Stage createDialog(Parent root , Stage primaryStage , String title) {
 		  Stage dialogStage = new Stage();
           dialogStage.setTitle(title);
+          dialogStage.getIcons().add(new Image(APPLICATION_ICON_URL));
           dialogStage.initModality(Modality.WINDOW_MODAL);
           dialogStage.initOwner(primaryStage);
           Scene scene = new Scene(root);

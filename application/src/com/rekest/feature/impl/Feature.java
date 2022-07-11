@@ -102,7 +102,6 @@ public class Feature implements IFeature {
 		return admin;
 	}
 
-	
 	@Override
 	public void initAllEntity() {
 		this.initAdmin();

@@ -1,6 +1,5 @@
 package com.rekest.controllers;
 
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -17,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -64,7 +62,7 @@ public class DepartementController implements Initializable {
 	 		if (departements.size() > 0)
 	 			tableViewDepartement.getSelectionModel().select(0);	
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
 			Utilitaire.alert(AlertType.INFORMATION, primaryStage,
         			"Echec de recuperation de données ", 
         			"Data Error", 
@@ -137,9 +135,7 @@ public class DepartementController implements Initializable {
 	}
 
 	@FXML
-	void handleClickedRecherche(ActionEvent event) {
-
-	}
+	void handleClickedRecherche(ActionEvent event) {}
 
 	
 
@@ -154,17 +150,11 @@ public class DepartementController implements Initializable {
     public boolean showDepartmentEditDialog(Departement department) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(DepartementController.class.getResource("DepartementEditDialog.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
+            FXMLLoader loader = Utilitaire.initFXMLoader("DepartementEditDialog");
+            AnchorPane root = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
 
             // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Person");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            Stage dialogStage = Utilitaire.createDialog(root, primaryStage, "Creation de departement");
 
             // Set the department into the controller.
             departementEditDialogController = loader.getController();
@@ -172,7 +162,7 @@ public class DepartementController implements Initializable {
             departementEditDialogController.setDepartement(department);
             
             // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
+            Utilitaire.showDialog(dialogStage);
 
             return departementEditDialogController.isOkClicked();
         } catch (Exception e) {
