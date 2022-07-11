@@ -32,7 +32,8 @@ public class Feature implements IFeature {
 	public void initDepartement() {
 		try {
 			for (int i = 0; i <= 10; i++) {
-				Departement department = new Departement(faker.commerce().department());
+				Departement department = 
+						new Departement(faker.commerce().department());
 				dao.save(department);
 			}
 		} catch (DAOException e) {
@@ -44,7 +45,9 @@ public class Feature implements IFeature {
 	public void initEmploye() {
 		try {
 			for (int i = 0; i <= 10; i++) {
-				Employe employe = new Employe(faker.name().firstName(), faker.name().lastName(),
+				Employe employe = new Employe(
+						faker.name().lastName(),
+						faker.name().firstName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress(),
 						null);
 				dao.save(employe);
@@ -59,7 +62,9 @@ public class Feature implements IFeature {
 		try {
 			dao.save(createDefaultAdmin());
 			for (int i = 0; i <= 3; i++) {
-				Administrateur admin = new Administrateur(faker.name().firstName(), faker.name().lastName(),
+				Administrateur admin = new Administrateur(
+						 faker.name().lastName(),
+						 faker.name().firstName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
 
 				dao.save(admin);

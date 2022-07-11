@@ -8,6 +8,7 @@ import com.rekest.dao.impl.DepartementDao;
 import com.rekest.entities.Departement;
 import com.rekest.exeptions.DAOException;
 import com.rekest.feature.IFeature;
+import com.rekest.observableList.impl.ObservableListDepartement;
 
 import javafx.collections.ObservableList;
 
@@ -15,6 +16,12 @@ public class FeatureDepartement implements IFeature {
 
 	private static IFeature instance = new FeatureDepartement();
 	private IDao dao  = DepartementDao.getCurrentInstance();
+	
+	/**
+	 * Observable List
+	*/
+	private ObservableListDepartement departmentData = new ObservableListDepartement();
+	
 
 	public static IFeature getInstance  () {
 		return instance;
@@ -22,15 +29,14 @@ public class FeatureDepartement implements IFeature {
 	
 	@Override
 	public List<Departement> listerDepartements () throws DAOException   {
-
-		List<Object> objects = dao.list ( Departement.class);
-		List<Departement> objs = new ArrayList<> ();
+		List<Object> objects = dao.list (new Departement());
+		List<Departement> departments = new ArrayList<> ();
 		for (Object obj : objects) {
 			if  (obj instanceof Departement) {
-				objs.add ( (Departement) obj);
+				departments.add ( (Departement) obj);
 			}
 		}
-		return objs;
+		return departments;
 	}
 
 	@Override
@@ -61,7 +67,7 @@ public class FeatureDepartement implements IFeature {
 	
 	@Override
 	public ObservableList<Departement> loadDepartementObservableList() throws DAOException {
-		dao.list(Departement.class);
+		dao.list(new Departement());
         return dao.departementlistObservable();
 	}
 	

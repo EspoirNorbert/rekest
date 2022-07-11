@@ -75,6 +75,13 @@ public class Departement {
 	public void setServices(List<Service> services) {
 		this.services = services;
 	}
+
+	@Override
+	public String toString() {
+		return "Departement [id=" + id + ", nom=" + nom + "]";
+	}
+	
+	
 	
 	
 }

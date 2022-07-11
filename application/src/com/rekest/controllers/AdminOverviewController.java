@@ -8,8 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-
-
 public class AdminOverviewController implements Initializable {
 
 	@FXML
@@ -45,7 +43,5 @@ public class AdminOverviewController implements Initializable {
 		countRoles.setText("0");
 		countServices.setText("0");
 	}
-
-
-
+	
 }

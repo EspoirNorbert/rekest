@@ -48,13 +48,8 @@ public class AuthenticationController implements Initializable {
 
 	@FXML
 	void handleClickedConnexion(ActionEvent event) {
-		/*System.out.println("Login OKK");*/
 		String login = txtLogin.getText();
 		String password = txtLogin.getText();
-
-		/*
-		System.out.println("Login: " + login);
-		System.out.println("Password: " + password);*/
 
 		if (login.equals("") || password.equals(""))
 			Utilitaire.alert(AlertType.ERROR, 

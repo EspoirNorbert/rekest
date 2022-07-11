@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -196,6 +197,12 @@ public class Utilitaire {
 		stage.show();
 	}
 
+	/**
+	 * Get current index to selected item in table 
+	 * @param tableView
+	 * @param stage
+	 * @return
+	 */
 	public static int getCurrentIndexTableView(TableView<?> tableView , Stage stage) {
     	int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -209,5 +216,19 @@ public class Utilitaire {
         	return 0;
         }
 	}
+	
+	/**
+	 * Get value TextField value
+	 * @param textFilField
+	 * @return
+	 */
+	public static String getTextField(TextField textFilField) {
+		return textFilField.getText();
+	}
+	
+	public static void setTextField(TextField textFilField, String value) {
+		 textFilField.setText(value);
+	}
+	
 	
 }

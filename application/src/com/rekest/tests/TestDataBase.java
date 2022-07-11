@@ -1,20 +1,31 @@
 package com.rekest.tests;
 
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rekest.dao.IDao;
 import com.rekest.dao.impl.HibernateDao;
+import com.rekest.entities.Departement;
 import com.rekest.entities.Role;
 import com.rekest.entities.Service;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Utilisateur;
+import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
+import com.rekest.feature.impl.FeatureDepartement;
 
 
 public class TestDataBase {
 
+	public final static Logger logger = LogManager.getLogger(TestDataBase.class);
+	
 	public static void main(String[] args) {
 
 		IDao dao = HibernateDao.getCurrentInstance();
+		IFeature feature = FeatureDepartement.getInstance();
 		ChefService chefService = new ChefService("BIPOMBO", "Espoir", "espoir-b", "passer");
 
 		try {
@@ -48,6 +59,14 @@ public class TestDataBase {
 			dao.save(seynabou);
 			
 			Feature.getCurrentInstance().initAllEntity();
+			List<Departement> departments = feature.listerDepartements();
+			
+			for (Departement departement : departments) {
+				logger.info(departement);
+				System.out.println("Affichage du department " + departement.getNom());
+				System.out.println(departement);
+			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
