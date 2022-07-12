@@ -2,13 +2,13 @@ package com.rekest.feature;
 
 import java.util.List;
 
-
 import com.rekest.entities.Demande;
 import com.rekest.entities.Departement;
 import com.rekest.entities.Note;
 import com.rekest.entities.Produit;
 import com.rekest.entities.Role;
 import com.rekest.entities.Service;
+import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Manager;
 import com.rekest.entities.employes.Utilisateur;
@@ -927,4 +927,18 @@ public interface IFeature {
 	default ObservableList<Departement> getCurrentDepartmentObservableList() throws DAOException {return null;}
 	default void clearDepartementList() throws DAOException {};
 	default void setDepartmentList(List<Departement> departements) throws DAOException {}
+	
+	/**
+	 * Others methodes
+	 */
+	default void refresh() {};
+	default void initDepartement() {}
+	default void initEmploye() {}
+	default void initService() {}
+	default void initRole() {}
+	default void initProduit() {}
+	default void initAdmin() {}
+	default  void initManagers() {}
+	default Administrateur createDefaultAdmin() {return null;}
+	default void initAllEntity() {}
 }
