@@ -34,6 +34,11 @@ public class Utilisateur extends Employe {
 		Utilitaire.generateLoginAndPassword(this);
 	}
 	
+	public Utilisateur()
+	{
+		super();
+	}
+	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_utilisateur")
 	private List<Notification> notifications = new ArrayList<>();
