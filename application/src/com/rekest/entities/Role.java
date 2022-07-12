@@ -20,6 +20,10 @@ public class Role {
 		this.intitule = intitule;
 	}
 	
+	public Role() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}
