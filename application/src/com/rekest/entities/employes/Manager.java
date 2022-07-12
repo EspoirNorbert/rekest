@@ -13,4 +13,8 @@ public class Manager extends Utilisateur {
 		super(nom, prenom);		
 	}
 
+	public Manager() {
+		super();
+	}
+
 }
