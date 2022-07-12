@@ -19,26 +19,28 @@ import javafx.stage.Stage;
 
 public interface IFeature {
 
-	
-	public void createEmptyAdressBook();
+
+	default void createEmptyAdressBook() {}
 
 	/**
 	 * @param primaryStage
 	 */
-	public void selectAnAddressBookToLoad(Stage primaryStage);
+	default void selectAnAddressBookToLoad(Stage primaryStage) {}
 
 	/**
 	 * @return
 	 */
-	public boolean saveCurrentOpenedDemandeFile();
+	default boolean saveCurrentOpenedDemandeFile() {
+		return false;
+	}
 
 	/**
 	 * @param primaryStage
 	 */
-	public void selectDemandeFileToSaveAs(Stage primaryStage);
+	default void selectDemandeFileToSaveAs(Stage primaryStage) {}
 
 
-	public void setDemandeList(List<Demande> demandes) throws DAOException ;
+	default void setDemandeList(List<Demande> demandes) throws DAOException {}
 
 
 	/**
@@ -46,7 +48,9 @@ public interface IFeature {
 	 * 
 	 * @return
 	 */
-	public List<Service> listerServices () throws DAOException;
+	default List<Service> listerServices () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns a list of all 'services' according to the filters.
@@ -55,7 +59,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Service> listerServices ( String whereClause)  throws DAOException;
+	default List<Service> listerServices ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Delete the 'service' set in parameter.
@@ -63,7 +69,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void supprimerService (Service service) throws DAOException;
+	default void supprimerService (Service service) throws DAOException {}
 
 	/**
 	 * Update the 'service' set in parameter. 
@@ -71,7 +77,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void modifierService (Service service) throws DAOException;
+	default void modifierService (Service service) throws DAOException {}
 
 	/**
 	 * Save the 'service' set in parameter. 
@@ -79,7 +85,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void creerService (Service service) throws DAOException;
+	default void creerService (Service service) throws DAOException {}
 
 
 
@@ -90,7 +96,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Service rechercherService( String whereClause)  throws DAOException;
+	default Service rechercherService( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Find and return the 'service' set in parameter if it exist, else null.
@@ -99,7 +107,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Service rechercherService( Integer primaryKey)  throws DAOException;	
+	default Service rechercherService( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 
 
@@ -111,7 +121,9 @@ public interface IFeature {
 	 * @param 
 	 * @return
 	 */
-	public List<Departement> listerDepartements () throws DAOException ;
+	default List<Departement> listerDepartements () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * 
@@ -121,7 +133,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Departement> listerDepartements ( String whereClause) throws DAOException ;
+	default List<Departement> listerDepartements ( String whereClause) throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Delete the 'departement' set in parameter.
@@ -129,7 +143,7 @@ public interface IFeature {
 	 * 
 	 * @param departement
 	 */
-	public void supprimerDepartement (Departement departement) throws DAOException ;
+	default void supprimerDepartement (Departement departement) throws DAOException {}
 
 	/**
 	 * Update the 'departement' set in parameter.
@@ -137,7 +151,7 @@ public interface IFeature {
 	 * 
 	 * @param departement
 	 */
-	public void modifierDepartement (Departement departement) throws DAOException ;
+	default void modifierDepartement (Departement departement) throws DAOException {}
 
 	/**
 	 * Save the 'departement' set in parameter.
@@ -145,7 +159,7 @@ public interface IFeature {
 	 * 
 	 * @param departement
 	 */
-	public void creerDepartement (Departement departement) throws DAOException ;
+	default void creerDepartement (Departement departement) throws DAOException {}
 
 
 	/**
@@ -155,7 +169,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Departement rechercherDepartement ( String whereClause) throws DAOException ;
+	default Departement rechercherDepartement ( String whereClause) throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Find the 'departement' set in parameter if it exist, else null.
@@ -164,7 +180,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Departement rechercherDepartement ( Integer primaryKey) throws DAOException ;	
+	default Departement rechercherDepartement ( Integer primaryKey) throws DAOException {
+		return null;
+	}
 
 
 
@@ -173,7 +191,9 @@ public interface IFeature {
 	 * 
 	 * @return
 	 */
-	public List<Manager> listerManagers () throws DAOException ;
+	default List<Manager> listerManagers () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns a list of all 'manager' according to the filters.
@@ -182,7 +202,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Manager> listerManagers ( String whereClause)  throws DAOException ;
+	default List<Manager> listerManagers ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Delete the 'manager' set in parameter. 
@@ -190,7 +212,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void supprimerManager (Manager manager) throws DAOException ;
+	default void supprimerManager (Manager manager) throws DAOException {}
 
 	/**
 	 * Update the 'manager' set in parameter. 
@@ -198,7 +220,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void modifierManager (Manager manager) throws DAOException ;
+	default void modifierManager (Manager manager) throws DAOException {}
 
 	/**
 	 * Save the 'manager' set in parameter. 
@@ -206,7 +228,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void creerManager (Manager manager) throws DAOException ;
+	default void creerManager (Manager manager) throws DAOException {}
 
 
 
@@ -217,7 +239,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Manager rechercherManager( String whereClause)  throws DAOException ;
+	default Manager rechercherManager( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Find and return the 'manager' set in parameter if it exist, else null.
@@ -226,7 +250,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Manager rechercherManager( Integer primaryKey)  throws DAOException;
+	default Manager rechercherManager( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 
 
@@ -237,7 +263,7 @@ public interface IFeature {
 	 * @param utilisateur
 	 * @return
 	 */
-	public void activerUtilisateur  (Utilisateur utilisateur) throws DAOException;	
+	default void activerUtilisateur  (Utilisateur utilisateur) throws DAOException {}
 
 	/**
 	 * Disable the user set in parameter.
@@ -246,7 +272,7 @@ public interface IFeature {
 	 * @param utilisateur
 	 * @return
 	 */
-	public void desactiverUtilisateur  (Utilisateur utilisateur) throws DAOException;	
+	default void desactiverUtilisateur  (Utilisateur utilisateur) throws DAOException {}
 
 	/**
 	 * 
@@ -260,7 +286,9 @@ public interface IFeature {
 	 * @param persons
 	 * @return
 	 */
-	public List<Utilisateur> listerUtilisateurs  () throws DAOException;
+	default List<Utilisateur> listerUtilisateurs  () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns a list of all 'utilisteurs' according to the filters.
@@ -269,7 +297,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Utilisateur> listerUtilisateurs  ( String whereClause)  throws DAOException;
+	default List<Utilisateur> listerUtilisateurs  ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * 
@@ -278,7 +308,7 @@ public interface IFeature {
 	 * 
 	 * @param utilisateur
 	 */
-	public void supprimerUtilisateur  (Utilisateur utilisateur) throws DAOException;
+	default void supprimerUtilisateur  (Utilisateur utilisateur) throws DAOException {}
 
 	/**
 	 * Update the 'utilisateur' set in parameter. 
@@ -286,7 +316,7 @@ public interface IFeature {
 	 * 
 	 * @param utilisateur
 	 */
-	public void modifierUtilisateur  (Utilisateur utilisateur) throws DAOException;
+	default void modifierUtilisateur  (Utilisateur utilisateur) throws DAOException {}
 
 	/**
 	 * Save the 'utilisateur' set in parameter. 
@@ -294,7 +324,7 @@ public interface IFeature {
 	 * 
 	 * @param utilisateur
 	 */
-	public void creerUtilisateur  (Utilisateur utilisateur) throws DAOException;
+	default void creerUtilisateur  (Utilisateur utilisateur) throws DAOException {}
 
 
 	/**
@@ -304,7 +334,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Utilisateur rechercherUtilisateur ( String whereClause)  throws DAOException;
+	default Utilisateur rechercherUtilisateur ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Find and return the 'utilisateur' set in parameter if it exist, else null.
@@ -313,7 +345,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Utilisateur rechercherUtilisateur ( Integer primaryKey)  throws DAOException;	
+	default Utilisateur rechercherUtilisateur ( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 
 
@@ -322,7 +356,9 @@ public interface IFeature {
 	 * 
 	 * @return
 	 */
-	public String getTheDaoImplementationClassname () throws DAOException;
+	default String getTheDaoImplementationClassname () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * @return
@@ -342,7 +378,9 @@ public interface IFeature {
 	 * @param persons
 	 * @return
 	 */
-	public List<Produit> listerProduits  () throws DAOException;
+	default List<Produit> listerProduits  () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns a list of all 'produits' according to the filters.
@@ -351,7 +389,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Produit> listerProduits  ( String whereClause)  throws DAOException;
+	default List<Produit> listerProduits  ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Delete the 'produit' set in parameter. 
@@ -359,7 +399,7 @@ public interface IFeature {
 	 *  
 	 * @param produit
 	 */
-	public void supprimerProduit  (Produit produit) throws DAOException;
+	default void supprimerProduit  (Produit produit) throws DAOException {}
 
 	/**
 	 * Update the 'produit' set in parameter. 
@@ -368,7 +408,7 @@ public interface IFeature {
 	 * 
 	 * @param produit
 	 */
-	public void modifierProduit  (Produit produit) throws DAOException;
+	default void modifierProduit  (Produit produit) throws DAOException {}
 
 	/**
 	 * Save the 'produit' set in parameter. 
@@ -376,7 +416,7 @@ public interface IFeature {
 	 * 
 	 * @param produit
 	 */
-	public void creerProduit  (Produit produit) throws DAOException;
+	default void creerProduit  (Produit produit) throws DAOException {}
 
 
 	/**
@@ -386,7 +426,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Produit rechercherProduit ( String whereClause)  throws DAOException;
+	default Produit rechercherProduit ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Find and return the 'produit' set in parameter if it exist, else null.
@@ -395,7 +437,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Produit rechercherProduit ( Integer primaryKey)  throws DAOException;	
+	default Produit rechercherProduit ( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 
 
@@ -414,7 +458,9 @@ public interface IFeature {
 	 * @param persons
 	 * @return
 	 */
-	public List<Role> listerRoles  () throws DAOException;
+	default List<Role> listerRoles  () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns a list of all 'roles' according to the filters.
@@ -423,7 +469,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Role> listerRoles  ( String whereClause)  throws DAOException;
+	default List<Role> listerRoles  ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Delete the 'role' set in parameter. 
@@ -431,7 +479,7 @@ public interface IFeature {
 	 *  
 	 * @param role
 	 */
-	public void supprimerRole  (Role role) throws DAOException;
+	default void supprimerRole  (Role role) throws DAOException {}
 
 	/**
 	 * Update the 'role' set in parameter. 
@@ -440,7 +488,7 @@ public interface IFeature {
 	 * 
 	 * @param role
 	 */
-	public void modifierRole  (Role role) throws DAOException;
+	default void modifierRole  (Role role) throws DAOException {}
 
 	/**
 	 * Save the 'role' set in parameter. 
@@ -448,7 +496,7 @@ public interface IFeature {
 	 * 
 	 * @param role
 	 */
-	public void creerRole  (Role role) throws DAOException;
+	default void creerRole  (Role role) throws DAOException {}
 
 
 	/**
@@ -458,7 +506,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Role rechercherRole ( String whereClause)  throws DAOException;
+	default Role rechercherRole ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 
 	/**
@@ -468,7 +518,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Role rechercherRole ( Integer primaryKey)  throws DAOException;	
+	default Role rechercherRole ( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 
 
@@ -478,7 +530,9 @@ public interface IFeature {
 	 * @param persons
 	 * @return
 	 */
-	public List<Employe> listerEmployes  () throws DAOException;
+	default List<Employe> listerEmployes  () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns a list of all 'employes' according to the filters.
@@ -487,7 +541,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Employe> listerEmployes  ( String whereClause)  throws DAOException;
+	default List<Employe> listerEmployes  ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Delete the 'employe' set in parameter. 
@@ -495,7 +551,7 @@ public interface IFeature {
 	 *  
 	 * @param employe
 	 */
-	public void supprimerEmploye  (Employe employe) throws DAOException;
+	default void supprimerEmploye  (Employe employe) throws DAOException {}
 
 	/**
 	 * Update the 'employe' set in parameter. 
@@ -504,7 +560,7 @@ public interface IFeature {
 	 * 
 	 * @param employe
 	 */
-	public void modifierEmploye  (Employe employe) throws DAOException;
+	default void modifierEmploye  (Employe employe) throws DAOException {}
 
 	/**
 	 * Save the 'employe' set in parameter. 
@@ -512,7 +568,7 @@ public interface IFeature {
 	 * 
 	 * @param employe
 	 */
-	public void creerEmploye  (Employe employe) throws DAOException;
+	default void creerEmploye  (Employe employe) throws DAOException {}
 
 
 	/**
@@ -522,7 +578,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Employe rechercherEmploye ( String whereClause)  throws DAOException;
+	default Employe rechercherEmploye ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Find and return the 'employe' set in parameter if it exist, else null.
@@ -532,7 +590,9 @@ public interface IFeature {
 	 * @ 
 	 */
 
-	public Employe rechercherEmploye ( Integer primaryKey)  throws DAOException;	
+	default Employe rechercherEmploye ( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 
 
@@ -552,7 +612,9 @@ public interface IFeature {
 	 * @return
 	 */
 
-	public List<Demande> listerDemandes () throws DAOException ;
+	default List<Demande> listerDemandes () throws DAOException {
+		return null;
+	}
 
 
 
@@ -564,7 +626,9 @@ public interface IFeature {
 	 * @ 
 	 */
 
-	public List<Demande> listerDemandes ( String whereClause)  throws DAOException ;
+	default List<Demande> listerDemandes ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 
 
@@ -575,7 +639,7 @@ public interface IFeature {
 	 * @param service
 	 */
 
-	public void supprimerDemande (Demande Demande) throws DAOException ;
+	default void supprimerDemande (Demande Demande) throws DAOException {}
 
 
 	/**
@@ -585,7 +649,7 @@ public interface IFeature {
 	 * @param service
 	 */
 
-	public void modifierDemande (Demande Demande) throws DAOException ;
+	default void modifierDemande (Demande Demande) throws DAOException {}
 
 
 	/**
@@ -594,7 +658,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void creerDemande (Demande Demande) throws DAOException ;
+	default void creerDemande (Demande Demande) throws DAOException {}
 
 
 	/**
@@ -605,7 +669,9 @@ public interface IFeature {
 	 * @ 
 	 */
 
-	public Demande rechercherDemande( String whereClause)  throws DAOException ;
+	default Demande rechercherDemande( String whereClause)  throws DAOException {
+		return null;
+	}
 
 
 	/**
@@ -616,7 +682,9 @@ public interface IFeature {
 	 * @ 
 	 */
 
-	public Demande rechercherDemande( Integer primaryKey)  throws DAOException;
+	default Demande rechercherDemande( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * TODO
@@ -630,7 +698,9 @@ public interface IFeature {
 	 * 
 	 * @return
 	 */
-	public List<Note> listerNotes () throws DAOException ;
+	default List<Note> listerNotes () throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns a list of all 'note' according to the filters.
@@ -639,7 +709,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public List<Note> listerNotes ( String whereClause)  throws DAOException ;
+	default List<Note> listerNotes ( String whereClause)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Delete the 'note' set in parameter. 
@@ -647,7 +719,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void supprimerNote (Note note) throws DAOException ;
+	default void supprimerNote (Note note) throws DAOException {}
 
 	/**
 	 * Update the 'note' set in parameter. 
@@ -656,7 +728,7 @@ public interface IFeature {
 	 * @param service
 	 */
 
-	public void modifierNote (Note note) throws DAOException ;
+	default void modifierNote (Note note) throws DAOException {}
 
 
 	/**
@@ -665,7 +737,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public void creerNote (Note note) throws DAOException ;
+	default void creerNote (Note note) throws DAOException {}
 
 
 	/**
@@ -675,7 +747,9 @@ public interface IFeature {
 	 * @return
 	 * @ 
 	 */
-	public Note rechercherNote( Integer primaryKey)  throws DAOException;
+	default Note rechercherNote( Integer primaryKey)  throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Find and return the 'note' set in parameter if it exist, else null.
@@ -684,96 +758,138 @@ public interface IFeature {
 	 * @return
 	 * @throws DAOException
 	 */
-	public Note rechercherNote (String whereClause) throws DAOException;
+	default Note rechercherNote (String whereClause) throws DAOException {
+		return null;
+	}
 
 	/**
 	 * Returns the number of 'Demandes'
 	 * 
 	 * @return
 	 */
-	public Integer RetournerNombreDemandesTotal ();
+	default Integer RetournerNombreDemandesTotal () {
+		return 0;
+	}
 
 	/**
 	 * Returns the number of 'Employes'
 	 * 
 	 * @return
 	 */
-	public Integer RetournerNombreEmployesTotal ();
+	default Integer RetournerNombreEmployesTotal () {
+		return 0;
+	}
 
 	/**
 	 * Returns the number of 'Departements'
 	 * 
 	 * @return
 	 */
-	public Integer RetournerNombreDepartementsTotal ();
+	default Integer RetournerNombreDepartementsTotal () {
+		return 0;
+	}
 
 	/**
 	 * Returns the number of 'Services'
 	 * 
 	 * @return
 	 */
-	public Integer RetournerNombreServicesTotal ();
+	default Integer RetournerNombreServicesTotal () {
+		return 0;
+	}
 
 	/**
 	 * Returns the number of 'Produits'
 	 * 
 	 * @return
 	 */
-	public Integer RetournerNombreProduitsTotal();
+	default Integer RetournerNombreProduitsTotal() {
+		return 0;
+	}
 
 
-	public ObservableList<Demande> loadDemandesObservableList () throws DAOException;
+	default ObservableList<Demande> loadDemandesObservableList () throws DAOException{
+		return null;
+	}
 
 
-	public ObservableList<Demande> getCurrentDemandesObservableList () throws DAOException;
+	default ObservableList<Demande> getCurrentDemandesObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Employe> loadEmployesObservableList () throws DAOException;
+	default ObservableList<Employe> loadEmployesObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Employe> getCurrentEmployesObservableList () throws DAOException;
+	default ObservableList<Employe> getCurrentEmployesObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Role> loadRoleObservableList () throws DAOException;
+	default ObservableList<Role> loadRoleObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Role> getCurrentRolesObservableList () throws DAOException;
+	default ObservableList<Role> getCurrentRolesObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Produit> loadProduitsObservableList () throws DAOException;
+	default ObservableList<Produit> loadProduitsObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Produit> getCurrentProduitsObservableList () throws DAOException;
+	default ObservableList<Produit> getCurrentProduitsObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Service> loadServicesObservableList () throws DAOException;
+	default ObservableList<Service> loadServicesObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Service> getCurrentServicesObservableList () throws DAOException;
+	default ObservableList<Service> getCurrentServicesObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Departement> loadDepartementsObservableList () throws DAOException;
+	default ObservableList<Departement> loadDepartementsObservableList () throws DAOException {
+		return null;
+	}
 
 
-	public ObservableList<Departement> getCurrentDepartementsObservableList () throws DAOException;
+	default ObservableList<Departement> getCurrentDepartementsObservableList () throws DAOException{
+		return null;
+	}
 
 
 
 	/**
 	 * @return
 	 */
-	public ObservableList<Demande> loadDemandesByServiceObservableList (Service service) throws DAOException;
+	default ObservableList<Demande> loadDemandesByServiceObservableList (Service service) throws DAOException {
+		return null;
+	}
 
 	/**
 	 * @return
 	 */
-	public ObservableList<Demande> getCurrentDemandesByServiceObservableList () throws DAOException;
+	default ObservableList<Demande> getCurrentDemandesByServiceObservableList () throws DAOException {
+		return null;
+	}
 
 
 	/**
 	 * @return
 	 */
-	public ObservableList<Demande> loadDemandesByDirectionObservableList (Object direction) throws DAOException;
+	default ObservableList<Demande> loadDemandesByDirectionObservableList (Object direction) throws DAOException{
+		return null;
+	}
 
 
 
@@ -786,7 +902,7 @@ public interface IFeature {
 	 * @return
 	 * @throws DAOException
 	 */
-	public  Object validerIdentifiants(String login, String password) throws DAOException;
+	default  Object validerIdentifiants(String login, String password) throws DAOException { return null;}
 
 	/**
 	 * Method qui permet de definir la reponse de la demande (rejeter , cloturée ...)
@@ -795,7 +911,7 @@ public interface IFeature {
 	 * @param reponse
 	 * @throws DAOException
 	 */
-	public void repondreDemande(Demande demande, String reponse) throws DAOException; 
+	default void repondreDemande(Demande demande, String reponse) throws DAOException {}
 
 
 	/**
@@ -804,6 +920,11 @@ public interface IFeature {
 	 * @param service
 	 * @throws DAOException
 	 */
-	public void associerService(Employe employe, Service service) throws DAOException;
+	default void associerService(Employe employe, Service service) throws DAOException {}
 
+
+	default ObservableList<Departement> loadDepartementObservableList() throws DAOException {return null;}
+	default ObservableList<Departement> getCurrentDepartmentObservableList() throws DAOException {return null;}
+	default void clearDepartementList() throws DAOException {};
+	default void setDepartmentList(List<Departement> departements) throws DAOException {}
 }
