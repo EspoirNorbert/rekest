@@ -65,6 +65,10 @@ public class Employe {
 		this.prenom = prenom;
 	}
 	
+	public Employe() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void addDemandeSoumise (Demande demande) {
 		this.demandes_soumises.add(demande);
 	}
