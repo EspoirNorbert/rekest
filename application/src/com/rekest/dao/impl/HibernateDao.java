@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.rekest.dao.IDao;
+import com.rekest.entities.Demande;
 import com.rekest.entities.Departement;
 import com.rekest.entities.Service;
 import com.rekest.entities.employes.Employe;
@@ -144,7 +145,7 @@ public class HibernateDao implements IDao  {
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 	}
-	
+
 	@Override
 	public void enableAccount(Utilisateur entity) throws DAOException{
 		entity.setEnable(true);
@@ -155,7 +156,7 @@ public class HibernateDao implements IDao  {
 	public void disableAccount(Utilisateur entity) throws DAOException{
 		entity.setEnable(false);
 		this.update(entity);
-		
+
 	}
 
 	@Override
@@ -178,8 +179,14 @@ public class HibernateDao implements IDao  {
 		} catch (Exception e) {
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
-		
+
 		return utilisateur;
+	}
+	
+	@Override
+	public void requestResponse(Demande demande, String reponse) throws DAOException {
+		demande.setEtat(reponse);
+		this.update(demande);
 	}
 
 	public static void closeSession() {
@@ -190,5 +197,5 @@ public class HibernateDao implements IDao  {
 	public ObservableList<Departement> departementlistObservable() throws DAOException {
 		return null;
 	}
-	
+
 }
