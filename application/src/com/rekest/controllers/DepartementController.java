@@ -52,9 +52,7 @@ public class DepartementController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.service = FeatureDepartement.getInstance();
-		// Initialize the department table.
         columnNom.setCellValueFactory(cellData -> cellData.getValue().getSpdNom());
-        // add to ObservableList
         addDepartmentObservableListToTheTable();
      }
      
@@ -64,7 +62,7 @@ public class DepartementController implements Initializable {
 		try {
 			departements = service.loadDepartementObservableList();
 	     	tableViewDepartement.setItems(departements);
-	         //Service.getInstance().refresh();
+	         service.refresh();
 	 		if (departements.size() > 0)
 	 			tableViewDepartement.getSelectionModel().select(0);	
 		} catch (DAOException e) {

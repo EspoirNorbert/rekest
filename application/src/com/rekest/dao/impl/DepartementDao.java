@@ -48,4 +48,11 @@ public class DepartementDao extends HibernateDao {
 	    return this.departmentData.getData();
 	}
 	
+	@Override
+	public void refresh() {
+		//super.refresh();
+		logger.info("Chargement du refresh");
+		departmentData.refresh();
+	}
+	
 }

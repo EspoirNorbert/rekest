@@ -14,9 +14,7 @@ public class ObservableListDepartement implements IObservableList<Departement> {
 	
     private ObservableList<Departement> departementData = FXCollections.observableArrayList();
 
-    public ObservableListDepartement() {
-    	displayDepartementData();
-    }
+    public ObservableListDepartement() {}
     
 	@Override
 	public ObservableList<Departement> getData() {
@@ -69,12 +67,26 @@ public class ObservableListDepartement implements IObservableList<Departement> {
 	}
 
 	@Override
-	public void refresh() {}
+	public void refresh() {
+		System.out.println("------------------------------");
+		for (Departement department : departementData) {
+			System.out.println(department.getSpdNom());
+			department.setSpdNom(department.getSpdNom());
+		}	
+		System.out.println("------------------------------");
+	}
 	
-	private void displayDepartementData() {
-		for (Departement departement : departementData) {
-			System.out.println(departement);
+	public void displayDepartementData() {
+		
+		if (departementData.isEmpty())
+				System.out.println("Liste des observables est vide");
+		else {
+			for (Departement departement : departementData) {
+				System.out.println(departement);
+			}
 		}
+		
+		
 	}
 
 }

@@ -16,12 +16,6 @@ public class FeatureDepartement implements IFeature {
 
 	private static IFeature instance = new FeatureDepartement();
 	private IDao dao  = DepartementDao.getCurrentInstance();
-	
-	/**
-	 * Observable List
-	*/
-	private ObservableListDepartement departmentData = new ObservableListDepartement();
-	
 
 	public static IFeature getInstance  () {
 		return instance;
@@ -83,9 +77,13 @@ public class FeatureDepartement implements IFeature {
 
 	@Override
 	public Departement rechercherDepartement (Integer primaryKey) throws DAOException  {
-
 		Departement dep   = new Departement();
 		return  (Departement) dao.find ( dep, primaryKey);
+	}
+	
+	@Override
+	public void refresh() {
+		dao.refresh();
 	}
 
 }

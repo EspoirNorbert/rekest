@@ -16,13 +16,14 @@ import com.rekest.entities.employes.Utilisateur;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.feature.impl.FeatureDepartement;
+import com.rekest.observableList.impl.ObservableListDepartement;
 
 
 public class TestDataBase {
 
 	public final static Logger logger = LogManager.getLogger(TestDataBase.class);
 	
-	public static void main(String[] args) {
+	public static void main_1(String[] args) {
 
 		IDao dao = HibernateDao.getCurrentInstance();
 		IFeature feature = FeatureDepartement.getInstance();
@@ -71,5 +72,11 @@ public class TestDataBase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String[] args) {
+		ObservableListDepartement obserlistDepart 
+							= new ObservableListDepartement();
+		
 	}
 }

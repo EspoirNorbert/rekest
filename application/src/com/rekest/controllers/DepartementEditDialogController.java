@@ -29,9 +29,9 @@ public class DepartementEditDialogController {
 	}
 
 	/**
-	 * Sets the person to be edited in the dialog.
+	 * Sets the department to be edited in the dialog.
 	 *
-	 * @param person
+	 * @param department
 	 */
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
@@ -93,7 +93,5 @@ public class DepartementEditDialogController {
 			return false;
 		}
 	}
-
-
 }
 
