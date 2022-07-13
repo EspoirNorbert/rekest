@@ -96,5 +96,8 @@ public class Demande {
 		this.updatedAt = updatedAt;
 	}
 	
+	public static void copy(Demande demande, Demande entity) {
+		// TODO Auto-generated method stub
+	}
 	
 }

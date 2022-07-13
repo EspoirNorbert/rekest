@@ -60,7 +60,7 @@ public class DepartementController implements Initializable {
      	// Add observable list data to the table
      	ObservableList<Departement> departements;
 		try {
-			departements = service.loadDepartementObservableList();
+			departements = service.loadDepartementsObservableList();
 	     	tableViewDepartement.setItems(departements);
 	         service.refresh();
 	 		if (departements.size() > 0)
@@ -68,7 +68,7 @@ public class DepartementController implements Initializable {
 		} catch (DAOException e) {
 			System.err.println(e.getMessage());
 			Utilitaire.alert(AlertType.INFORMATION, primaryStage,
-        			"Echec de recuperation de données ", 
+        			"Echec de recuperation de donnï¿½es ", 
         			"Data Error", 
         			e.getMessage());
 		}
