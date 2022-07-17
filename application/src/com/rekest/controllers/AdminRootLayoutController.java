@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.rekest.exeptions.DAOException;
 import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXML;
@@ -31,6 +32,7 @@ public class AdminRootLayoutController implements Initializable {
 	private DepartementController departementController; 
 	private ServiceController serviceController;      
 	private MainController mainController;
+	private EmployeController employeController;
 
 	private Stage primaryStage;
 
@@ -106,6 +108,13 @@ public class AdminRootLayoutController implements Initializable {
 	@FXML
 	void handleClickedEmploye(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Employes");
+//		employeController = new EmployeController();
+//		try {
+//			employeController.loadDataInTable();
+//		} catch (DAOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 
@@ -167,6 +176,14 @@ public class AdminRootLayoutController implements Initializable {
 
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
+	}
+
+	public EmployeController getEmployeController() {
+		return employeController;
+	}
+
+	public void setEmployeController(EmployeController employeController) {
+		this.employeController = employeController;
 	}
 
 	public BorderPane getRootLayout() {
