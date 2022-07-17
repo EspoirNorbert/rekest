@@ -18,70 +18,52 @@ import javafx.beans.property.StringProperty;
 @Entity
 public class Departement {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_departement")
-	
 	private int id;
+	
 	private String nom;
 	
 	@Transient
-	private StringProperty spdNom;
+	private StringProperty stringPropertyNom;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_departement")
 	private List<Service> services = new ArrayList<>();
 	
+	public Departement() {}
+	
 	public Departement(String nom) {
 		this.nom = nom;
-		this.spdNom = new SimpleStringProperty(nom);
-	}
-
-	public Departement() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public static void copy(Departement oldDepartement, Departement newDepartment) {
-		oldDepartement.setNom(newDepartment.getNom());
+		this.stringPropertyNom = new SimpleStringProperty(nom);
 	}
 
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public String getNom() {
 		return nom;
 	}
-
+	
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
-	public StringProperty getSpdNom() {
-		return spdNom;
+	
+	public static void copy(Departement oldDepartement, Departement newDepartment) {
+		oldDepartement.setNom(newDepartment.getNom());
 	}
 
-	public void setSpdNom(StringProperty spdNom) {
-		this.spdNom = spdNom;
-	}
-
-	public List<Service> getServices() {
-		return services;
-	}
-
-	public void setServices(List<Service> services) {
-		this.services = services;
-	}
-
-	@Override
-	public String toString() {
-		return "Departement [id=" + id + ", nom=" + nom + "]";
+	public StringProperty getStringPropertyNom() {
+		return stringPropertyNom;
 	}
 	
-	
-	
-	
+	public void setStringPropertyNom(StringProperty stringPropertyNom) {
+		this.stringPropertyNom = stringPropertyNom;
+	}
 }

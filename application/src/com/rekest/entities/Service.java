@@ -18,12 +18,13 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class Service {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_service")
 	private int id;
 	private String nom;
-	
+
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_service")
 	private List<Employe> employes = new ArrayList<>();
@@ -33,16 +34,11 @@ public class Service {
 	private ChefService chefService;
 	
 	public Service() {}
-	
+
 	public Service(String nom) {
 		this.nom = nom;
 	}
 
-	public void addEmploye(Employe employe) {
-		employes.add(employe);
-	}
-
-	
 	public int getId() {
 		return id;
 	}
@@ -59,12 +55,8 @@ public class Service {
 		this.nom = nom;
 	}
 
-	public List<Employe> getEmployes() {
-		return employes;
-	}
-
-	public void setEmployes(List<Employe> employes) {
-		this.employes = employes;
+	public void addEmploye(Employe employe) {
+		employes.add(employe);	
 	}
 
 	public ChefService getChefService() {
@@ -75,6 +67,7 @@ public class Service {
 		this.chefService = chefService;
 	}
 
-	public static void copy(Service service, Service entity) {}
-
+	public static void copy(Service service, Service entity) {
+		
+	}
 }

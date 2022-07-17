@@ -13,11 +13,8 @@ public class Directeur extends Manager {
 		super(nom, prenom, telephone, email, adresse);
 	}
 
+	
 	public Directeur(String nom, String prenom, String login, String password) {
-		super(nom, prenom);
+		super(nom, prenom, login, password);
 	}
-	
-	
-	
-	
 }

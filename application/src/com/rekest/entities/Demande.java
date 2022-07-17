@@ -1,7 +1,7 @@
 package com.rekest.entities;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -13,16 +13,27 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Demande {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_demande")
 	private int id;
+	
 	private String etat;
 	
-	@OneToOne(targetEntity = Produit.class , cascade = CascadeType.ALL)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_At", columnDefinition="TIMESTAMP")
+	private Date  createdAt;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="updated_At", columnDefinition="TIMESTAMP")
+	private Date updatedAt;
+	
+	@OneToOne(targetEntity=Produit.class)
 	@JoinColumn(name = "id_produit")
 	private Produit produit;
 	
@@ -34,18 +45,23 @@ public class Demande {
 	@JoinColumn(name="id_demande")
 	private List<Notification> notifications = new ArrayList<>();
 	
-	@Column(name = "created_at")
-	private Date  createdAt;
 	
-	@Column(name = "updated_at")
-	private Date updatedAt;
+	public Demande() {
+		  this.createdAt = new java.util.Date();
+	}
 
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
+		this.updatedAt = new java.util.Date();
+	}
+	
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+		this.updatedAt = new java.util.Date();
 	}
 
 	public String getEtat() {
@@ -54,30 +70,7 @@ public class Demande {
 
 	public void setEtat(String etat) {
 		this.etat = etat;
-	}
-
-	public Produit getProduit() {
-		return produit;
-	}
-
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	public List<Note> getNotes() {
-		return notes;
-	}
-
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
-	}
-
-	public List<Notification> getNotifications() {
-		return notifications;
-	}
-
-	public void setNotifications(List<Notification> notifications) {
-		this.notifications = notifications;
+		this.updatedAt = new java.util.Date();
 	}
 
 	public Date getCreatedAt() {
@@ -96,8 +89,15 @@ public class Demande {
 		this.updatedAt = updatedAt;
 	}
 	
-	public static void copy(Demande demande, Demande entity) {
-		// TODO Auto-generated method stub
+	public void addNote(Note note) {
+		this.notes.add(note);
+		this.updatedAt = new java.util.Date();
 	}
-	
+//	public void addNotification(Notification notification) {
+//		this.notifications.add(notification);
+//	}
+
+	public static void copy(Demande demande, Demande entity) {
+		
+	}
 }

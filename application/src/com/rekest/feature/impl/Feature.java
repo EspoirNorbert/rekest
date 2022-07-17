@@ -91,7 +91,7 @@ public class Feature implements IFeature {
 				Employe employe = new Employe(
 						faker.name().lastName(),
 						faker.name().firstName(),
-						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress(), null);
+						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
 				dao.save(employe);
 			}
 		} catch (DAOException e) {

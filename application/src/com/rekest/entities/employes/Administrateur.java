@@ -2,8 +2,6 @@ package com.rekest.entities.employes;
 
 import jakarta.persistence.Entity;
 
-
-
 @Entity
 public class Administrateur extends Utilisateur {
 	
@@ -15,10 +13,8 @@ public class Administrateur extends Utilisateur {
 		super(nom, prenom, telephone, email, adresse);
 	}
 	
-	public Administrateur(String nom, String prenom) {
-		super(nom, prenom);
-	}
-
 	
-		
+	public Administrateur(String nom, String prenom, String login, String password) {
+		super(nom, prenom, login, password);		
+	}
 }

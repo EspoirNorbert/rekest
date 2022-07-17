@@ -1,41 +1,54 @@
 package com.rekest.entities;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-
 @Entity
 public class Produit {
-
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_produit")
 	private int id;
+	
 	private String nom;
 	private double prix;
 	private int quantite;
 	private String type;
-
-	@Column(columnDefinition = "TEXT")
 	private String description;
+	
+	public Produit() {}
+	
+	public Produit(String nom) {
+		this.nom = nom;
+	}
+	
+	public Produit(String nom ,double prix, int quantite , String type , String description) {
+		this(nom);
+		this.setPrix(prix);
+		this.setQuantite(quantite);
+		this.type = type;
+		this.description = description;
+	}
+	
+	public Produit(String nom ,double prix, int quantite ) {
+		this(nom , prix ,quantite , ""  , "");
+	}
 
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-
+	
 	public String getNom() {
 		return nom;
 	}
-
+	
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
@@ -56,14 +69,6 @@ public class Produit {
 		this.quantite = quantite;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -72,6 +77,15 @@ public class Produit {
 		this.description = description;
 	}
 
-	public static void copy(Produit produit, Produit entity) {}
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public static void copy(Produit produit, Produit entity) {}
+	
+	
 }

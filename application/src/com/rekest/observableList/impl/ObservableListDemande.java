@@ -12,54 +12,54 @@ import javafx.collections.ObservableList;
 
 public class ObservableListDemande implements IObservableList<Demande> {    
 	
-    private ObservableList<Demande> roleData = FXCollections.observableArrayList();
+    private ObservableList<Demande> demandeData = FXCollections.observableArrayList();
 
 	@Override
 	public ObservableList<Demande> getData() {
-		return roleData;
+		return demandeData;
 	}
 
 	@Override
 	public void add(Demande entity) {
-		roleData.add(entity);
+		demandeData.add(entity);
 	}
 
 	public void delete(Demande entity) {
-		roleData.remove(entity);
+		demandeData.remove(entity);
 	}
 
 	@Override
 	public void update(Demande entity) {
-		 int index = roleData.lastIndexOf(entity);
+		 int index = demandeData.lastIndexOf(entity);
 	        if (index >= 0) {
-	            Demande.copy(roleData.get(index), entity);            
+	            Demande.copy(demandeData.get(index), entity);            
 	        }
 	}
 
 	@Override
 	public void delete(int id) {
 		Predicate<Demande> predicate = person -> (person.getId() == id);
-        Optional<Demande> person = roleData.stream().filter(predicate).findFirst();
+        Optional<Demande> person = demandeData.stream().filter(predicate).findFirst();
         if (person != null) {
-            roleData.remove(person.get());
+            demandeData.remove(person.get());
         }
 	}
 
 	@Override
 	public void setData(List<Demande> entities) {
-		this.roleData.setAll(entities);
+		this.demandeData.setAll(entities);
 	}
 
 	@Override
 	public void clear() {
-		this.roleData.clear();
+		this.demandeData.clear();
 	}
 
 	@Override
 	public void addAll(List<Object> entities) {
 		 for(Object obj : entities) {
 	            if (obj instanceof Demande) {
-	                roleData.add((Demande)obj);
+	                demandeData.add((Demande)obj);
 	            }
 	        }
 	}

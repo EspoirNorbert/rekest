@@ -125,9 +125,6 @@ public class EmployeEditDialogController {
 			 employe.setAdresse(textFieldAdresse.getText());
 			 employe.setEmail(textFieldEmail.getText());
 			 employe.setTelephone(textFieldTelephone.getText());
-
-			 // Setting default profile to employe for test purpose
-			 employe.setEmployeProfil("Employe");
 			 
 			 okClicked = true;
 			 dialogStage.close();

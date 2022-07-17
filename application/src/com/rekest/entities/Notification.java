@@ -1,12 +1,15 @@
 package com.rekest.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Notification {
@@ -20,25 +23,30 @@ public class Notification {
 	@Column(name = "is_read")
 	private boolean isRead = false;
 	
+	@Basic
+	@Temporal(TemporalType.DATE)
 	@Column(name = "created_at")
-	private Date createAt;
+	private Date createdAt;
+	
+	public Notification() {}
 	
 	public Notification(String message) {
 		this.message = message;
+		this.createdAt = new java.util.Date();
 	}
 
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public String getMessage() {
 		return message;
 	}
-
+	
 	public void setMessage(String message) {
 		this.message = message;
 	}
@@ -51,13 +59,12 @@ public class Notification {
 		this.isRead = isRead;
 	}
 
-	public Date getCreateAt() {
-		return createAt;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreateAt(Date createAt) {
-		this.createAt = createAt;
+	public void setCreateAt(Date createat) {
+		this.createdAt = createat;
 	}
 	
-
 }

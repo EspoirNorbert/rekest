@@ -51,7 +51,7 @@ public class DepartementController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.service = Feature.getCurrentInstance();
-        columnNom.setCellValueFactory(cellData -> cellData.getValue().getSpdNom());
+        columnNom.setCellValueFactory(cellData -> cellData.getValue().getStringPropertyNom());
         addDepartmentObservableListToTheTable();
      }
      

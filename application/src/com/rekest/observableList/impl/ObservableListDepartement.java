@@ -70,8 +70,8 @@ public class ObservableListDepartement implements IObservableList<Departement> {
 	public void refresh() {
 		System.out.println("------------------------------");
 		for (Departement department : departementData) {
-			System.out.println(department.getSpdNom());
-			department.setSpdNom(department.getSpdNom());
+			System.out.println(department.getStringPropertyNom());
+			department.setStringPropertyNom(department.getStringPropertyNom());
 		}	
 		System.out.println("------------------------------");
 	}

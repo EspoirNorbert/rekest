@@ -16,22 +16,16 @@ public class Gestionnaire extends Utilisateur {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_gestionnaire")
 	private List<Demande> demandes_assignees = new ArrayList<>();
+
+	public Gestionnaire() {
+		super();
+	}
 	
 	public Gestionnaire(String nom, String prenom, String telephone, String email, String adresse) {
 		super(nom, prenom, telephone, email, adresse);
 	}
 	
-	public Gestionnaire(String nom, String prenom) {
-		super(nom, prenom);		
+	public Gestionnaire(String nom, String prenom, String login, String password) {
+		super(nom, prenom, login, password);		
 	}
-
-	public List<Demande> getDemandes_assignees() {
-		return demandes_assignees;
-	}
-
-	public void setDemandes_assignees(List<Demande> demandes_assignees) {
-		this.demandes_assignees = demandes_assignees;
-	}
-	
-		
 }
