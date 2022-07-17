@@ -25,7 +25,7 @@ public class MainController {
 		this.primaryStage = primaryStage;
 		FXMLLoader loader =	Utilitaire.initFXMLoader("Authentication");
 		AnchorPane root = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
-		Utilitaire.createScene(root, primaryStage, "Rekest - Authentication");
+		Utilitaire.createScene(root, primaryStage, "Application de suivie de taches - Authentication");
 		authenticationController = loader.getController();       
 		authenticationController.setPrimaryStage(this.primaryStage);
 		Utilitaire.showStage(this.primaryStage);
