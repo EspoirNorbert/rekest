@@ -18,6 +18,8 @@ import com.rekest.feature.impl.Feature;
 import com.rekest.feature.impl.FeatureDepartement;
 import com.rekest.observableList.impl.ObservableListDepartement;
 
+import javafx.collections.ObservableList;
+
 
 public class TestDataBase {
 
@@ -78,5 +80,24 @@ public class TestDataBase {
 		ObservableListDepartement obserlistDepart 
 							= new ObservableListDepartement();
 		
+	}
+	
+	// Ajout d'un test de la recuperation de la liste des services en tant qu'observable
+	public static void main_2(String[] args) {
+		IDao dao = HibernateDao.getCurrentInstance();
+		IFeature feature = Feature.getCurrentInstance();
+		
+		try {
+			ObservableList<Service> services = feature.loadServicesObservableList();		
+			for (Service service : services) {
+				logger.info(service);
+				System.out.println("Affichage du department " + service.getNom());
+				System.out.println(service);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		logger.info(feature.getClass());
 	}
 }
