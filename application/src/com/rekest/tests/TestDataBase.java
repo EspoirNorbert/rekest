@@ -15,7 +15,7 @@ import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
-import com.rekest.feature.impl.FeatureDepartement;
+
 import com.rekest.observableList.impl.ObservableListDepartement;
 
 import javafx.collections.ObservableList;
@@ -28,7 +28,7 @@ public class TestDataBase {
 	public static void main_1(String[] args) {
 
 		IDao dao = HibernateDao.getCurrentInstance();
-		IFeature feature = FeatureDepartement.getInstance();
+		IFeature feature = Feature.getCurrentInstance();
 		ChefService chefService = new ChefService("BIPOMBO", "Espoir", "espoir-b", "passer");
 
 		try {

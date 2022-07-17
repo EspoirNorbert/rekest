@@ -7,7 +7,6 @@ import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.utils.Utilitaire;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -83,11 +82,9 @@ public class EmployeController {
 		boolean okClicked = showEmployeEditDialog(tempEmp);
 		if (okClicked) {
 			tempEmp = employeEditDialogController.getEmploye();
-			try {
-				feature.creerEmploye(tempEmp);
-			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			Boolean statut =  feature.creerEmploye(tempEmp);
+			if (statut) {
+				
 			}
 		}
 	}

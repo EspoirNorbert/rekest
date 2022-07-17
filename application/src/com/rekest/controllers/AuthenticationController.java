@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rekest.feature.IFeature;
-import com.rekest.feature.impl.FeatureDepartement;
+import com.rekest.feature.impl.Feature;
 import com.rekest.utils.Utilitaire;
 
 import javafx.event.ActionEvent;
@@ -41,7 +41,7 @@ public class AuthenticationController implements Initializable {
 	@FXML
 	private PasswordField txtPassword;
 	
-	private IFeature service = FeatureDepartement.getInstance();
+	private IFeature service = Feature.getCurrentInstance();
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
