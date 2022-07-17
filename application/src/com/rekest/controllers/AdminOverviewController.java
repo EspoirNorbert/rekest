@@ -30,6 +30,10 @@ public class AdminOverviewController implements Initializable {
 	
 	private Stage primaryStage;
 	
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}

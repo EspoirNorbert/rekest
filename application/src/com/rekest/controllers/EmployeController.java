@@ -1,15 +1,19 @@
 package com.rekest.controllers;
 
-import com.rekest.entities.Service;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.rekest.entities.employes.Employe;
 import com.rekest.exeptions.DAOException;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.utils.Utilitaire;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class EmployeController {
+public class EmployeController implements Initializable {
 
 	@FXML
 	private Button btnAjouter;
@@ -34,47 +38,43 @@ public class EmployeController {
 	private Button btnSupprimer;
 
 	@FXML
-	private TableColumn<?, ?> columnAdresse;
+	private TableColumn<Employe, String> columnAdresse;
 
 	@FXML
-	private TableColumn<?, ?> columnEmail;
+	private TableColumn<Employe, String> columnEmail;
 
 	@FXML
-	private TableColumn<?, ?> columnLogin;
+	private TableColumn<Employe, String> columnLogin;
 
 	@FXML
-	private TableColumn<?, ?> columnNom;
+	private TableColumn<Employe, String> columnNom;
 
 	@FXML
-	private TableColumn<?, ?> columnPrenom;
+	private TableColumn<Employe, String> columnPrenom;
 
 	@FXML
-	private TableColumn<?, ?> columnProfil;
+	private TableColumn<Employe, String> columnProfil;
 
 	@FXML
-	private TableColumn<?, ?> columnService;
+	private TableColumn<Employe, String> columnService;
 
 	@FXML
-	private TableColumn<?, ?> columnTelephone;
+	private TableColumn<Employe, String> columnTelephone;
 
 	@FXML
 	private Label countEmployes;
 
 	@FXML
-	private TableView<? > tableViewEmployes;
+	private TableView<Employe> tableViewEmployes;
 
 	@FXML
 	private TextField textRecherche;
 
 	private EmployeEditDialogController employeEditDialogController;
 
-	private Service service;
-
-	private Employe employe;
-
 	private Stage primaryStage;
 
-	IFeature feature = Feature.getCurrentInstance();
+	private IFeature feature = Feature.getCurrentInstance();
 
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
@@ -108,8 +108,7 @@ public class EmployeController {
 		try {
 			FXMLLoader loader = Utilitaire.initFXMLoader("EmployeEditDialog");
 			AnchorPane root = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
-			Stage dialogStage = Utilitaire.createDialog(root, 
-					this.primaryStage, "Creation d'un employe");
+			Stage dialogStage = Utilitaire.createDialog(root, this.primaryStage, "Creation d'un employe");
 
 			// Set the employe into the controller.
 			employeEditDialogController = loader.getController();
@@ -118,8 +117,6 @@ public class EmployeController {
 			employeEditDialogController.setServices();
 
 			Utilitaire.showDialog(dialogStage);
-
-
 			return employeEditDialogController.isOkClicked();
 		} catch (Exception e) {
 			Utilitaire.alert(AlertType.WARNING, 
@@ -130,19 +127,20 @@ public class EmployeController {
 		return false;
 	}
 
-	public void loadDataInTable() throws DAOException {
-
-
+	public void loadDataInTable() {
 		// Add observable list data to the table
+		ObservableList<Employe> employes = feature.loadEmployesObservableList();
+		tableViewEmployes.setItems(employes);
 
-//		ObservableList<Employe> employes = feature.loadEmployesObservableList();
-//		tableViewEmployes.setItems(employes);
-//
-//		if (employes.size() > 0)
-//			tableViewEmployes.getSelectionModel().select(0);
+		if (employes.size() > 0) tableViewEmployes.getSelectionModel().select(0);
 	}
 
 	public void showServices() throws DAOException {
 		System.out.println("EmployeController.showServices()" + feature.listerServices());
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		loadDataInTable();
 	}
 }

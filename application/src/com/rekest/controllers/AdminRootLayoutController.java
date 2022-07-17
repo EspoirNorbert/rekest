@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.rekest.exeptions.DAOException;
 import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXML;
