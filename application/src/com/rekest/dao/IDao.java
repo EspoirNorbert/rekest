@@ -11,53 +11,50 @@ import com.rekest.exeptions.DAOException;
 
 import javafx.collections.ObservableList;
 
+
+/**
+ * @author Illiassou
+ *
+ */
 public interface IDao {
-	
+
 	/**
+	 * Save entity 
 	 * @param entity
 	 * @throws DAOException 
 	 * @ 
 	 */
 	public void save(Object entity) throws DAOException ;
 
-	/**
+	/** Delete entity
 	 * @param entity
 	 * @throws DAOException 
 	 * @ 
 	 */
 	public void delete(Object entity) throws DAOException ;
 
-	/**
-	 * @param entityClass
-	 * @param primaryKey
-	 * @return
-	 * @throws DAOException 
-	 * @ 
-	 */
+
 	public Object find(Object entityClass, Integer primaryKey) throws DAOException ;
 	
-	/**
-	 * @param entityClass
-	 * @return
-	 * @ 
-	 */
-	public List<Object> list(Object entityClass) throws DAOException;
-	
-	/**
-	 * @param entityClass
+	/** Find user by email
+	 * @param users
+	 * @param whereClause
 	 * @return
 	 * @throws DAOException 
 	 * @ 
 	 */
-	public List<Object> list(Class<?> entityClass, String whereClause) throws DAOException ;
-	
-	/**
-	 * @param entity
+	public Object findUserByNumber(String whereClause) throws DAOException ;
+
+	/** Find entity by clause
+	 * @param entityClass
+	 * @param whereClause
+	 * @return
+	 * @throws DAOException 
 	 * @ 
 	 */
-	public void update(Object entity) throws DAOException;
-
-	/**
+	public Object findProductByName(String whereClause) throws DAOException ;
+	
+	/** Find entity by clause
 	 * @param entityClass
 	 * @param whereClause
 	 * @return
@@ -66,6 +63,36 @@ public interface IDao {
 	 */
 	public Object find(Class<?> entityClass, String whereClause) throws DAOException ;
 	
+	/** List entities
+	 * @param entityClass
+	 * @return
+	 * @ 
+	 */
+	public List<Object> list(Object entityClass) throws DAOException;
+
+	/** List entities with close
+	 * @param entityClass
+	 * @return
+	 * @throws DAOException 
+	 * @ 
+	 */
+	public List<Object> list(Class<?> entityClass, String whereClause) throws DAOException ;
+
+	/**
+	 * List entities
+	 * @return
+	 * @throws DAOException
+	 */
+	public List<Object> list() throws DAOException;
+
+	
+	/** Update entity
+	 * @param entity
+	 * @ 
+	 */
+	public void update(Object entity) throws DAOException;
+
+
 	/**
 	 * 
 	 * @param login
@@ -73,34 +100,40 @@ public interface IDao {
 	 * @return
 	 * @throws DAOException
 	 */
-	public default Object validateCredential(String login, String password) throws DAOException{return null;};
-	
+	public default Object validateCredential(String login, String password) throws DAOException{
+		return null;
+	}
+
 	/**
-	 * 
+	 * Enable user account
 	 * @param entity
 	 * @throws DAOException
 	 */
 	public default void enableAccount(Utilisateur entity) throws DAOException{};
-	
+
 	/**
-	 * 
+	 * Disable user account
 	 * @param entity
 	 * @throws DAOException
 	 */
 	public default void disableAccount(Utilisateur entity) throws DAOException{};
-	
+
 	/**
-	 * 
+	 * Associate an employe to a service
 	 * @param employe
 	 * @param service
 	 * @throws DAOException
 	 */
 	public default void associateService(Employe employe, Service service) throws DAOException{};
-	
+
+
 	/**
-	 * 
+	 * Definir la reponse de la demande (rejeter , clotur�e ...)
+	 * @param demande
+	 * @param reponse
+	 * @throws Exception
 	 */
-	public default void refresh() {}
+	public void requestResponse(Demande demande, String reponse) throws DAOException;
 	
 	/**
 	 * @return
@@ -109,13 +142,4 @@ public interface IDao {
 	public default ObservableList<Departement> departementlistObservable() throws DAOException {
 		return null;
 	}
-	
-	/**
-	 * Definir la reponse de la demande (rejeter , cloturée ...)
-	 * @param demande
-	 * @param reponse
-	 * @throws Exception
-	 */
-	public void requestResponse(Demande demande, String reponse) throws DAOException;
-	
 }

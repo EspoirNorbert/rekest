@@ -10,23 +10,20 @@ import org.hibernate.query.Query;
 
 import com.rekest.dao.IDao;
 import com.rekest.entities.Demande;
-import com.rekest.entities.Departement;
 import com.rekest.entities.Service;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
 import com.rekest.utils.HibernateSession;
 
-import javafx.collections.ObservableList;
-
-
-public class HibernateDao implements IDao  {
+public class HibernateDao implements IDao{
 
 	public final static Logger logger = LogManager.getLogger(HibernateDao.class);
 
 	private static Session session = null;
 	private static Transaction transaction = null;
 	private static HibernateDao daoInstance = null;
+	
 
 	protected HibernateDao() {}
 
@@ -43,6 +40,8 @@ public class HibernateDao implements IDao  {
 			logger.info("Begin transaction.");// begin transaction
 			session.persist(entity);
 			transaction.commit();
+			
+		
 			logger.info("Record is Successully created");  //  end transaction
 		} catch (Exception e) {
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
@@ -52,13 +51,11 @@ public class HibernateDao implements IDao  {
 	@Override
 	public void delete(Object entity) throws DAOException{
 		try {
-			session = HibernateSession.getSession();
-			//Creating Transaction Object
+			session = HibernateSession.getSession();//Creating Transaction Object
 			transaction = session.beginTransaction();
 			logger.info("Begin transaction.");
 			session.remove(entity);
-			// Transaction Is Committed To Database
-			transaction.commit();
+			transaction.commit(); // Transaction Is Committed To Database
 			logger.info("Record is Successfully deleted.");
 		} catch (Exception e) {
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
@@ -146,6 +143,7 @@ public class HibernateDao implements IDao  {
 		}
 	}
 
+
 	@Override
 	public void enableAccount(Utilisateur entity) throws DAOException{
 		entity.setEnable(true);
@@ -156,7 +154,6 @@ public class HibernateDao implements IDao  {
 	public void disableAccount(Utilisateur entity) throws DAOException{
 		entity.setEnable(false);
 		this.update(entity);
-
 	}
 
 	@Override
@@ -168,34 +165,72 @@ public class HibernateDao implements IDao  {
 	@Override
 	public Object validateCredential(String login, String password)  throws DAOException{
 		Object utilisateur = null;
+		String whereClause = "where login = " + "'"+login+"'"+ " and password = " +"'"+password+"'"; 
 		try {
-			String whereClause = "where login = " + "'"+login+"'"+ " and password = " +"'"+password+"'"; 
 			session = HibernateSession.getSession();
 			@SuppressWarnings("deprecation")
 			Query<?> query = session.createQuery("From Utilisateur " + whereClause); 
 			utilisateur =  query.uniqueResult();
-			if (utilisateur != null) logger.info("Utilisateur trouver !");
-			else logger.info("utilisateur non");
+			if (utilisateur != null) {
+				logger.info("Utilisateur trouver !");
+				return utilisateur;
+			}		
+			else {
+				logger.info("utilisateur non");
+				return utilisateur;
+			}
 		} catch (Exception e) {
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
-
-		return utilisateur;
 	}
-	
+
+	@Override
+	public List<Object> list() throws DAOException {
+		return null;
+	}
+
 	@Override
 	public void requestResponse(Demande demande, String reponse) throws DAOException {
 		demande.setEtat(reponse);
 		this.update(demande);
 	}
 
+
 	public static void closeSession() {
 		HibernateSession.close();		
 	}
 
 	@Override
-	public ObservableList<Departement> departementlistObservable() throws DAOException {
-		return null;
+	public Object findUserByNumber(String whereClause) throws DAOException {
+		Object entity = null;
+		try {
+			session = HibernateSession.getSession();
+			@SuppressWarnings("deprecation")
+			Query<?> query = session.createQuery("From Employe where telephone = " +whereClause); 
+			entity = query.getSingleResult();
+			if (entity != null) logger.info("Record Successfully read.");
+			else logger.info("Record not found.");
+		} catch (Exception e) {
+			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
+		}
+		return entity;
+	}
+
+	@Override
+	public Object findProductByName(String whereClause) throws DAOException {
+		Object entity = null;
+		try {
+			session = HibernateSession.getSession();
+			@SuppressWarnings("deprecation")
+			Query<?> query = session.createQuery("From Produit where nom = :name");
+			query.setParameter("name", whereClause);
+			entity = query.getSingleResult();
+			if (entity != null) logger.info("Record Successfully read.");
+			else logger.info("Record not found.");
+		} catch (Exception e) {
+			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
+		}
+		return entity;
 	}
 
 }
