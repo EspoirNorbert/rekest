@@ -60,18 +60,12 @@
 			<artifactId>javafaker</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		<!-- https://mavenlibs.com/maven/dependency/de.nycode/bcrypt -->
+		<!-- BCRYPT-->
+		<!-- https://mvnrepository.com/artifact/at.favre.lib/bcrypt -->
 		<dependency>
-			<groupId>de.nycode</groupId>
-			<artifactId>bcrypt</artifactId>
-			<version>2.3.0</version>
-		</dependency>
-		<!-- JAXB API-->
-		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-		<dependency>
-		    <groupId>javax.xml.bind</groupId>
-		    <artifactId>jaxb-api</artifactId>
-		    <version>2.4.0-b180830.0359</version>
+		    <groupId>at.favre.lib</groupId>
+		    <artifactId>bcrypt</artifactId>
+		    <version>0.9.0</version>
 		</dependency>
 
 	</dependencies>
