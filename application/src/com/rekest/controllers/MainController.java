@@ -8,18 +8,44 @@ import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainController {
 
+	/**
+	 * Loggers
+	 */
 	public final static Logger logger = LogManager.getLogger(MainController.class);
-
+	
+	private static MainController instance = new MainController();
+	
+	/**
+	 * Attributes
+	*/
 	private Stage primaryStage;
-	private AuthenticationController authenticationController;
+    private BorderPane rootLayout;
 
-	public MainController() {
-		logger.info("An instance of {} was created" , this);
+    /**
+     * Controllers
+    */
+	private AuthenticationController authenticationController;
+	private AdminRootLayoutController adminRootLayoutController;
+	private AdminOverviewController adminOverviewController;
+	private ManagerRootLayoutController managerRootLayoutController;
+	private ManagerOverviewController managerOverviewController;
+	private GestionnaireRootLayoutController gestionnaireRootLayoutController;
+	private GestionnaireOverviewController gestionnaireOverviewController;
+
+	public static MainController getInstance() {
+		if (instance == null) {
+			instance = new MainController();
+			logger.info("An instance of {} was created" , instance);
+		}
+		return instance;
 	}
+	
+	private MainController() {}
 
 	public void initAuthentication(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -31,4 +57,90 @@ public class MainController {
 		Utilitaire.showStage(this.primaryStage);
 	}
 
+
+	/**
+	 * 
+	 * @param primaryStage
+	 */
+    public void initAdminRootLayout(Stage primaryStage) {
+    	this.primaryStage = primaryStage;
+    	this.primaryStage.setResizable(true);
+    	FXMLLoader loader = Utilitaire.initFXMLoader("AdminRootLayout");
+    	rootLayout = (BorderPane) Utilitaire.loadFXMLFile(loader, true);
+        Utilitaire.createScene(rootLayout, primaryStage, null);
+        adminRootLayoutController = loader.getController();       
+        adminRootLayoutController.setPrimaryStage(primaryStage);
+        adminRootLayoutController.setRootLayout(rootLayout);
+        Utilitaire.showStage(primaryStage);
+    }
+
+    /**
+     * Shows the Admin overview inside the root layout.
+     */
+    public void showAdminOverview() {
+        Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview");
+        adminOverviewController = new AdminOverviewController();
+        adminOverviewController.setPrimaryStage(primaryStage);
+    }
+    
+    
+    /**
+	 * 
+	 * @param primaryStage
+	 */
+    public void initManagerRootLayout(Stage primaryStage) {
+    	try {
+    		this.primaryStage = primaryStage;
+        	this.primaryStage.setResizable(true);
+        	FXMLLoader loader = Utilitaire.initFXMLoader("ManagerRootLayout");
+        	rootLayout = (BorderPane) Utilitaire.loadFXMLFile(loader, true);
+            Utilitaire.createScene(rootLayout, primaryStage, null);
+            managerRootLayoutController = loader.getController();       
+            managerRootLayoutController.setPrimaryStage(primaryStage);
+            managerRootLayoutController.setRootLayout(rootLayout);
+            Utilitaire.showStage(primaryStage);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+    	
+    }
+
+    /**
+     * Shows the Manager overview inside the root layout.
+     */
+    public void showManagerOverview() {
+        Utilitaire.loadPageInRootLayout(rootLayout, "ManagerOverview");
+        managerOverviewController = new ManagerOverviewController();
+        managerOverviewController.setPrimaryStage(primaryStage);
+    }
+    
+    
+    /**
+	 * 
+	 * @param primaryStage
+	 */
+	public void initGestionnaireRootLayout(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		this.primaryStage.setResizable(true);
+		FXMLLoader loader = Utilitaire.initFXMLoader("GestionnaireRootLayout");
+		rootLayout = (BorderPane) Utilitaire.loadFXMLFile(loader, true);
+		Utilitaire.createScene(rootLayout, primaryStage, null);
+		gestionnaireRootLayoutController = loader.getController();       
+		gestionnaireRootLayoutController.setPrimaryStage(primaryStage);
+		gestionnaireRootLayoutController.setRootLayout(rootLayout);
+		Utilitaire.showStage(primaryStage);
+	}
+
+	/**
+	 * Shows the Gestionnaire overview inside the root layout.
+	 */
+	public void showGestionnaireOverview() {
+		Utilitaire.loadPageInRootLayout(rootLayout, "GestionnaireOverview");
+		gestionnaireOverviewController = new GestionnaireOverviewController();
+		gestionnaireOverviewController.setPrimaryStage(primaryStage);
+	}
+
+    
+    
+	
 }

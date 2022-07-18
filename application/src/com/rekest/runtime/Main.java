@@ -13,7 +13,7 @@ public class Main extends Application {
     private MainController mainController;
     
     public Main() {
-    	mainController = new MainController();
+    	mainController = MainController.getInstance();
 	}
     
     @Override

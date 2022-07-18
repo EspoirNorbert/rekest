@@ -112,7 +112,13 @@ public class Employe {
 		this.adresse = adresse;
 	}
 	
+	public String getEmployeProfil() {
+		return employeProfil;
+	}
 	
+	public String getFullName() {
+		return this.getNom() + " " + this.getPrenom();
+	}
 	
 	public void addDemandeSoumise(Demande demande) {
 		demandes_soumises.add(demande);

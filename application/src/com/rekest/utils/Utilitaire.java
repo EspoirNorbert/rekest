@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.controlsfx.control.Notifications;
 
 import com.rekest.controllers.MainController;
 import com.rekest.dao.impl.HibernateDao;
@@ -13,14 +14,19 @@ import com.rekest.entities.employes.Directeur;
 import com.rekest.entities.employes.DirecteurGeneral;
 import com.rekest.entities.employes.Gestionnaire;
 import com.rekest.entities.employes.Utilisateur;
+import com.rekest.enums.NotificationType;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -28,10 +34,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 public class Utilitaire {
 
-	public final static Logger logger = LogManager.getLogger(HibernateDao.class);
+	public final static Logger logger = LogManager.getLogger(Utilitaire.class);
 	public static final String PATH_VIEWS_FILES = "/com/rekest/views/";
 	public static final String APPLICATION_ICON_URL = "com/rekest/assets/images/rekest_logo.png"; 	
 
@@ -53,9 +60,7 @@ public class Utilitaire {
 		alert.setTitle(title);
 		alert.setHeaderText(headerText);
 		alert.setContentText(contentText);
-		Image image = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
-		ImageView imageView = new ImageView(image);
-		alert.setGraphic(imageView);
+	
 
 		alert.showAndWait();
 
@@ -64,6 +69,32 @@ public class Utilitaire {
 			// Fatal Error, exit System !
 			System.exit(-1);
 		 */     		
+	}
+	
+	public static void notification(NotificationType notifcationType ,String title , String message) {
+		Notifications notification = Notifications.create()
+				.title(title)
+				.text(message)
+				.graphic(new ImageView(new Image(Utilitaire.APPLICATION_ICON_URL)))
+				.hideAfter(Duration.seconds(5))
+				.position(Pos.TOP_CENTER)
+				.onAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent event) {
+						System.out.println("Cliquer sur la notification");
+					}
+				});
+		
+			if (notifcationType.equals(NotificationType.ERROR)) {
+				notification.showError();
+			}
+			
+
+			if (notifcationType.equals(NotificationType.INFO)) {
+				notification.showInformation();
+			}
+		
 	}
 
 	/**
@@ -107,19 +138,22 @@ public class Utilitaire {
 	public static Parent loadFXMLFile(FXMLLoader loader, Boolean isRoot) {
 		Parent root = null;
 		try {
-			if (isRoot)
+			if (isRoot) 
 				root = (BorderPane) loader.load();
 			else
 				root = (AnchorPane) loader.load();
 			
+			logger.info(root);
 			return root;
 		} catch (IOException io) {
+			  io.printStackTrace();
 			  Utilitaire.alert(AlertType.ERROR, null,
 		                "Error", io.getClass() +
-		                "Error while loading fxml file",
+		                " Error while loading fxml file",
 		                io.getMessage());
+				return null;
 		}
-		return null;
+	
 	}
 
 	/**
@@ -218,6 +252,20 @@ public class Utilitaire {
 	}
 	
 	/**
+	 * Get value Label value
+	 * @param Labeled
+	 * @return
+	 */
+	public static String getLabel(Labeled labeled) {
+		return labeled.getText();
+	}
+	
+	public static void setLabel(Labeled labeled, String value) {
+		 labeled.setText(value);
+	}
+	
+
+	/**
 	 * Get value TextField value
 	 * @param textFilField
 	 * @return
@@ -228,6 +276,17 @@ public class Utilitaire {
 	
 	public static void setTextField(TextField textFilField, String value) {
 		 textFilField.setText(value);
+	}
+
+
+	public static void clear(TextField...fields) {
+		for (TextField textField : fields) {
+			Utilitaire.setTextField(textField, "");
+		}
+	}
+	
+	public static String setUserWindowTitle(Utilisateur utilisateur , String typeSpace) {
+		return utilisateur.getFullName() +" is connected - "+ typeSpace +" Space -  Rekest";
 	}
 	
 	

@@ -7,7 +7,10 @@ import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.controlsfx.control.Notifications;
 
+import com.rekest.entities.employes.Utilisateur;
+import com.rekest.enums.NotificationType;
 import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXML;
@@ -82,61 +85,72 @@ public class AdminRootLayoutController implements Initializable {
 	@FXML
 	private Label labelUsername;
 
+	private Utilisateur userConnected;
+	
+	private String currentPage = "Accueil";
+	
+	public void setCurrentPage(String currentPage) {
+		this.currentPage = currentPage;
+	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Espace d'administration - Admin connect�");
+		this.initData();
 	}
+	
+	private void setTitle(String currentPage) {
+		this.primaryStage.setTitle(currentPage + " - " +
+				Utilitaire.setUserWindowTitle(userConnected , "Admin")) ;
+	}
+
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview");
+		this.setTitle("Accueil");
 	}
 
 	@FXML
 	void handleClickedDemande(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
+		this.setTitle("Demandes");
 	}
 
 	@FXML
 	void handleClickedDepartement(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Departement");
-
+		this.setTitle("Departement");
 	}
 
 	@FXML
 	void handleClickedEmploye(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Employes");
-//		employeController = new EmployeController();
-//		try {
-//			employeController.loadDataInTable();
-//		} catch (DAOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		this.setTitle("Employe");
 	}
 
 
 	@FXML
 	void handleClickedParametre(MouseEvent event) {
-
 		Utilitaire.loadPageInRootLayout(rootLayout, "Parametres");
-
+		this.setTitle("Parametres");
 	}
 
 	@FXML
 	void handleClickedProduit(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Produits");
+		this.setTitle("Produits");
 	}
 
 	@FXML
 	void handleClickedRole(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Roles");
+		this.setTitle("Roles");
 	}
 
 	@FXML
 	void handleClickedService(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Services");
+		this.setTitle("Services");
 	}
 
 	@FXML
@@ -145,12 +159,14 @@ public class AdminRootLayoutController implements Initializable {
 	@FXML
 	void handleClickedLogOut(MouseEvent event) {
 		mainController.initAuthentication(primaryStage);
+		Utilitaire.notification(NotificationType.INFO, "Deconnexion", "Aurevoir a la prochaine !");
 
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		mainController = new MainController();
+		mainController = MainController.getInstance();
+		
 	}
 
 	public DepartementController getDepartementController() {
@@ -203,6 +219,13 @@ public class AdminRootLayoutController implements Initializable {
 
 	public Stage getPrimaryStage() {
 		return primaryStage;
+	}
+	
+	private  void initData() {
+		this.userConnected = (Utilisateur) this.primaryStage.getUserData();
+		Utilitaire.setLabel(labelProfil, userConnected.getEmployeProfil());
+		Utilitaire.setLabel(labelUsername, userConnected.getFullName());
+		this.setTitle(currentPage);
 	}
 
 	
