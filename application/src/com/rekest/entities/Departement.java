@@ -55,6 +55,19 @@ public class Departement {
 		this.nom = nom;
 	}
 	
+	public List<Service> getServices() {
+		return services;
+	}
+	
+	public void addService(Service service) {
+		if(service != null) 
+			this.services.add(service);
+	}
+
+	public void setServices(List<Service> services) {
+		this.services = services;
+	}
+
 	public static void copy(Departement oldDepartement, Departement newDepartment) {
 		oldDepartement.setNom(newDepartment.getNom());
 	}
