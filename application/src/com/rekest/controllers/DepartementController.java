@@ -88,8 +88,8 @@ public class DepartementController implements Initializable {
 	            // Nothing selected.
 	        	Utilitaire.alert(AlertType.WARNING, primaryStage,
 	        			"No Selection", 
-	        			"No Person Selected", 
-	        			"Please select a person in the table.");
+	        			"No Department Selected", 
+	        			"Please select a department in the table.");
 	        }
 	}
 	
@@ -104,8 +104,8 @@ public class DepartementController implements Initializable {
             // Nothing selected.
         	Utilitaire.alert(AlertType.WARNING, primaryStage,
         			"No Selection", 
-        			"No Person Selected", 
-        			"Please select a person in the table.");
+        			"No Department Selected", 
+        			"Please select a department in the table.");
         }
 	}
 
