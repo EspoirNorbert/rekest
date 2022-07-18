@@ -1,6 +1,8 @@
 package com.rekest.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +20,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -57,13 +60,39 @@ public class Utilitaire {
 		ImageView imageView = new ImageView(image);
 		alert.setGraphic(imageView);
 
-		alert.showAndWait();
+		alert.showAndWait();	
+
 
 		/*
 		if (alertType == AlertType.ERROR)
 			// Fatal Error, exit System !
 			System.exit(-1);
 		 */     		
+	}
+	
+	/**
+	 * Confirm Function for javaFX
+	 * @param alertType
+	 * @param onwer
+	 * @param title
+	 * @param headerText
+	 * @param contentText
+	 * @return true when the user clicks YES and false otherwise
+	 */
+	public static Boolean confirm(AlertType alertType, Window onwer, String title, String headerText, String contentText) {
+	  
+		Alert alert = new Alert(alertType,null,ButtonType.YES, ButtonType.NO);
+		alert.initOwner(onwer);
+		alert.setTitle(title);
+		alert.setHeaderText(headerText);
+		alert.setContentText(contentText);
+		Image image = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Emojione_1F62D.svg/64px-Emojione_1F62D.svg.png");
+		ImageView imageView = new ImageView(image);
+		alert.setGraphic(imageView);
+
+		alert.showAndWait();
+		return (alert.getResult() == ButtonType.YES)? true :  false;
+	
 	}
 
 	/**
@@ -230,5 +259,17 @@ public class Utilitaire {
 		 textFilField.setText(value);
 	}
 	
+	public static  List<String> getProfiles(){
+		
+		List<String> profiles  = new ArrayList<>();
+		profiles.add("Administrateur");
+		profiles.add("Employe");
+		profiles.add("ChefService");
+		profiles.add("Gestionnaire");
+		profiles.add("Directeur");
+		profiles.add("DirecteurGeneral");
+		
+		return profiles;
+	}
 	
 }
