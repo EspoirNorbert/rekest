@@ -23,6 +23,7 @@ public class Departement {
 	@Column(name="id_departement")
 	private int id;
 	
+	@Column(unique = true)
 	private String nom;
 	
 	@Transient
