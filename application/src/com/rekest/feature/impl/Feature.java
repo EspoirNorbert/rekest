@@ -39,7 +39,7 @@ public class Feature implements IFeature {
 
 	private static Feature instance = null;
 	private static IDao dao = HibernateDao.getCurrentInstance();
-	
+
 	private ObservableListDepartement observableListDepartement;
 	private ObservableListEmploye observableListEmploye ;
 	private ObservableListProduit observableListProduit ;
@@ -50,7 +50,7 @@ public class Feature implements IFeature {
 	private ObservableListNote observableListNote ;
 	private ObservableListUtilisateur observableListUtilisateur;
 
-	
+
 	private Feature () {
 		observableListDepartement = new ObservableListDepartement();
 		observableListEmploye = new ObservableListEmploye();
@@ -67,7 +67,7 @@ public class Feature implements IFeature {
 		if (instance == null) instance = new Feature ();
 		return instance;
 	}
-	
+
 	private Faker faker = new Faker();
 
 
@@ -105,8 +105,8 @@ public class Feature implements IFeature {
 			dao.save(createDefaultAdmin());
 			for (int i = 0; i <= 3; i++) {
 				Administrateur admin = new Administrateur(
-						 faker.name().lastName(),
-						 faker.name().firstName(),
+						faker.name().lastName(),
+						faker.name().firstName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
 
 				dao.save(admin);
@@ -115,7 +115,7 @@ public class Feature implements IFeature {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void initManagers() {
 		try {
@@ -139,7 +139,7 @@ public class Feature implements IFeature {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public Administrateur createDefaultAdmin() {
 		Administrateur admin =  new Administrateur("Administrator", "System", "+221771234500", "rekest.app@rekest.sn",
@@ -150,46 +150,73 @@ public class Feature implements IFeature {
 	}
 
 	@Override
+	public void initService() {
+		try {
+			for (int i = 0; i <= 10; i++) {
+				ChefService chefService = new ChefService(faker.name().firstName(), faker.name().lastName(),
+						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
+				dao.save(chefService);
+
+				Departement department = 
+						new Departement(faker.commerce().department());
+
+				Service service = new Service(faker.commerce().department());
+
+				service.setChefService(chefService);
+				dao.save(service);
+
+				department.addService(service);
+				dao.save(department);
+
+			}
+		} catch (DAOException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+
+	@Override
 	public void initAllEntity() {
 		this.initAdmin();
 		this.initEmploye();
 		this.initManagers();
 		this.initDepartement();
+		this.initService();
 	}
-	
-	
+
+
 	public ObservableListDemande getObservableListDemande() {
 		return observableListDemande;
 	}
-	
+
 	public ObservableListDepartement getObservableListDepartement() {
 		return observableListDepartement;
 	}
-	
+
 	public ObservableListEmploye getObservableListEmploye() {
 		return observableListEmploye;
 	}
-	
+
 	public ObservableListManager getObservableListManager() {
 		return observableListManager;
 	}
-	
+
 	public ObservableListNote getObservableListNote() {
 		return observableListNote;
 	}
-	
+
 	public ObservableListProduit getObservableListProduit() {
 		return observableListProduit;
 	}
-	
+
 	public ObservableListRole getObservableListRole() {
 		return observableListRole;
 	}
-	
+
 	public ObservableListService getObservableListService() {
 		return observableListService;
 	}
-	
+
 	public ObservableListUtilisateur getObservableListUtilisateur() {
 		return observableListUtilisateur;
 	}
