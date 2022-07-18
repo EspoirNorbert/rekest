@@ -155,6 +155,7 @@ public class Feature implements IFeature {
 			for (int i = 0; i <= 10; i++) {
 				ChefService chefService = new ChefService(faker.name().firstName(), faker.name().lastName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
+				Utilitaire.generateLoginAndPassword(chefService);
 				dao.save(chefService);
 
 				Departement department = 
