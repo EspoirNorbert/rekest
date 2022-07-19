@@ -63,6 +63,7 @@ public class Utilisateur extends Employe {
 		this.adresse = adresse;
 		this.createdAt = new java.util.Date();
 		Utilitaire.generateLoginAndPassword(this);
+		this.setEmployeProfil();
 	}
 	
 	public Utilisateur(String nom, String prenom, String login, String password) {
@@ -70,6 +71,7 @@ public class Utilisateur extends Employe {
 		this.login = login;
 		this.password = password;
 		this.createdAt = new java.util.Date();
+		this.setEmployeProfil();
 	}
 
 	public String getLogin() {
@@ -88,7 +90,19 @@ public class Utilisateur extends Employe {
 		this.password = password;
 	}
 	
+	@Override
+	public void setEmployeProfil() {
+		this.employeProfil = setUserProfil(this);
+	}
 	
+	public static String setUserProfil(Object u) {
+		if (u instanceof Administrateur ) return "Administrateur";
+		if (u instanceof Gestionnaire ) return "Gestionnaire";
+		if (u instanceof ChefService ) return "ChefService";
+		if (u instanceof Directeur ) return "Directeur";
+		if (u instanceof DirecteurGeneral ) return "DirecteurGeneral";
+		return null;
+	}
 	
 	public boolean isEnable() {
 		return isEnable;
