@@ -846,20 +846,6 @@ public interface IFeature {
 	 * @param service
 	 * @ 
 	 */
-	public boolean associerService(Employe employe, Service service)  ;
-	
-	/**
-	 * Others methodes
-	 */
-	default void refresh() {};
-	default void initDepartement() {}
-	default void initEmploye() {}
-	default void initService() {}
-	default void initRole() {}
-	default void initProduit() {}
-	default void initAdmin() {}
-	default  void initManagers() {}
-	default Administrateur createDefaultAdmin() {return null;}
-	default void initAllEntity() {}
+	public boolean associerService(Employe employe, Service service);
 	
 }
