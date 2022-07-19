@@ -67,14 +67,7 @@ public class ObservableListDepartement implements IObservableList<Departement> {
 	}
 
 	@Override
-	public void refresh() {
-		System.out.println("------------------------------");
-		for (Departement department : departementData) {
-			System.out.println(department.getStringPropertyNom());
-			department.setStringPropertyNom(department.getStringPropertyNom());
-		}	
-		System.out.println("------------------------------");
-	}
+	public void refresh() {}
 	
 	public void displayDepartementData() {
 		
