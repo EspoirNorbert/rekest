@@ -20,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class DepartementController implements Initializable {
@@ -51,8 +52,9 @@ public class DepartementController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.service = Feature.getCurrentInstance();
-        columnNom.setCellValueFactory(cellData -> cellData.getValue().getStringPropertyNom());
+		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         addDepartmentObservableListToTheTable();
+        refreshCount();
      }
      
      private void addDepartmentObservableListToTheTable() {
@@ -64,13 +66,22 @@ public class DepartementController implements Initializable {
 	 			tableViewDepartement.getSelectionModel().select(0);	
    					
  	}
+     
+     public void refreshCount() {
+ 		countDepartements.setText(String.valueOf(tableViewDepartement.getItems().size()));
+
+ 	}
 
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
 		  Departement tempDepartment = new Departement();
 	      boolean okClicked = showDepartmentEditDialog(tempDepartment);
 	        if (okClicked) {
-					service.creerDepartement(tempDepartment);
+					Boolean statut = service.creerDepartement(tempDepartment);
+					if(statut) {
+						refreshCount();
+						
+					}
 	        }
 	}
 
@@ -82,8 +93,13 @@ public class DepartementController implements Initializable {
 	        if (selectedDepartement != null) {
 	            boolean okClicked = this.showDepartmentEditDialog(selectedDepartement);
 	            if (okClicked) {
-						service.modifierDepartement(selectedDepartement);
+						Boolean statut = service.modifierDepartement(selectedDepartement);
+						if(statut) {
+							refreshCount();
+							
+						}
 	            }
+	            
 	        } else {
 	            // Nothing selected.
 	        	Utilitaire.alert(AlertType.WARNING, primaryStage,
@@ -96,9 +112,24 @@ public class DepartementController implements Initializable {
 	@FXML
 	void handleClickedSupprimer(ActionEvent event) {
 		int selectedIndex = tableViewDepartement.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            // personTable.getItems().remove(selectedIndex);
-            //Service.getInstance().deletePerson(personTable.getSelectionModel().getSelectedItem());
+        if (selectedIndex >= 0 && tableViewDepartement.getSelectionModel().isSelected(selectedIndex)) {
+        	Departement selectedDepartement = tableViewDepartement.getSelectionModel().getSelectedItem();
+        
+        	Boolean confirmStatus = Utilitaire.confirm(AlertType.CONFIRMATION,
+					null, 
+					"Delete",
+					"Delete \""+selectedDepartement.getNom()+ "\" ? ",
+					"Are you sure you want to delete this department?");
+        	
+        	if(confirmStatus) {
+//              tableViewDepartement.getItems().remove(selectedIndex);
+                Boolean statut = service.supprimerDepartement(selectedDepartement);
+                if(statut) {
+                	refreshCount();
+                	
+                }
+
+        	}
         	
         } else {
             // Nothing selected.
