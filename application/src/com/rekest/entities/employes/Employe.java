@@ -49,11 +49,20 @@ public class Employe {
 	@Transient
 	private Service service;
 	
-	public Employe() {}
+	@Transient
+	private String serviceName;
+	
+	@Transient
+	private Service oldService = null;
+	
+	public Employe() {
+		setEmployeProfil();
+	}
 	
 	public Employe(String nom, String prenom) {
 		this.nom = nom;
 		this.prenom = prenom;
+		setEmployeProfil();
 	}
 	
 	public Employe(String nom, String prenom, String telephone, String email, String adresse) {
@@ -62,6 +71,7 @@ public class Employe {
 		this.telephone = telephone;
 		this.email = email;
 		this.adresse = adresse;
+		setEmployeProfil();
 	}
 	
 	public int getId() {
@@ -112,8 +122,51 @@ public class Employe {
 		this.adresse = adresse;
 	}
 	
+	public String getEmployeProfil() {
+		return employeProfil;
+	}
+
+	public void setEmployeProfil() {
+		this.employeProfil = setUserProfil(this);
+	}
 	
+	public static String setUserProfil(Object u) {
+		if (u instanceof Employe) return "Employe";
+		return null;
+	}
+
+	public List<Demande> getDemandes_soumises() {
+		return demandes_soumises;
+	}
+
+	public void setDemandes_soumises(List<Demande> demandes_soumises) {
+		this.demandes_soumises = demandes_soumises;
+	}
+
+	public Service getService() {
+		return service;
+	}
 	
+	public void setService(Service service) {
+		this.service = service;
+	}
+
+	public String getServiceString() {
+		return service!= null? service.getId() + " - " + service.getNom() : null;
+	}
+
+	public String getServiceName() {
+		return service != null? service.getNom() : null;
+	}
+	
+	public Service getOldService() {
+		return oldService;
+	}
+
+	public void setOldService(Service oldService) {
+		this.oldService = oldService;
+	}
+
 	public void addDemandeSoumise(Demande demande) {
 		demandes_soumises.add(demande);
 	}
