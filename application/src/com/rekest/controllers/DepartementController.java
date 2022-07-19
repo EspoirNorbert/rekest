@@ -61,7 +61,6 @@ public class DepartementController implements Initializable {
      	// Add observable list data to the table
      	ObservableList<Departement> departements = service.loadDepartementsObservableList();
 	     	tableViewDepartement.setItems(departements);
-	         service.refresh();
 	 		if (departements.size() > 0)
 	 			tableViewDepartement.getSelectionModel().select(0);	
    					
@@ -75,7 +74,7 @@ public class DepartementController implements Initializable {
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
 		  Departement tempDepartment = new Departement();
-	      boolean okClicked = showDepartmentEditDialog(tempDepartment);
+	      boolean okClicked = showDepartmentEditDialog(tempDepartment, "Creation d'un departement");
 	        if (okClicked) {
 					Boolean statut = service.creerDepartement(tempDepartment);
 					if(statut) {
@@ -91,7 +90,7 @@ public class DepartementController implements Initializable {
 				  tableViewDepartement.getSelectionModel().getSelectedItem();        
           
 	        if (selectedDepartement != null) {
-	            boolean okClicked = this.showDepartmentEditDialog(selectedDepartement);
+	            boolean okClicked = showDepartmentEditDialog(selectedDepartement, "Modification d'un departement");
 	            if (okClicked) {
 						Boolean statut = service.modifierDepartement(selectedDepartement);
 						if(statut) {
@@ -152,14 +151,14 @@ public class DepartementController implements Initializable {
      * @param person the person object to be edited
      * @return true if the user clicked OK, false otherwise.
      */
-    public boolean showDepartmentEditDialog(Departement department) {
+    public boolean showDepartmentEditDialog(Departement department, String title) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = Utilitaire.initFXMLoader("DepartementEditDialog");
             AnchorPane root = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
 
             // Create the dialog Stage.
-            Stage dialogStage = Utilitaire.createDialog(root, primaryStage, "Creation de departement");
+            Stage dialogStage = Utilitaire.createDialog(root, primaryStage, title);
 
             // Set the department into the controller.
             departementEditDialogController = loader.getController();
