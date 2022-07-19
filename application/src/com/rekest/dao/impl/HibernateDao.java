@@ -161,6 +161,12 @@ public class HibernateDao implements IDao{
 		service.addEmploye(employe);
 		this.update(service);
 	}
+	
+	@Override
+	public void dissociateService(Employe employe, Service service) throws DAOException {
+		service.deleteEmploye(employe);
+		this.update(service);
+	}
 
 	@Override
 	public Object validateCredential(String login, String password)  throws DAOException{
