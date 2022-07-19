@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.controlsfx.control.Notifications;
 
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.enums.NotificationType;
@@ -95,6 +94,8 @@ public class AdminRootLayoutController implements Initializable {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+		this.primaryStage.setHeight(600);
+		this.primaryStage.setWidth(1200);
 		this.initData();
 	}
 	

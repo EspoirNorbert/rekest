@@ -17,8 +17,11 @@ public class MainController {
 	 * Loggers
 	 */
 	public final static Logger logger = LogManager.getLogger(MainController.class);
-	
 	private static MainController instance = new MainController();
+	
+	private MainController() {
+		logger.info("A unique instance of {} was created !" ,MainController.class.getSimpleName());
+	}
 	
 	/**
 	 * Attributes
@@ -37,6 +40,10 @@ public class MainController {
 	private GestionnaireRootLayoutController gestionnaireRootLayoutController;
 	private GestionnaireOverviewController gestionnaireOverviewController;
 
+	/**
+	 * Get instance of MainController
+	 * @return
+	 */
 	public static MainController getInstance() {
 		if (instance == null) {
 			instance = new MainController();
@@ -45,8 +52,11 @@ public class MainController {
 		return instance;
 	}
 	
-	private MainController() {}
 
+	/**
+	 * Initialize authentication windows
+	 * @param primaryStage Stage to created
+	 */
 	public void initAuthentication(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		FXMLLoader loader =	Utilitaire.initFXMLoader("Authentication");
@@ -55,6 +65,7 @@ public class MainController {
 		authenticationController = loader.getController();       
 		authenticationController.setPrimaryStage(this.primaryStage);
 		Utilitaire.showStage(this.primaryStage);
+		  Utilitaire.centrerStage(primaryStage);
 	}
 
 

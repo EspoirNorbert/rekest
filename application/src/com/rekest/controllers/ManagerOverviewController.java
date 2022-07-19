@@ -36,7 +36,8 @@ public class ManagerOverviewController implements Initializable {
 	private PieChart pieChartDemandes;
 
 	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;	
+		this.primaryStage = primaryStage;
+		
 	}
 
 	@Override

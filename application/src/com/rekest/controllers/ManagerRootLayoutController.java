@@ -93,7 +93,8 @@ public class ManagerRootLayoutController implements Initializable {
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Espace Manager - Manager connecté");
-
+		this.primaryStage.setHeight(600);
+		this.primaryStage.setWidth(1200);
 	}
 
 	public void setRootLayout(BorderPane rootLayout) {

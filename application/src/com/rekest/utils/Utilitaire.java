@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.Notifications;
 
 import com.rekest.controllers.MainController;
-import com.rekest.dao.impl.HibernateDao;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
@@ -20,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -32,6 +32,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -39,12 +40,8 @@ import javafx.util.Duration;
 public class Utilitaire {
 
 	public final static Logger logger = LogManager.getLogger(Utilitaire.class);
-	public static final String PATH_VIEWS_FILES = "/com/rekest/views/";
-	public static final String APPLICATION_ICON_URL = "com/rekest/assets/images/rekest_logo.png"; 	
 
-	public static String getApplicationIconUrl() {
-		return APPLICATION_ICON_URL;
-	}
+	private static PropertyManager propertyManager = PropertyManager.getInstance();
 	
 	/**
 	 * Alert Function for javaFX
@@ -61,7 +58,6 @@ public class Utilitaire {
 		alert.setHeaderText(headerText);
 		alert.setContentText(contentText);
 	
-
 		alert.showAndWait();
 
 		/*
@@ -75,7 +71,7 @@ public class Utilitaire {
 		Notifications notification = Notifications.create()
 				.title(title)
 				.text(message)
-				.graphic(new ImageView(new Image(Utilitaire.APPLICATION_ICON_URL)))
+				.graphic(new ImageView(new Image(propertyManager.getApplicationIcon())))
 				.hideAfter(Duration.seconds(5))
 				.position(Pos.TOP_CENTER)
 				.onAction(new EventHandler<ActionEvent>() {
@@ -145,7 +141,7 @@ public class Utilitaire {
 			
 			logger.info(root);
 			return root;
-		} catch (IOException io) {
+		} catch (IOException | IllegalStateException io) {
 			  io.printStackTrace();
 			  Utilitaire.alert(AlertType.ERROR, null,
 		                "Error", io.getClass() +
@@ -162,7 +158,7 @@ public class Utilitaire {
 	 * @return
 	 */
 	public static String getFileInViews(String filename) {
-		return PATH_VIEWS_FILES + filename + ".fxml";
+		return propertyManager.getApplicationPathViews() + filename + ".fxml";
 	}
 
 	/**
@@ -172,16 +168,13 @@ public class Utilitaire {
 	 */
 	public static FXMLLoader initFXMLoader(String filename){
 	    FXMLLoader	fxmlLoader = new FXMLLoader ();
-		fxmlLoader.setLocation(MainController.class.getResource(Utilitaire
-				.getFileInViews(filename)));
+		fxmlLoader.setLocation(MainController.class.getResource(Utilitaire.getFileInViews(filename)));
 			
 		if (fxmlLoader.getLocation() != null) 
 			logger.info("Chargement de la vue {} avec le chemin {}",filename,fxmlLoader.getLocation().toString()); 
 		
 		return fxmlLoader;
 	}
-
-	public static void saveLogError() {}
 
 	/**
 	 * Create Scene
@@ -193,7 +186,7 @@ public class Utilitaire {
 	public static Stage createScene(Parent root , Stage stage , String title) {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
-		stage.setTitle(title + "- Rekest");
+		stage.setTitle(title + "-" + propertyManager.getApplicationName());
 		return stage;
 	}
 	
@@ -207,7 +200,7 @@ public class Utilitaire {
 	public static Stage createDialog(Parent root , Stage primaryStage , String title) {
 		  Stage dialogStage = new Stage();
           dialogStage.setTitle(title + "- Rekest");
-          dialogStage.getIcons().add(new Image(APPLICATION_ICON_URL));
+          dialogStage.getIcons().add(new Image(propertyManager.getApplicationIcon()));
           dialogStage.initModality(Modality.WINDOW_MODAL);
           dialogStage.initOwner(primaryStage);
           Scene scene = new Scene(root);
@@ -260,6 +253,11 @@ public class Utilitaire {
 		return labeled.getText();
 	}
 	
+	/**
+	 * Set label
+	 * @param labeled
+	 * @param value
+	 */
 	public static void setLabel(Labeled labeled, String value) {
 		 labeled.setText(value);
 	}
@@ -274,19 +272,55 @@ public class Utilitaire {
 		return textFilField.getText();
 	}
 	
+	/**
+	 * Set TextField
+	 * @param textFilField
+	 * @param value
+	 */
 	public static void setTextField(TextField textFilField, String value) {
 		 textFilField.setText(value);
 	}
 
 
+	/**
+	 * Clear all fields
+	 * @param fields
+	 */
 	public static void clear(TextField...fields) {
 		for (TextField textField : fields) {
 			Utilitaire.setTextField(textField, "");
 		}
 	}
 	
+	/**
+	 * Set Windows title for connected user 
+	 * @param utilisateur
+	 * @param typeSpace
+	 * @return
+	 */
 	public static String setUserWindowTitle(Utilisateur utilisateur , String typeSpace) {
 		return utilisateur.getFullName() +" is connected - "+ typeSpace +" Space -  Rekest";
+	}
+
+	/**
+	 * Center stage on scene
+	 * @param stage
+	 */
+	public static void centrerStage(Stage stage) {
+		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+		stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+		stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
+	}
+	
+	public static Administrateur getDefaultAdmin() {
+		Administrateur admin= new Administrateur(
+				propertyManager.getApplicationAdminFirstname(), 
+				propertyManager.getApplicationAdminLastname(), 
+				propertyManager.getApplicationAdminPhone(), 
+				propertyManager.getApplicationAdminEmail(),
+				propertyManager.getApplicationAdminAdresse());
+		admin.setLogin(propertyManager.getApplicationAdminLogin());
+		return admin;
 	}
 	
 	

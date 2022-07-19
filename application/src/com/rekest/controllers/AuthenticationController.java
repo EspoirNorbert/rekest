@@ -15,7 +15,9 @@ import com.rekest.entities.employes.Utilisateur;
 import com.rekest.enums.NotificationType;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
+import com.rekest.utils.PropertyManager;
 import com.rekest.utils.Utilitaire;
+import com.rekest.utils.Validator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,7 +63,6 @@ public class AuthenticationController implements Initializable {
 			if (user!= null) {
 				logger.info("{} connecté avec success", user.getNom());
 				clearField(); // clear field
-				String profil = user.getEmployeProfil();
 				this.setConnectedUser(user);
 				this.primaryStage.setUserData(user);
 				this.primaryStage.hide();
@@ -90,8 +91,8 @@ public class AuthenticationController implements Initializable {
 		if (profil.equals(ChefService.class.getSimpleName()) ||
 				profil.equals(Directeur.class.getSimpleName()) ||
 				profil.equals(DirecteurGeneral.class.getSimpleName())) {
-			mainController.initManagerRootLayout(primaryStage);
-			//mainController.showManagerOverview();
+				mainController.initManagerRootLayout(primaryStage);
+				mainController.showManagerOverview();
 		}
 
 		if (profil.equals(Gestionnaire.class.getSimpleName())) {
@@ -102,9 +103,7 @@ public class AuthenticationController implements Initializable {
 	}
 
 	@FXML
-	void handleClickedPasswordForget(ActionEvent event) {
-
-	}
+	void handleClickedPasswordForget(ActionEvent event) {}
 
 	@FXML
 	void handleClickedQuitter(ActionEvent event) {
@@ -128,21 +127,19 @@ public class AuthenticationController implements Initializable {
 	private boolean isInputValid() {
 		String errorMessage = "";
 
-		if (Utilitaire.getTextField(txtLogin) == null || Utilitaire.getTextField(txtLogin).length() == 0)
-			errorMessage += "Le login est invalide!\n";
+		if (!Validator.validateText(Utilitaire.getTextField(txtLogin)))
+			errorMessage += PropertyManager.getInstance().getApplicationLoginError();
 
+		if (!Validator.validateText(Utilitaire.getTextField(txtPassword))) 
+			errorMessage += PropertyManager.getInstance().getApplicationPasswordError();
 
-		if (Utilitaire.getTextField(txtPassword) == null || Utilitaire.getTextField(txtPassword).length() == 0) 
-			errorMessage += "Le mot de passe est invalide!\n";
-
-
-		if (errorMessage.length() == 0) {
+		if (!Validator.validateText(errorMessage)) {
 			return true;
 		} else {
 			Utilitaire.alert(AlertType.WARNING, 
 					primaryStage, 
-					"Invalid Fields", 
-					"Please correct invalid fields", 
+					PropertyManager.getInstance().getApplicationErrorFieldHeader(), 
+					PropertyManager.getInstance().getApplicationErrorFields(), 
 					errorMessage);
 
 			return false;
