@@ -11,9 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Transient;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 @Entity
 public class Departement {
@@ -26,8 +23,6 @@ public class Departement {
 	@Column(unique = true)
 	private String nom;
 	
-	@Transient
-	private StringProperty stringPropertyNom;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_departement")
@@ -37,7 +32,6 @@ public class Departement {
 	
 	public Departement(String nom) {
 		this.nom = nom;
-		this.stringPropertyNom = new SimpleStringProperty(nom);
 	}
 
 	public int getId() {
@@ -73,11 +67,5 @@ public class Departement {
 		oldDepartement.setNom(newDepartment.getNom());
 	}
 
-	public StringProperty getStringPropertyNom() {
-		return stringPropertyNom;
-	}
 	
-	public void setStringPropertyNom(StringProperty stringPropertyNom) {
-		this.stringPropertyNom = stringPropertyNom;
-	}
 }
