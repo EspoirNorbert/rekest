@@ -273,6 +273,7 @@ public class Feature implements IFeature {
 	public boolean supprimerDepartement (Departement departement)   {
 		try {
 			dao.delete ( departement);
+			observableListDepartement.delete(departement);
 			loadDepartementsObservableList();
 			return true;
 		} catch (DAOException e) {
@@ -756,7 +757,11 @@ public class Feature implements IFeature {
 	@Override
 	public boolean supprimerEmploye (Employe employe)   {
 		try {
+			if ( employe.getService() != null )
+				dao.dissociateService ( employe, employe.getService());
+			
 			dao.delete ( employe);
+			observableListEmploye.delete(employe);
 			loadEmployesObservableList();
 			return true;
 		} catch (DAOException e) {
@@ -772,6 +777,12 @@ public class Feature implements IFeature {
 	public boolean modifierEmploye (Employe employe)   {
 
 		try {
+			if ( employe.getService() != null && employe.getOldService() != employe.getService()) {
+				if ( employe.getOldService() != null)
+					dao.dissociateService ( employe, employe.getOldService());
+				dao.associateService ( employe, employe.getService());
+			}
+
 			dao.update ( employe);
 			loadEmployesObservableList();
 			return true;
@@ -786,7 +797,11 @@ public class Feature implements IFeature {
 	public boolean creerEmploye (Employe employe)   {
 
 		try {
+			if ( employe.getService() != null)
+				dao.associateService ( employe, employe.getService());
+
 			dao.save ( employe);
+			
 			loadEmployesObservableList();
 			return true;
 		} catch (DAOException e) {
