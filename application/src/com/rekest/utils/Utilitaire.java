@@ -101,7 +101,8 @@ public class Utilitaire {
 	 * @return
 	 */
 	public static Utilisateur generateLoginAndPassword(Utilisateur utilisateur) {
-		utilisateur.setLogin(utilisateur.getNom() + "." +utilisateur.getPrenom()+ "@rekest.sn");
+		String login = utilisateur.getNom().toLowerCase() + "." +utilisateur.getPrenom().toLowerCase()+ "@rekest.sn";
+		utilisateur.setLogin(login);
 		utilisateur.setPassword(Utilitaire.setUserProfil(utilisateur));
 		return utilisateur;
 	}
