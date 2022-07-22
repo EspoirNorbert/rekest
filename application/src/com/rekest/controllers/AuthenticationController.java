@@ -7,16 +7,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rekest.feature.IFeature;
+import com.rekest.feature.IRekestData;
 import com.rekest.feature.impl.Feature;
+import com.rekest.feature.impl.RekestData;
 import com.rekest.utils.Utilitaire;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AuthenticationController implements Initializable {
@@ -42,6 +44,8 @@ public class AuthenticationController implements Initializable {
 	private PasswordField txtPassword;
 	
 	private IFeature service = Feature.getCurrentInstance();
+	
+	private IRekestData rekestData = new RekestData();
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -82,7 +86,7 @@ public class AuthenticationController implements Initializable {
 	
 	public AuthenticationController() {
 		logger.info("Instance of {} is created" , this.getClass().getName());
-		service.initAllEntity();
+		rekestData.initAllEntity();
 	}
 
 	@Override
