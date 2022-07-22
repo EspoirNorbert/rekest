@@ -1,5 +1,6 @@
 package com.rekest.feature;
 
+import com.rekest.entities.employes.Administrateur;
 
 public interface IRekestData {
 
@@ -51,7 +52,7 @@ public interface IRekestData {
 	/**
 	 * Create defaut Admin
 	 */
-	public void createDefaultAdmin();
+	public Administrateur createDefaultAdmin();
 
 	/**
 	 * Initialize all Entities datas
