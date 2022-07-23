@@ -1,4 +1,4 @@
-package com.rekest.feature;
+package com.rekest.helpers;
 
 
 public interface IRekestData {

@@ -1,4 +1,4 @@
-package com.rekest.controllers;
+package com.rekest.controllers.impl;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class ProduitController {
+public class RoleController {
 
     @FXML
     private Button btnAjouter;
@@ -23,31 +23,13 @@ public class ProduitController {
     private Button btnSupprimer;
 
     @FXML
-    private TableColumn<?, ?> columnDateCreation;
-
-    @FXML
-    private TableColumn<?, ?> columnDateMiseAJour;
-
-    @FXML
-    private TableColumn<?, ?> columnDescription;
-
-    @FXML
     private TableColumn<?, ?> columnNom;
 
     @FXML
-    private TableColumn<?, ?> columnPrix;
+    private Label countRoles;
 
     @FXML
-    private TableColumn<?, ?> columnQuantite;
-
-    @FXML
-    private TableColumn<?, ?> columnType;
-
-    @FXML
-    private Label countProduits;
-
-    @FXML
-    private TableView<?> tableViewProduits;
+    private TableView<?> tableViewRoles;
 
     @FXML
     private TextField textRecherche;

@@ -1,4 +1,4 @@
-package com.rekest.controllers;
+package com.rekest.controllers.impl;
 
 import javafx.stage.Stage;
 
@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.rekest.controllers.IController;
+import com.rekest.entities.employes.Utilisateur;
 import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXML;
@@ -24,19 +26,29 @@ import javafx.scene.shape.Circle;
  * RootLayout des windows Admins
  * @author Fatoumata DICKO
  */
-public class AdminRootLayoutController implements Initializable {
+public class AdminRootLayoutController implements Initializable , IController {
 
+	/**
+	 * Loggers
+	 */
 	public final static Logger logger = LogManager.getLogger(AdminRootLayoutController.class);
 
+	/**
+	 * Controllers
+	 */
 	private DepartementController departementController; 
 	private ServiceController serviceController;      
 	private MainController mainController;
-	private EmployeController employeController;
 
+	/**
+	 * Stage and Node
+	 */
 	private Stage primaryStage;
-
 	private BorderPane rootLayout;
 
+	/**
+	 * Les composants
+	*/
 	@FXML
 	private AnchorPane anchorPaneCenter;
 
@@ -59,16 +71,19 @@ public class AdminRootLayoutController implements Initializable {
 	private Button btnNotifications;
 
 	@FXML
-	private Button btnParametre;
+	private Button btnProduit;
 
 	@FXML
-	private Button btnProduit;
+	private Button btnProfil;
 
 	@FXML
 	private Button btnRole;
 
 	@FXML
 	private Button btnService;
+
+	@FXML
+	private Button btnUtlisateurs;
 
 	@FXML
 	private Circle circleProfil;
@@ -82,75 +97,103 @@ public class AdminRootLayoutController implements Initializable {
 	@FXML
 	private Label labelUsername;
 
+	private Utilisateur userConnected;
+
+	private String currentPage = "Accueil";
+
+	public void setCurrentPage(String currentPage) {
+		this.currentPage = currentPage;
+	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Espace d'administration - Admin connectï¿½");
+		Utilitaire.setDimensionStage(primaryStage, 600, 1200);
+		this.initData();
 	}
+
+	
+	@Override
+	public void setRootLayout(BorderPane rootLayout) {
+		this.rootLayout = rootLayout;
+		logger.info("Root layout a été setter");
+	}
+
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview");
+		Utilitaire.setTiteStage(primaryStage , "Accueil" , userConnected);
 	}
 
 	@FXML
 	void handleClickedDemande(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
+		Utilitaire.setTiteStage(primaryStage , "Demandes" , userConnected);
 	}
 
 	@FXML
 	void handleClickedDepartement(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Departement");
-
+		Utilitaire.setTiteStage(primaryStage , "Departement" , userConnected);
 	}
 
 	@FXML
 	void handleClickedEmploye(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Employes");
-//		employeController = new EmployeController();
-//		try {
-//			employeController.loadDataInTable();
-//		} catch (DAOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		Utilitaire.setTiteStage(primaryStage , "Employe" , userConnected);
 	}
 
 
 	@FXML
 	void handleClickedParametre(MouseEvent event) {
-
 		Utilitaire.loadPageInRootLayout(rootLayout, "Parametres");
-
+		Utilitaire.setTiteStage(primaryStage , "Parametres" , userConnected);
 	}
 
 	@FXML
 	void handleClickedProduit(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Produits");
+		Utilitaire.setTiteStage(primaryStage , "Produits" , userConnected);
 	}
 
 	@FXML
 	void handleClickedRole(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Roles");
+		Utilitaire.setTiteStage(primaryStage , "Roles" , userConnected);
+	}
+
+	@FXML
+	void handleClickedProfil(MouseEvent event) {
+		Utilitaire.loadPageInRootLayout(rootLayout, "Profil");
+		Utilitaire.setTiteStage(primaryStage , "Profil" , userConnected);
+	}
+
+	@FXML
+	void handleClickedUtilisateur(MouseEvent event) {
+		Utilitaire.loadPageInRootLayout(rootLayout, "Profil");
+		Utilitaire.setTiteStage(primaryStage , "Utilisateurs" , userConnected);
 	}
 
 	@FXML
 	void handleClickedService(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Services");
+		Utilitaire.setTiteStage(primaryStage , "Services" , userConnected);
 	}
 
 	@FXML
-	void handleClicledNotification(MouseEvent event) {}
+	void handleClicledNotification(MouseEvent event) {
+		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications");
+		Utilitaire.setTiteStage(primaryStage , "Notifications" , userConnected);
+	}
 
 	@FXML
 	void handleClickedLogOut(MouseEvent event) {
-		mainController.initAuthentication(primaryStage);
-
+		Utilitaire.logout(primaryStage);
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		mainController = new MainController();
+		mainController = MainController.getInstance();
 	}
 
 	public DepartementController getDepartementController() {
@@ -177,21 +220,10 @@ public class AdminRootLayoutController implements Initializable {
 		this.mainController = mainController;
 	}
 
-	public EmployeController getEmployeController() {
-		return employeController;
-	}
-
-	public void setEmployeController(EmployeController employeController) {
-		this.employeController = employeController;
-	}
-
 	public BorderPane getRootLayout() {
 		return rootLayout;
 	}
 
-	public void setRootLayout(BorderPane rootLayout) {
-		this.rootLayout = rootLayout;
-	}
 
 	public AnchorPane getAnchorPaneCenter() {
 		return anchorPaneCenter;
@@ -205,5 +237,12 @@ public class AdminRootLayoutController implements Initializable {
 		return primaryStage;
 	}
 
-	
+	@Override
+	public void initData() {
+		userConnected = Utilitaire.getConnectedUser(primaryStage);
+		logger.info(userConnected.getFullName());
+		Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
+		primaryStage.setTitle(currentPage);
+	}
+
 }

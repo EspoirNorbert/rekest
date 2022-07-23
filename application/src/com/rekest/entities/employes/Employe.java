@@ -158,6 +158,11 @@ public class Employe {
 	public String getServiceName() {
 		return service != null? service.getNom() : null;
 	}
+		
+	
+	public String getFullName() {
+		return this.getNom() + " " + this.getPrenom();
+	}
 	
 	public Service getOldService() {
 		return oldService;
@@ -171,6 +176,18 @@ public class Employe {
 		demandes_soumises.add(demande);
 	}
 	
+	
+	public void setEmployeProfil(String employeProfil) {
+		this.employeProfil = employeProfil;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Employe [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", telephone=" + telephone + ", email="
+				+ email + ", adresse=" + adresse + ", employeProfil=" + employeProfil + "]";
+	}
+
 	public static void copy(Employe employe, Employe entity) {}
 
 }

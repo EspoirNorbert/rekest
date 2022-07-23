@@ -3,7 +3,8 @@ package com.rekest.tests;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.rekest.feature.impl.RekestData;
+import com.rekest.helpers.RekestData;
+
 
 
 public class TestDataBase {
@@ -12,6 +13,7 @@ public class TestDataBase {
 
 	public static void main(String[] args) {
 		RekestData.getInstance().initAdmins();
+
 	}
 	
 	

@@ -1,27 +1,30 @@
 package com.rekest.runtime;
 
-import com.rekest.controllers.MainController;
+import com.rekest.controllers.impl.MainController;
+import com.rekest.enums.NotificationType;
 import com.rekest.utils.Utilitaire;
 
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private Stage primaryStage;
     private MainController mainController;
     
     public Main() {
-    	mainController = new MainController();
+    	mainController = MainController.getInstance();
 	}
     
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        this.primaryStage.getIcons().add(new Image(Utilitaire.getApplicationIconUrl()));
-        this.primaryStage.setResizable(false);
-        mainController.initAuthentication(primaryStage);
+    	try {
+    	     mainController.initAuthentication();
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    		Utilitaire.notification(NotificationType.ERROR, 
+    				"Erro when creating main stage", e.getMessage());
+    	}
+     
     }
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.rekest.feature.impl;
+package com.rekest.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.github.javafaker.Faker;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.feature.IFeature;
-import com.rekest.feature.IRekestData;
+import com.rekest.feature.impl.Feature;
 
 public class RekestData implements IRekestData {
 
@@ -129,7 +129,6 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initDemande() {
 		// TODO Auto-generated method stub
-
 	}
 
 }

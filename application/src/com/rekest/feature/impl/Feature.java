@@ -2,6 +2,8 @@ package com.rekest.feature.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
 
 import com.rekest.dao.IDao;
 import com.rekest.dao.impl.HibernateDao;
@@ -295,9 +297,6 @@ public class Feature implements IFeature {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-
 		return objs;
 	}
 
