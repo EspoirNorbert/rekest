@@ -1,7 +1,4 @@
-package com.rekest.controllers;
-
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
+package com.rekest.controllers.impl;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -9,6 +6,7 @@ import java.util.ResourceBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.rekest.controllers.IController;
 import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXML;
@@ -18,9 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
-public class ManagerRootLayoutController implements Initializable {
+public class GestionnaireRootLayoutController implements Initializable , IController {
 
 	public final static Logger logger = LogManager.getLogger(ManagerRootLayoutController.class);
 
@@ -35,9 +35,6 @@ public class ManagerRootLayoutController implements Initializable {
 
 	@FXML
 	private Button btnAccueil;
-
-	@FXML
-	private Button btnDemande;
 
 	@FXML
 	private Button btnLogOut;
@@ -62,22 +59,17 @@ public class ManagerRootLayoutController implements Initializable {
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerOverview");
-	}
-
-	@FXML
-	void handleClickedDemande(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerDemande");
+		Utilitaire.loadPageInRootLayout(rootLayout, "GestionnaireOverview");
 	}
 
 	@FXML
 	void handleClickedLogOut(MouseEvent event) {
-		mainController.initAuthentication(primaryStage);
+		
 	}
 
 	@FXML
 	void handleClickedProfil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerProfil");
+		Utilitaire.loadPageInRootLayout(rootLayout, "GestionnaireProfil");
 	}
 
 	@FXML
@@ -92,9 +84,8 @@ public class ManagerRootLayoutController implements Initializable {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Espace Manager - Manager connecté");
-		this.primaryStage.setHeight(600);
-		this.primaryStage.setWidth(1200);
+		this.primaryStage.setTitle("Espace Gestionnaire - Gestionnaire connecté");
+
 	}
 
 	public void setRootLayout(BorderPane rootLayout) {
@@ -116,4 +107,5 @@ public class ManagerRootLayoutController implements Initializable {
 	public BorderPane getRootLayout() {
 		return rootLayout;
 	}
+
 }

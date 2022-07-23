@@ -113,5 +113,13 @@ public class Utilisateur extends Employe {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	@Override
+	public String toString() {
+		return "Utilisateur [ "+ super.toString()   +"   login=" + login + ", password=" + password + ", isEnable=" + isEnable + "]";
+	}
+	
+	
+	
 	
 }

@@ -1,4 +1,4 @@
-package com.rekest.controllers;
+package com.rekest.controllers.impl;
 
 import java.net.URL;
 import java.util.ResourceBundle;

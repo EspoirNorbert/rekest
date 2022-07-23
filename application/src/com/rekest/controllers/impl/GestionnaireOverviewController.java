@@ -1,4 +1,4 @@
-package com.rekest.controllers;
+package com.rekest.controllers.impl;
 
 import javafx.stage.Stage;
 

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.AuthenticationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.impl.AuthenticationController">
    <children>
       <AnchorPane prefHeight="500.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -29,7 +29,7 @@
       </AnchorPane>
       <AnchorPane layoutX="400.0" prefHeight="500.0" prefWidth="500.0">
          <children>
-            <VBox prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #272924;">
+            <VBox prefHeight="500.0" prefWidth="500.0" styleClass="authcolor">
                <children>
                   <VBox prefHeight="125.0" prefWidth="500.0">
                      <children>
@@ -38,10 +38,10 @@
                               <Image url="@../assets/images/rekest_logo.png" />
                            </image>
                            <VBox.margin>
-                              <Insets left="200.0" top="20.0" />
+                              <Insets left="200.0" top="35.0" />
                            </VBox.margin>
                         </ImageView>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="442.0" text="Connectez-vous à votre compte" textFill="WHITE">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="442.0" text="Connectez-vous à votre compte">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -67,12 +67,12 @@
                               <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
                            </VBox.margin>
                            <children>
-                              <Label text="LOGIN" textFill="WHITE">
+                              <Label text="LOGIN">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label text="PASSWORD" textFill="WHITE" GridPane.rowIndex="2">
+                              <Label text="PASSWORD" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -91,9 +91,9 @@
                         </GridPane>
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="500.0" stylesheets="@../assets/css/style.css">
+                  <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="500.0">
                      <children>
-                        <Button fx:id="btnConnexion" mnemonicParsing="false" onAction="#handleClickedConnexion" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #fff;" text="Connexion">
+                        <Button fx:id="btnConnexion" mnemonicParsing="false" onAction="#handleClickedConnexion" prefHeight="40.0" prefWidth="250.0" styleClass="btnauth" stylesheets="@../assets/css/style.css" text="Connexion">
                            <HBox.margin>
                               <Insets left="30.0" right="30.0" />
                            </HBox.margin>
@@ -101,10 +101,10 @@
                               <Font size="20.0" />
                            </font>
                            <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
+                              <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="btnQuitter" mnemonicParsing="false" onAction="#handleClickedQuitter" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #fff;" text="Quitter">
+                        <Button fx:id="btnQuitter" mnemonicParsing="false" onAction="#handleClickedQuitter" prefHeight="40.0" prefWidth="250.0" styleClass="btnauth" stylesheets="@../assets/css/style.css" text="Quitter">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
@@ -112,17 +112,20 @@
                               <Font size="20.0" />
                            </font>
                            <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
+                              <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="500.0">
                      <children>
-                        <Button fx:id="btnPasswordForget" mnemonicParsing="false" onAction="#handleClickedPasswordForget" style="-fx-background-color: transparent;" text="Mot de passe oublié?" textFill="WHITE">
+                        <Button fx:id="btnPasswordForget" mnemonicParsing="false" onAction="#handleClickedPasswordForget" style="-fx-background-color: transparent;" text="Mot de passe oublié?">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                   </HBox>

@@ -19,6 +19,7 @@ import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
 import com.rekest.entities.employes.DirecteurGeneral;
 import com.rekest.entities.employes.Employe;
+import com.rekest.entities.employes.Gestionnaire;
 import com.rekest.entities.employes.Manager;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
@@ -159,8 +160,11 @@ public class Feature implements IFeature {
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
 				Utilitaire.generateLoginAndPassword(directeur);
 				dao.save(directeur);
-				DirecteurGeneral directeurGeneral = new DirecteurGeneral(faker.name().firstName(),
-						faker.name().lastName(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress(),
+				DirecteurGeneral directeurGeneral = new DirecteurGeneral(
+						faker.name().firstName(),
+						faker.name().lastName(), 
+						faker.phoneNumber().cellPhone(), 
+						faker.internet().emailAddress(),
 						faker.address().fullAddress());
 				Utilitaire.generateLoginAndPassword(directeurGeneral);
 				dao.save(directeur);
@@ -181,7 +185,26 @@ public class Feature implements IFeature {
 		admin.setPassword("admin");
 		return admin;
 	}
+	
+	public void createDefaultGestionnaire() {
+		Gestionnaire gestionnaire =  new Gestionnaire(
+				faker.name().firstName(),
+				faker.name().lastName(), 
+				faker.phoneNumber().cellPhone(), 
+				faker.internet().emailAddress(),
+				faker.address().fullAddress());
+		gestionnaire.setLogin("gestionnaire");
+		gestionnaire.setPassword("gestionnaire");
+		try {
+			dao.save(gestionnaire);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+ 
+	
 	@Override
 	public void initAllEntity() {
 		this.initAdmin();
@@ -189,6 +212,7 @@ public class Feature implements IFeature {
 		this.initManagers();
 		this.initProduit();
 		this.initDepartement();
+		this.createDefaultGestionnaire();
 	}
 
 

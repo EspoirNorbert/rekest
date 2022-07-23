@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.Notifications;
 
-import com.rekest.controllers.MainController;
+import com.rekest.controllers.impl.MainController;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
@@ -34,6 +34,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
@@ -67,6 +68,12 @@ public class Utilitaire {
 		 */     		
 	}
 	
+	/**
+	 * Notification Push Function
+	 * @param notifcationType
+	 * @param title
+	 * @param message
+	 */
 	public static void notification(NotificationType notifcationType ,String title , String message) {
 		Notifications notification = Notifications.create()
 				.title(title)
@@ -93,10 +100,12 @@ public class Utilitaire {
 		
 	}
 
+
+
 	/**
-	 * Generate login and password for user
+	 * Return Random login and password for user
 	 * @param utilisateur
-	 * @return
+	 * @return  Random login and password for user
 	 */
 	public static Utilisateur generateLoginAndPassword(Utilisateur utilisateur) {
 		utilisateur.setLogin(utilisateur.getNom() + "." +utilisateur.getPrenom()+ "@rekest.sn");
@@ -128,7 +137,11 @@ public class Utilitaire {
 	public static void loadPageInRootLayout(BorderPane rootLayout ,String filename) {
 		FXMLLoader loader = Utilitaire.initFXMLoader(filename);
 		AnchorPane page   = (AnchorPane) Utilitaire.loadFXMLFile(loader, false) ;
-		rootLayout.setCenter(page);
+		
+		if (rootLayout == null) {
+			logger.info("RootLayout is null" , rootLayout);
+		} else
+			rootLayout.setCenter(page);
 	}
 	
 	public static Parent loadFXMLFile(FXMLLoader loader, Boolean isRoot) {
@@ -141,7 +154,7 @@ public class Utilitaire {
 			
 			logger.info(root);
 			return root;
-		} catch (IOException | IllegalStateException io) {
+		} catch (IOException | IllegalStateException | NullPointerException io) {
 			  io.printStackTrace();
 			  Utilitaire.alert(AlertType.ERROR, null,
 		                "Error", io.getClass() +
@@ -175,7 +188,7 @@ public class Utilitaire {
 		
 		return fxmlLoader;
 	}
-
+	
 	/**
 	 * Create Scene
 	 * @param root
@@ -183,11 +196,41 @@ public class Utilitaire {
 	 * @param title
 	 * @return scene created
 	 */
-	public static Stage createScene(Parent root , Stage stage , String title) {
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setTitle(title + "-" + propertyManager.getApplicationName());
-		return stage;
+	public static Stage createStage(Parent root, String title , Boolean isDecorated) {
+		try {
+			// create scene
+			Scene scene = new Scene(root);
+			// create stage
+			Stage newStage = new Stage();
+			// set scene to stage
+			newStage.setScene(scene);
+			
+			if (title == null)
+				newStage.setTitle(propertyManager.getApplicationName());
+			else
+				newStage.setTitle(title + " - " + propertyManager.getApplicationName());
+			
+			if (isDecorated == true) {
+				logger.info("Decorated is called");	
+				newStage.initStyle(StageStyle.UNDECORATED);
+			}
+				
+			Utilitaire.setImageToStage(newStage);
+			logger.info("stage [titre={}, scene={} , style={}] " , newStage.getTitle() , newStage.getScene() , newStage.getStyle());
+			return newStage;
+		} catch (IllegalStateException e) {
+			logger.error(e.getLocalizedMessage());
+			Utilitaire.notification(NotificationType.ERROR, "Error", e.getLocalizedMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * Set Image to Stage
+	 * @param stage
+	 */
+	public static void setImageToStage(Stage stage) {
+		 stage.getIcons().add(new Image(propertyManager.getApplicationIcon()));
 	}
 	
 	/**
@@ -222,6 +265,15 @@ public class Utilitaire {
 	 */
 	public static void showStage(Stage stage) {
 		stage.show();
+	}
+	
+	/**
+	 * Show Stage
+	 * @param stage
+	 */
+	public static void hideAndCloseStage(Stage stage , Boolean isHide) {
+		if (isHide) stage.hide();
+		stage.close();
 	}
 
 	/**
@@ -301,6 +353,10 @@ public class Utilitaire {
 	public static String setUserWindowTitle(Utilisateur utilisateur , String typeSpace) {
 		return utilisateur.getFullName() +" is connected - "+ typeSpace +" Space -  Rekest";
 	}
+	
+	public static String getFullNameApp() {
+		return propertyManager.getApplicationName() + " " + propertyManager.getApplicationBrand(); 
+	}
 
 	/**
 	 * Center stage on scene
@@ -323,5 +379,83 @@ public class Utilitaire {
 		return admin;
 	}
 	
+	public static void logout(Stage primaryStage) {
+		primaryStage.close();
+		if (!primaryStage.isShowing()) {
+			MainController.getInstance().initAuthentication();
+			Utilitaire.notification(NotificationType.INFO, 
+					"Deconnexion", "Aurevoir a la prochaine !");
+		}	
+	}
 	
+	/**
+	 * Initialize Data for connected user
+	 * @param connectedUser 
+	 * @param stage
+	 * @param labelProfil
+	 * @param labelUsername
+	 * @param currentPage
+	 * @return
+	 */
+	public static void initData(Utilisateur connectedUser , 
+		Stage stage , Labeled labelProfil , Labeled labelUsername , String currentPage) {
+		Utilitaire.setLabel(labelProfil, connectedUser.getEmployeProfil());
+		Utilitaire.setLabel(labelUsername, connectedUser.getFullName());
+	}
+	
+	/**
+	 * Get connected user getting data in Stage
+	 * @param stage
+	 * @return
+	 */
+	public static Utilisateur getConnectedUser(Stage stage) {
+		return (Utilisateur) stage.getUserData();
+	}
+	
+	public static void setDimensionStage(Stage stage ,double height , double width) {
+		stage.setHeight(height);
+		stage.setWidth(width);
+	}
+	
+	public static String getTypeManager(Utilisateur utilisateur) {
+		
+		String profil = utilisateur.getEmployeProfil();
+		
+		if (profil.equals(ChefService.class.getSimpleName())) {
+			return "Chef Service";
+		}
+		
+		if (profil.equals(Directeur.class.getSimpleName())) {
+			return "Directeur";
+		}
+		
+		if (profil.equals(DirecteurGeneral.class.getSimpleName())) {
+			return "Directeur General";
+		}
+		return null;
+	}
+	
+	public static String setEmployeeProfil(Utilisateur utilisateur) {
+		switch (utilisateur.getPassword()) {
+		case "admin":
+			return Administrateur.class.getSimpleName(); 
+		case "chef":
+			return ChefService.class.getSimpleName(); 
+		case "directeur":
+			return Directeur.class.getSimpleName(); 
+		case "gestionnaire":
+			return Gestionnaire.class.getSimpleName(); 
+		case "dg":
+			return DirecteurGeneral.class.getSimpleName(); 
+		default:
+			break;
+		}
+		return null;
+	}
+	
+	
+	public static void setTiteStage(Stage stage , String currentPage, Utilisateur userConnected) {
+		stage.setTitle(currentPage + " - " +
+				Utilitaire.setUserWindowTitle(userConnected , "Admin")) ;
+	}
 }
