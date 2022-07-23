@@ -8,7 +8,6 @@ import com.rekest.entities.Note;
 import com.rekest.entities.Produit;
 import com.rekest.entities.Role;
 import com.rekest.entities.Service;
-import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Manager;
 import com.rekest.entities.employes.Utilisateur;
