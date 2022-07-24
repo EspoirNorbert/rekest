@@ -187,9 +187,9 @@ public class EmployeEditDialogController {
 			errorMessage += "Le telephone de l'employe est invalide!\n";
 		}
 		
-		if (comboBoxService.getValue() == null || comboBoxService.getValue().length() == 0) {
-			errorMessage += "Le service de l'employe est invalide!\n";
-		}
+//		if (comboBoxService.getValue() == null || comboBoxService.getValue().length() == 0) {
+//			errorMessage += "Le service de l'employe est invalide!\n";
+//		}
 
 
 		if (errorMessage.length() == 0) {
