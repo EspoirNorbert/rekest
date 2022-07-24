@@ -1,7 +1,5 @@
 package com.rekest.controllers.impl;
 
-import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -10,18 +8,22 @@ import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.utils.Utilitaire;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class DepartementController implements Initializable {
 
@@ -32,10 +34,12 @@ public class DepartementController implements Initializable {
 	private TableView<Departement> tableViewDepartement;
 
 	@FXML
-	private Label countDepartements;
+	private Label countDepartement;
 
 	@FXML
 	private TextField textRecherche;
+	
+	private ObservableList<Departement> departements =  FXCollections.observableArrayList();
 	
 	public Stage primaryStage;
 	
@@ -54,29 +58,74 @@ public class DepartementController implements Initializable {
 		this.service = Feature.getCurrentInstance();
 		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         addDepartmentObservableListToTheTable();
-        //refreshCount();
+        refreshCount();
+        addListeners();
      }
      
      private void addDepartmentObservableListToTheTable() {
      	// Add observable list data to the table
-     	ObservableList<Departement> departements = service.loadDepartementsObservableList();
+    	 setDepartements(service.loadDepartementsObservableList());
 	     	tableViewDepartement.setItems(departements);
 	 		if (departements.size() > 0)
 	 			tableViewDepartement.getSelectionModel().select(0);	
    					
  	}
      
+    private void addListeners() {
+    	// Wrap the ObservaleList in a FilteredList (initially display all data)
+    			FilteredList<Departement> filteredDepartments = new FilteredList<>(getDepartements(), b -> true);
+
+    			// Set the filter Predicate whenever the filter changes
+    			textRecherche.textProperty().addListener((observable, oldValue, newValue) -> {
+    				
+    				filteredDepartments.setPredicate(department -> {
+    					// If filter text is blank or null or empty -> display all departments
+    					if(newValue.isBlank() || newValue.isEmpty() || newValue == null) 
+    						return true;
+
+    					// Compare the name of every department with keyword
+    					String keyword = newValue.toLowerCase();
+
+    					if(department.getNom().toLowerCase().indexOf(keyword) > -1) {
+    						return true; // Filter matches name
+    					}    				
+    					else {
+    						return false; // No matches
+    					}
+
+    				});
+    			});
+
+    			// Wrap the FilteredList in a SortedList 
+    			SortedList<Departement> sortedDepartments = new SortedList<>(filteredDepartments);
+
+    			// Bind the SortedList comparator to the TableView comparator, otherwise sorting will have no effect
+    			sortedDepartments.comparatorProperty().bind(tableViewDepartement.comparatorProperty());
+
+    			// Add sorted (and filtered) data to the table 
+    			tableViewDepartement.setItems(sortedDepartments);
+    }
+     
      public void refreshCount() {
- 		countDepartements.setText(String.valueOf(tableViewDepartement.getItems().size()));
+    	 countDepartement.setText(String.valueOf(getDepartements().size()));
 
  	}
+
+	public ObservableList<Departement> getDepartements() {
+		return departements;
+	}
+
+	public void setDepartements(ObservableList<Departement> departements) {
+		this.departements.clear();
+		this.departements = departements;
+	}
 
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
 		  Departement tempDepartment = new Departement();
-	      boolean okClicked = showDepartmentEditDialog(tempDepartment, "Creation d'un departement");
+	      boolean okClicked = showDepartmentEditDialog(tempDepartment, "Creation d'un departement ");
 	        if (okClicked) {
-					Boolean statut = service.creerDepartement(tempDepartment);
+					Boolean statut = service.createDepartement(tempDepartment);
 					if(statut) {
 						refreshCount();
 						
@@ -90,9 +139,9 @@ public class DepartementController implements Initializable {
 				  tableViewDepartement.getSelectionModel().getSelectedItem();        
           
 	        if (selectedDepartement != null) {
-	            boolean okClicked = showDepartmentEditDialog(selectedDepartement, "Modification d'un departement");
+	            boolean okClicked = showDepartmentEditDialog(selectedDepartement, "Modification d'un departement ");
 	            if (okClicked) {
-						Boolean statut = service.modifierDepartement(selectedDepartement);
+						Boolean statut = service.updateDepartement(selectedDepartement);
 						if(statut) {
 							refreshCount();
 							
@@ -122,7 +171,7 @@ public class DepartementController implements Initializable {
         	
         	if(confirmStatus) {
 //              tableViewDepartement.getItems().remove(selectedIndex);
-                Boolean statut = service.supprimerDepartement(selectedDepartement);
+                Boolean statut = service.deleteDepartement(selectedDepartement);
                 if(statut) {
                 	refreshCount();
                 	
