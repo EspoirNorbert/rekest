@@ -135,6 +135,12 @@ public interface IDao {
 	 */
 	public default void dissociateService(Employe employe, Service service) throws DAOException{};
 
+	/**
+	 * @param employe
+	 * @param departement
+	 * @throws DAOException
+	 */
+	public default void associateDepartement(Service service, Departement departement) throws DAOException{};
 
 	/**
 	 * Definir la reponse de la demande (rejeter , clotur�e ...)

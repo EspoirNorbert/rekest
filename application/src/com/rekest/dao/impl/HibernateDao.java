@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 
 import com.rekest.dao.IDao;
 import com.rekest.entities.Demande;
+import com.rekest.entities.Departement;
 import com.rekest.entities.Service;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Utilisateur;
@@ -164,10 +165,16 @@ public class HibernateDao implements IDao{
 	
 	@Override
 	public void dissociateService(Employe employe, Service service) throws DAOException {
-		service.deleteEmploye(employe);
+		service.removeEmploye(employe);
 		this.update(service);
 	}
 
+	@Override
+	public void associateDepartement(Service service, Departement departement) throws DAOException{
+		departement.addService(service);
+		this.update(departement);
+	}
+	
 	@Override
 	public Object validateCredential(String login, String password)  throws DAOException{
 		Object utilisateur = null;
