@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #272924;" stylesheets="@../assets/css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.impl.ServiceEditDialogController">
+<AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #272924;" stylesheets="@../assets/css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.impl.DepartementEditDialogController">
    <children>
       <VBox prefHeight="300.0" prefWidth="500.0" styleClass="parent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -40,7 +40,7 @@
                         <Insets bottom="25.0" left="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label text="Chef de département">
+                  <!-- <Label text="Chef de département">
                      <padding>
                         <Insets bottom="5.0" left="10.0" />
                      </padding>
@@ -52,7 +52,7 @@
                      <VBox.margin>
                         <Insets bottom="15.0" left="10.0" right="10.0" />
                      </VBox.margin>
-                  </ComboBox>
+                  </ComboBox> -->
                </children>
                <VBox.margin>
                   <Insets left="5.0" right="20.0" top="10.0" />
@@ -67,7 +67,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="btnAnnuler" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleClickedAnnuler" styleClass="defaultbtns" text="ANNULER">
+                        <Button fx:id="btnAnnuler" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleClicledAnnuler" styleClass="defaultbtns" text="ANNULER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

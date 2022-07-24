@@ -48,7 +48,7 @@
                         <Insets right="385.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textRecherche" prefHeight="30.0" prefWidth="200.0" promptText="Entrer le nom du rôle" style="-fx-background-color: white; -fx-border-color: #D8DBDE;" styleClass="search">
+                  <TextField fx:id="textRecherche" prefHeight="30.0" prefWidth="200.0" promptText="Entrer le nom du rôle" style="-fx-background-color: white; -fx-border-color: #D8DBDE;">
                      <font>
                         <Font name="Calibri Light" size="14.0" />
                      </font>
