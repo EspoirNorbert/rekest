@@ -230,6 +230,7 @@ public class AdminRootLayoutController implements Initializable , IController {
 	public void initData() {
 		try {
 			Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);	
+			Utilitaire.setUserProfilePicture(currentPage, imageLogo);
 			
 		} catch (Exception e) {
 			logger.info("------------------------------------------------");

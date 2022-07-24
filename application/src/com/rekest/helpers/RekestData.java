@@ -90,7 +90,7 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initGestionnaire() {
 		List<Gestionnaire> gestionnaires = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i <=1; i++) {
 			gestionnaires.add(new Gestionnaire(faker.name().firstName(), 
 					faker.name().lastName(),
 					faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress()));
@@ -109,7 +109,7 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initChefServices() {
 		List<ChefService> chefServices = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 			chefServices.add(new ChefService(faker.name().firstName(), 
 					faker.name().lastName(),
 					faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress()));

@@ -84,6 +84,29 @@ public class PropertyManager {
 		return this.getProperties("application.entity.admin.password");
 	}
 	
+	public String getApplicationUserProfilAdmin() {
+		return this.getProperties("application.user.profile.admin");
+	}
+	
+	public String getApplicationUserProfilSimple() {
+		return this.getProperties("application.user.profile.simple");
+	}
+	
+	public String getApplicationUserProfilDirecteur() {
+		return this.getProperties("application.user.profile.directeur");
+	}
+	
+	
+	public String getApplicationUserProfilChefService() {
+		return this.getProperties("application.user.profile.chefService");
+	}
+	
+	
+	public String getApplicationUserProfilGestionnaire() {
+		return this.getProperties("application.user.profile.gestionnaire");
+	}
+	
+	
 	/**
 	 * Get property from file application.property
 	 * @param property Property string to get

@@ -183,7 +183,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="btnDetails" layoutX="172.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleClickedSoumettre" styleClass="defaultbtns" text="Détails">
+                        <Button fx:id="btnDetails" layoutX="172.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleClickedDetails" styleClass="defaultbtns" text="Détails">
                            <font>
                               <Font size="14.0" />
                            </font>

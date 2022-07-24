@@ -9,36 +9,56 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class NoteEditController implements Initializable {
-	
+
 	@FXML
-    private Button btnAnnuler;
+	private Button btnAnnuler;
 
-    @FXML
-    private Button btnEmettre;
+	@FXML
+	private Button btnEmettre;
 
-    @FXML
-    private Button btnFermer;
+	@FXML
+	private Button btnFermer;
 
-    @FXML
-    private TextArea textArea;
+	@FXML
+	private Button btnAjoutNote;
 
-    @FXML
-    void handleClickedCloturer(ActionEvent event) {
+	@FXML
+	private TextArea textArea;
 
-    }
+	private Stage dialogStage;
 
-    @FXML
-    void handleClickedSoumettre(ActionEvent event) {
+	private boolean okClicked = false;
 
-    }
+	/**
+	 * Sets the stage of this dialog.
+	 * @param dialogStage
+	 */
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
+	}
+
+	public boolean isOkClicked() {
+		return okClicked;
+	}
+
+	@FXML
+	void handleClickedCloturer(ActionEvent event) {
+		dialogStage.close();
+	}
+
+	@FXML
+	void handleClickedSoumettre(ActionEvent event) {
+
+	}
 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

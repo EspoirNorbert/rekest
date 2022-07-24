@@ -29,6 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -551,6 +552,20 @@ public class Utilitaire {
 	public static void initData(Utilisateur userConnected , Stage primaryStage , Label labelProfil , Label labelUsername , String currentPage) {
 		Utilitaire.initLabelData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
 		Utilitaire.setTiteStage(primaryStage, currentPage, userConnected);
+	}
+
+	public static void hideButton(Button...buttons) {
+		for (Button button : buttons) {
+			button.setVisible(false);
+		}
+	}
+	
+	public static void setUserProfilePicture(String profile , ImageView imageView) {
+		
+		if (profile.equals(Administrateur.class.getSimpleName())) {
+			imageView.setImage(new Image(propertyManager.getApplicationUserProfilAdmin()));
+		}
+		
 	}
 	
 	

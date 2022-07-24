@@ -89,5 +89,11 @@ public class Produit {
 
 	public static void copy(Produit produit, Produit entity) {}
 	
+	public String getProduitString() {
+		return description;
+		//return pro!= null? service.getId() + " - " + service.getNom() : null;
+	
+	}
+	
 	
 }

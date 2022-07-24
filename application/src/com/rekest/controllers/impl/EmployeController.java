@@ -82,7 +82,6 @@ public class EmployeController implements Initializable {
 
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
-		
 		Employe tempEmp = new Employe();
 		boolean okClicked = showEmployeEditDialog(tempEmp, "Creation d'un employe");
 		if (okClicked) {
@@ -90,7 +89,6 @@ public class EmployeController implements Initializable {
 			Boolean statut =  feature.creerEmploye(tempEmp);
 			if (statut) {
 				refreshCount();
-
 			}
 		}
 	}
