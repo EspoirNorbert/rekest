@@ -41,7 +41,7 @@ public class AuthenticationController implements Initializable , IController {
 	@FXML
 	private PasswordField txtPassword;
 
-	private IRekestData data = RekestData.getInstance();
+	private IRekestData data = new RekestData();
 
 	private IFeature service = Feature.getCurrentInstance();
 
@@ -53,7 +53,7 @@ public class AuthenticationController implements Initializable , IController {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		logger.info("Fenetre reçue {}" , this.primaryStage.getTitle() );
+		logger.info("Fenetre reï¿½ue {}" , this.primaryStage.getTitle() );
 	}
 
 	public void setConnectedUser(Utilisateur utilisateur) {
@@ -64,17 +64,17 @@ public class AuthenticationController implements Initializable , IController {
 	@FXML
 	void handleClickedConnexion(ActionEvent event) {
 		if (isInputValid()) {
-			Utilisateur user = (Utilisateur) service.validerIdentifiants(
+			Utilisateur user = (Utilisateur) service.validateCredential(
 					Utilitaire.getTextField(txtLogin), 
 					Utilitaire.getTextField(txtPassword));
 
 			if (user!= null) {
-				logger.info("{} connecté avec success", user.getEmployeProfil());
+				logger.info("{} connectï¿½ avec success", user.getEmployeProfil());
 				clearField();
 				this.setConnectedUser(user);
 				this.primaryStage.hide();
 				connectUserToSpace();
-				//Utilitaire.notification(NotificationType.INFO, "Bienvenue dans le votre ", "Vous etes connecté avec success !");
+				//Utilitaire.notification(NotificationType.INFO, "Bienvenue dans le votre ", "Vous etes connectï¿½ avec success !");
 			} else {
 				Utilitaire.notification(NotificationType.ERROR, 
 						"Echec de connexion", "Informations incorrects");
