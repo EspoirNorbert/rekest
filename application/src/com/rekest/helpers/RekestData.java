@@ -3,13 +3,20 @@ package com.rekest.helpers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.github.javafaker.Faker;
+import com.rekest.entities.Departement;
+import com.rekest.entities.Produit;
+import com.rekest.entities.Role;
 import com.rekest.entities.employes.Administrateur;
+import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Employe;
+import com.rekest.entities.employes.Gestionnaire;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.utils.Utilitaire;
@@ -82,62 +89,102 @@ public class RekestData implements IRekestData {
 
 	@Override
 	public void initGestionnaire() {
-		// TODO Auto-generated method stub
-
+		List<Gestionnaire> gestionnaires = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			gestionnaires.add(new Gestionnaire(faker.name().firstName(), 
+					faker.name().lastName(),
+					faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress()));
+			
+		}
+		// For each admin in ArrayList we add in database
+		gestionnaires.forEach(gestionnaire -> {
+			logger.info("{}" , gestionnaire.getFullName());
+			Boolean resultat = feature.creerUtilisateur(gestionnaire);
+			if (resultat)
+				logger.info("Departement {} was created successfully ", gestionnaire.getFullName());
+	
+		});
 	}
 
 	@Override
 	public void initChefServices() {
-		// TODO Auto-generated method stub
-
+		List<ChefService> chefServices = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			chefServices.add(new ChefService(faker.name().firstName(), 
+					faker.name().lastName(),
+					faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress()));
+			
+		}
+		// For each admin in ArrayList we add in database
+		chefServices.forEach(chefService -> {
+			logger.info("{}" , chefService.getFullName());
+			Boolean resultat = feature.creerUtilisateur(chefService);
+			if (resultat)
+				logger.info("Departement {} was created successfully ", chefService.getFullName());
+	
+		});
 	}
 
 	@Override
-	public void initChefDepartement() {
-		// TODO Auto-generated method stub
-
-	}
+	public void initChefDepartement() {}
 
 	@Override
-	public void initDirecteurGeneral() {
-		// TODO Auto-generated method stub
-
-	}
+	public void initDirecteurGeneral() {}
 
 	@Override
 	public void initDirection() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void createDefaultAdmin() {
-		// TODO Auto-generated method stub
-
-	}
+	public void createDefaultAdmin() {}
 
 	@Override
 	public void initDepartement() {
-		// TODO Auto-generated method stub
-
+		List<Departement> departements = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			departements.add(new Departement(faker.commerce().department()));
+		}
+		// For each admin in ArrayList we add in database
+		departements.forEach(departement -> {
+			logger.info("{}" , departement.getNom());
+			Boolean resultat = feature.creerDepartement(departement);
+			if (resultat)
+				logger.info("Departement {} was created successfully ", departement.getNom());
+	
+		});
 	}
 
 	@Override
-	public void initService() {
-		// TODO Auto-generated method stub
-
-	}
+	public void initService() {}
 
 	@Override
 	public void initRole() {
-		// TODO Auto-generated method stub
-
+		Stream.of("ALL",  "LISTER" , "MODIFIER" , "SUPPRIMER")
+		.forEach(roleName -> {
+			logger.info("{}" ,roleName);
+			Boolean resultat = feature.creerRole(new Role(roleName));
+			if (resultat)
+				logger.info("Role {} was created successfully ", roleName);
+		});
 	}
 
 	@Override
 	public void initProduit() {
-		// TODO Auto-generated method stub
-
+		List<Produit> produits = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			produits.add(new Produit(faker.commerce().productName(), 
+							Integer.parseInt(faker.commerce().price().replace(",", "")), 
+							new Random().nextInt() * 2));
+		}
+		// For each admin in ArrayList we add in database
+		produits.forEach(produit -> {
+			logger.info("{}" , produit.getNom());
+			Boolean resultat = feature.creerProduit(produit);
+			if (resultat)
+				logger.info("Produit {} was created successfully ", produit.getNom());
+	
+		});
 	}
 
 	@Override
