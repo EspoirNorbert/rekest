@@ -35,9 +35,7 @@ public class AdminRootLayoutController implements Initializable , IController {
 
 	/**
 	 * Controllers
-	 */
-	private DepartementController departementController; 
-	private ServiceController serviceController;      
+	 */ 
 	private MainController mainController;
 
 	/**
@@ -196,22 +194,6 @@ public class AdminRootLayoutController implements Initializable , IController {
 		mainController = MainController.getInstance();
 	}
 
-	public DepartementController getDepartementController() {
-		return departementController;
-	}
-
-	public void setDepartementController(DepartementController departementController) {
-		this.departementController = departementController;
-	}
-
-	public ServiceController getServiceController() {
-		return serviceController;
-	}
-
-	public void setServiceController(ServiceController serviceController) {
-		this.serviceController = serviceController;
-	}
-
 	public MainController getMainController() {
 		return mainController;
 	}
@@ -223,26 +205,21 @@ public class AdminRootLayoutController implements Initializable , IController {
 	public BorderPane getRootLayout() {
 		return rootLayout;
 	}
-
-
-	public AnchorPane getAnchorPaneCenter() {
-		return anchorPaneCenter;
-	}
-
-	public void setAnchorPaneCenter(AnchorPane anchorPaneCenter) {
-		this.anchorPaneCenter = anchorPaneCenter;
-	}
-
+	
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
 
 	@Override
 	public void initData() {
-		userConnected = Utilitaire.getConnectedUser(primaryStage);
-		logger.info(userConnected.getFullName());
-		Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
-		Utilitaire.setTiteStage(primaryStage, currentPage, userConnected);
+		try {
+			userConnected = Utilitaire.getConnectedUser(primaryStage);
+			logger.info(userConnected.getFullName());
+			Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
+		} catch (Exception e) {
+			logger.error("Error in initData {}" , e.getMessage());
+		}
+		
 	}
 
 }

@@ -15,12 +15,9 @@ import com.rekest.utils.Utilitaire;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
 
 public class ManagerRootLayoutController implements Initializable , IController {
 
@@ -32,9 +29,7 @@ public class ManagerRootLayoutController implements Initializable , IController 
 	
 	/**
 	 * Controllers
-	 */
-	private DemandeController demandeController; 
-	private ProfilController profilController;      
+	 */     
 	private MainController mainController;
 
 	/**
@@ -46,27 +41,6 @@ public class ManagerRootLayoutController implements Initializable , IController 
 	/**
 	 * Composants
 	 */
-	@FXML
-	private AnchorPane anchorPaneCenter;
-
-	@FXML
-	private Button btnAccueil;
-
-	@FXML
-	private Button btnDemande;
-
-	@FXML
-	private Button btnLogOut;
-
-	@FXML
-	private Button btnNotifications;
-
-	@FXML
-	private Button btnProfil;
-
-	@FXML
-	private Circle circleProfil;
-
 	@FXML
 	private ImageView imageLogo;
 
@@ -90,23 +64,17 @@ public class ManagerRootLayoutController implements Initializable , IController 
 		this.initData();
 	}
 
-	private void setTitle(String currentPage) {
-		this.primaryStage.setTitle(currentPage + " - " +
-				Utilitaire.setUserWindowTitle(userConnected , 
-						Utilitaire.getTypeManager(userConnected))) ;
-	}
-
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerOverview");
-		this.setTitle(currentPage);
+		Utilitaire.setTiteStage(primaryStage , currentPage, userConnected);
 	}
 
 	@FXML
 	void handleClickedDemande(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Demande");
-		this.setTitle("Demande");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
+		Utilitaire.setTiteStage(primaryStage , "Demandes", userConnected);
 	}
 
 	@FXML
@@ -117,13 +85,13 @@ public class ManagerRootLayoutController implements Initializable , IController 
 	@FXML
 	void handleClickedProfil(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Profil");
-		this.setTitle("Profil");
+		Utilitaire.setTiteStage(primaryStage , "Profil", userConnected);
 	}
 
 	@FXML
 	void handleClicledNotification(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications");
-		this.setTitle("Notifications");
+		Utilitaire.setTiteStage(primaryStage , "Notifications", userConnected);
 	}
 
 	@Override
@@ -154,6 +122,8 @@ public class ManagerRootLayoutController implements Initializable , IController 
 
 	@Override
 	public void initData() {
-	
+		userConnected = Utilitaire.getConnectedUser(primaryStage);
+		logger.info(userConnected.getFullName());
+		Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
 	}
 }

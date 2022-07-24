@@ -81,7 +81,7 @@ public class MainController {
 
 	public void initGestionnaireRootLayout(Utilisateur auth) {
 		this.loadInitRootLayout(auth, "GestionnaireRootLayout", gestionnaireRootLayoutController);
-		Utilitaire.loadPageInRootLayout(rootLayout, "GestionnaireOverview");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
 	}
 
 

@@ -95,10 +95,9 @@ public class DemandeController {
 
     }
 
+    
     @FXML
-    void handleClickedValider(ActionEvent event) {
-
-    }
+    void handleClickedValider(ActionEvent event) {}
 
 }
 

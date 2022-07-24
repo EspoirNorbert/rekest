@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.Notifications;
 
 import com.rekest.controllers.impl.MainController;
-import com.rekest.controllers.impl.MainController;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
@@ -28,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Labeled;
@@ -442,7 +442,7 @@ public class Utilitaire {
 	public static void logout(Stage primaryStage) {
 		primaryStage.close();
 		if (!primaryStage.isShowing()) {
-			MainController.getInstance().initAuthentication(primaryStage);
+			MainController.getInstance().initAuthentication(new Stage());
 			Utilitaire.notification(NotificationType.INFO, 
 					"Deconnexion", "Aurevoir a la prochaine !");
 		}	
@@ -457,7 +457,7 @@ public class Utilitaire {
 	 * @param currentPage
 	 * @return
 	 */
-	public static void initData(Utilisateur connectedUser , 
+	public static void initLabelData(Utilisateur connectedUser , 
 		Stage stage , Labeled labelProfil , Labeled labelUsername , String currentPage) {
 		Utilitaire.setLabel(labelProfil, connectedUser.getEmployeProfil());
 		Utilitaire.setLabel(labelUsername, connectedUser.getFullName());
@@ -515,7 +515,21 @@ public class Utilitaire {
 	
 	
 	public static void setTiteStage(Stage stage , String currentPage, Utilisateur userConnected) {
+		String space = "";
+		
+		if (userConnected.getEmployeProfil().equals(Administrateur.class.getSimpleName()))
+			space = "Admin";
+		else
+			space = Utilitaire.getTypeManager(userConnected);
+		
+		
 		stage.setTitle(currentPage + " - " +
-				Utilitaire.setUserWindowTitle(userConnected , "Admin")) ;
+				Utilitaire.setUserWindowTitle(userConnected , space)) ;
+	}
+	
+	
+	public static void initData(Utilisateur userConnected , Stage primaryStage , Label labelProfil , Label labelUsername , String currentPage) {
+		Utilitaire.initLabelData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
+		Utilitaire.setTiteStage(primaryStage, currentPage, userConnected);
 	}
 }

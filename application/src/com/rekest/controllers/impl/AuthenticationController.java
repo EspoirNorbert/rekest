@@ -107,7 +107,7 @@ public class AuthenticationController implements Initializable , IController {
 				if (profil.equals(ChefService.class.getSimpleName()) ||
 						profil.equals(Directeur.class.getSimpleName()) ||
 						profil.equals(DirecteurGeneral.class.getSimpleName())) {
-					//mainController.initManagerRootLayout(connectedUser);
+					   mainController.initManagerRootLayout(connectedUser);
 				}
 
 				if (profil.equals(Gestionnaire.class.getSimpleName())) {
@@ -116,7 +116,7 @@ public class AuthenticationController implements Initializable , IController {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				//Utilitaire.notification(NotificationType.ERROR, "Error", e.getMessage());
+				Utilitaire.notification(NotificationType.ERROR, "Error", e.getMessage());
 			}
 		}
 
@@ -133,7 +133,7 @@ public class AuthenticationController implements Initializable , IController {
 	public AuthenticationController() {
 		logger.info("Instance of {} is created" , this.getClass().getSimpleName());
 		mainController = MainController.getInstance();
-		data.initAllEntity();
+		//data.initAllEntity();
 	}
 
 	@Override
