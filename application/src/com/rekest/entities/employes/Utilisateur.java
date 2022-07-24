@@ -24,11 +24,11 @@ public class Utilisateur extends Employe {
 	protected String login;
 	protected String password;
 	
-	@Column(name = "is_enable")
+	@Column(name="is_enable")
 	protected boolean isEnable = true;
 	
 	@Basic
-	@Column(name = "created_at")
+	@Column(name="created_at")
 	protected Date createdAt;
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -41,8 +41,8 @@ public class Utilisateur extends Employe {
 	
 	@ManyToMany(targetEntity=Role.class, cascade=CascadeType.ALL)
 	@JoinTable(
-			joinColumns = 		 { @JoinColumn(name = "id_utilisateur") }, 
-			inverseJoinColumns = { @JoinColumn(name = "id_role") }
+			joinColumns = 		 { @JoinColumn(name="id_utilisateur") }, 
+			inverseJoinColumns = { @JoinColumn(name="id_role") }
 			)
 	protected List<Role> roles = new ArrayList<>();
 	
@@ -99,6 +99,7 @@ public class Utilisateur extends Employe {
 		if (u instanceof Administrateur ) return "Administrateur";
 		if (u instanceof Gestionnaire ) return "Gestionnaire";
 		if (u instanceof ChefService ) return "ChefService";
+		if (u instanceof ChefDepartement) return "ChefDepartement";
 		if (u instanceof Directeur ) return "Directeur";
 		if (u instanceof DirecteurGeneral ) return "DirecteurGeneral";
 		return null;
@@ -120,6 +121,10 @@ public class Utilisateur extends Employe {
 		notifications.add(notification);
 	}
 
+	public void removeNotification (Notification notification) {
+		notifications.remove(notification);
+	}
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -127,13 +132,30 @@ public class Utilisateur extends Employe {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+	public List<Notification> getNotification(){
+		
+		return this.notifications;
+	}
 
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	public List<Demande> getDemandesCreees() {
+		return demandesCreees;
+	}
+
+	public void setDemandesCreees(List<Demande> demandesCreees) {
+		this.demandesCreees = demandesCreees;
+	}
+	
 	@Override
 	public String toString() {
 		return "Utilisateur [ "+ super.toString()   +"   login=" + login + ", password=" + password + ", isEnable=" + isEnable + "]";
 	}
-	
-	
-	
-	
 }

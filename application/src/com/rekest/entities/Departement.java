@@ -3,6 +3,8 @@ package com.rekest.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rekest.entities.employes.ChefDepartement;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Departement {
@@ -28,6 +31,10 @@ public class Departement {
 	@JoinColumn(name="id_departement")
 	private List<Service> services = new ArrayList<>();
 	
+	@OneToOne(targetEntity=ChefDepartement.class)
+	@JoinColumn(name="id_chefdepartement")
+	private ChefDepartement chefDepartement;
+
 	public Departement() {}
 	
 	public Departement(String nom) {
@@ -57,6 +64,18 @@ public class Departement {
 	public void addService(Service service) {
 		if(service != null) 
 			this.services.add(service);
+	}
+
+	public void removeService(Service service) {
+		services.remove(service);
+	}
+	
+	public ChefDepartement getChefDepartement() {
+		return chefDepartement;
+	}
+	
+	public void setChefDepartement(ChefDepartement chefDepartement) {
+		this.chefDepartement = chefDepartement;
 	}
 
 	public void setServices(List<Service> services) {
