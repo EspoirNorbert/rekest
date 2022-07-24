@@ -32,7 +32,8 @@ public class AdminRootLayoutController implements Initializable , IController {
 	 * Loggers
 	 */
 	public final static Logger logger = LogManager.getLogger(AdminRootLayoutController.class);
-
+	private static AdminRootLayoutController instance =  new  AdminRootLayoutController();
+	
 	/**
 	 * Controllers
 	 */ 
@@ -96,11 +97,25 @@ public class AdminRootLayoutController implements Initializable , IController {
 	private Label labelUsername;
 
 	private Utilisateur userConnected;
-
+	
 	private String currentPage = "Accueil";
 
+	public AdminRootLayoutController() {
+		System.out.println("Controller " + AdminRootLayoutController.class.getSimpleName() +  " was called");
+	}
+	
+	public static AdminRootLayoutController getInstance() {
+		if (instance == null) return new AdminRootLayoutController();
+		return instance;
+	}
+	
 	public void setCurrentPage(String currentPage) {
 		this.currentPage = currentPage;
+	}
+	
+	@Override
+	public void setUserData(Utilisateur auth) {
+		this.userConnected = auth;
 	}
 
 	public void setPrimaryStage(Stage primaryStage) {
@@ -119,69 +134,71 @@ public class AdminRootLayoutController implements Initializable , IController {
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview");
+		Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview" ,userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Accueil" , userConnected);
 	}
 
 	@FXML
 	void handleClickedDemande(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Demandes" , userConnected);
+	
 	}
 
 	@FXML
 	void handleClickedDepartement(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Departement");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Departement",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Departement" , userConnected);
 	}
 
 	@FXML
 	void handleClickedEmploye(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Employes");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Employes",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Employe" , userConnected);
 	}
 
 
 	@FXML
 	void handleClickedParametre(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Parametres");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Parametres",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Parametres" , userConnected);
 	}
 
 	@FXML
 	void handleClickedProduit(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Produits");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Produits",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Produits" , userConnected);
 	}
 
 	@FXML
 	void handleClickedRole(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Roles");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Roles",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Roles" , userConnected);
 	}
 
 	@FXML
 	void handleClickedProfil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Profil");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Profil",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Profil" , userConnected);
 	}
 
 	@FXML
 	void handleClickedUtilisateur(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Utilisateurs");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Utilisateurs",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Utilisateurs" , userConnected);
 	}
 
 	@FXML
 	void handleClickedService(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Services");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Services",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Services" , userConnected);
 	}
 
 	@FXML
 	void handleClicledNotification(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Notifications" , userConnected);
+		
 	}
 
 	@FXML
@@ -209,17 +226,23 @@ public class AdminRootLayoutController implements Initializable , IController {
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
-
+	
 	@Override
 	public void initData() {
 		try {
-			userConnected = Utilitaire.getConnectedUser(primaryStage);
-			logger.info(userConnected.getFullName());
-			Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
+			Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);	
+			
 		} catch (Exception e) {
+			logger.info("------------------------------------------------");
+			e.printStackTrace();
 			logger.error("Error in initData {}" , e.getMessage());
+			logger.info("------------------------------------------------");
 		}
 		
+	}
+
+	public Utilisateur getUserConnected() {
+		return userConnected;
 	}
 
 }

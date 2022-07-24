@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.Notifications;
 
 import com.rekest.controllers.impl.MainController;
+import com.rekest.controllers.impl.ProfilController;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
@@ -179,9 +180,14 @@ public class Utilitaire {
 	 * @param classe
 	 * @throws IOException
 	 */
-	public static void loadPageInRootLayout(BorderPane rootLayout ,String filename) {
+	public static void loadPageInRootLayout(BorderPane rootLayout ,String filename , Utilisateur auth) {
 		FXMLLoader loader = Utilitaire.initFXMLoader(filename);
 		AnchorPane page   = (AnchorPane) Utilitaire.loadFXMLFile(loader, false) ;
+		
+		if (filename.equals("Profil")) {
+			ProfilController profilController = loader.getController();
+			profilController.setConnectedUser(auth);
+		}
 		
 		if (rootLayout == null) {
 			logger.info("RootLayout is null" , rootLayout);
@@ -532,4 +538,6 @@ public class Utilitaire {
 		Utilitaire.initLabelData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
 		Utilitaire.setTiteStage(primaryStage, currentPage, userConnected);
 	}
+	
+	
 }

@@ -71,17 +71,17 @@ public class MainController {
 
 	public void initAdminRootLayout(Utilisateur auth) {
 		this.loadInitRootLayout(auth, "AdminRootLayout", adminRootLayoutController);
-		Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview");
+		Utilitaire.loadPageInRootLayout(rootLayout, "AdminOverview" , auth);
 	}
 
 	public void initManagerRootLayout(Utilisateur auth) {
 		this.loadInitRootLayout(auth, "ManagerRootLayout", managerRootLayoutController);
-		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerOverview");
+		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerOverview" , auth);
 	}
 
 	public void initGestionnaireRootLayout(Utilisateur auth) {
 		this.loadInitRootLayout(auth, "GestionnaireRootLayout", gestionnaireRootLayoutController);
-		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes" , auth);
 	}
 
 
@@ -113,12 +113,13 @@ public class MainController {
 		FXMLLoader loader = Utilitaire.initFXMLoader(filename);
 		rootLayout = (BorderPane) Utilitaire.loadFXMLFile(loader, true);
 		Stage primaryStage = Utilitaire.createStage(rootLayout, null, false);
-		primaryStage.setUserData(auth);
-		rootController = loader.getController();       
+		rootController = loader.getController();  
+		rootController.setUserData(auth);
 		rootController.setPrimaryStage(primaryStage);
 		rootController.setRootLayout(rootLayout);
 		Utilitaire.showStage(primaryStage);
 	}
 
+	
 
 }

@@ -106,7 +106,7 @@
                   <Insets bottom="20.0" left="50.0" right="400.0" top="30.0" />
                </VBox.margin>
                <children>
-                  <Button fx:id="btnSauveegarder" mnemonicParsing="false" styleClass="defaultbtns" text="Sauvegarder">
+                  <Button fx:id="btnSauveegarder" mnemonicParsing="false" onAction="#handleClickedSauvegarder" styleClass="defaultbtns" text="Sauvegarder">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

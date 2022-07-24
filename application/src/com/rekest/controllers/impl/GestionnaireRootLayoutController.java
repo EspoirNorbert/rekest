@@ -82,7 +82,7 @@ public class GestionnaireRootLayoutController implements Initializable , IContro
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes" , null);
 		Utilitaire.setTiteStage(primaryStage , currentPage, userConnected);
 	}
 
@@ -93,13 +93,13 @@ public class GestionnaireRootLayoutController implements Initializable , IContro
 
 	@FXML
 	void handleClickedProfil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Profil");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Profil" , userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Profil", userConnected);
 	}
 
 	@FXML
 	void handleClicledNotification(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications" , userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Notifications", userConnected);
 	}
 

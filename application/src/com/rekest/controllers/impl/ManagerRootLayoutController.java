@@ -67,13 +67,13 @@ public class ManagerRootLayoutController implements Initializable , IController 
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerOverview");
+		Utilitaire.loadPageInRootLayout(rootLayout, "ManagerOverview" , userConnected);
 		Utilitaire.setTiteStage(primaryStage , currentPage, userConnected);
 	}
 
 	@FXML
 	void handleClickedDemande(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes", userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Demandes", userConnected);
 	}
 
@@ -84,13 +84,13 @@ public class ManagerRootLayoutController implements Initializable , IController 
 
 	@FXML
 	void handleClickedProfil(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Profil");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Profil", userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Profil", userConnected);
 	}
 
 	@FXML
 	void handleClicledNotification(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications", userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Notifications", userConnected);
 	}
 
