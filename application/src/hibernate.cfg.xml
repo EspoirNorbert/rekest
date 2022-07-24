@@ -5,26 +5,28 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hbm2ddl.auto">create</property>
-		<property name = "hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name = "hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-		<property name = "hibernate.connection.url">jdbc:mysql://localhost:3306/rekest_db?serverTimezone=UTC</property>
-		<property name = "hibernate.connection.username">root</property>
-		<property name = "hibernate.connection.password"></property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/rekest_db?serverTimezone=UTC</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
 
-		<mapping  class="com.rekest.entities.employes.Employe" />
-		<mapping  class="com.rekest.entities.employes.Utilisateur" />
-		<mapping  class="com.rekest.entities.employes.Gestionnaire" />
-		<mapping  class="com.rekest.entities.employes.Administrateur" />
-		<mapping  class="com.rekest.entities.employes.Manager" />	
-		<mapping  class="com.rekest.entities.employes.ChefService" />
-		<mapping  class="com.rekest.entities.employes.Directeur" />
-		<mapping  class="com.rekest.entities.employes.DirecteurGeneral" />
-		<mapping  class="com.rekest.entities.Demande" />
-		<mapping  class="com.rekest.entities.Produit" />
-		<mapping  class="com.rekest.entities.Notification" />
-		<mapping  class="com.rekest.entities.Note" />
-		<mapping  class="com.rekest.entities.Role" />
-		<mapping  class="com.rekest.entities.Service" />
-		<mapping  class="com.rekest.entities.Departement" />
+		<mapping class="com.rekest.entities.employes.Employe" />
+		<mapping class="com.rekest.entities.employes.Utilisateur" />
+		<mapping class="com.rekest.entities.employes.Gestionnaire" />
+		<mapping class="com.rekest.entities.employes.Administrateur" />
+		<mapping class="com.rekest.entities.employes.Manager" />
+		<mapping class="com.rekest.entities.employes.ChefService" />
+		<mapping class="com.rekest.entities.employes.ChefDepartement" />
+
+		<mapping class="com.rekest.entities.employes.Directeur" />
+		<mapping class="com.rekest.entities.employes.DirecteurGeneral" />
+		<mapping class="com.rekest.entities.Demande" />
+		<mapping class="com.rekest.entities.Produit" />
+		<mapping class="com.rekest.entities.Notification" />
+		<mapping class="com.rekest.entities.Note" />
+		<mapping class="com.rekest.entities.Role" />
+		<mapping class="com.rekest.entities.Service" />
+		<mapping class="com.rekest.entities.Departement" />
 	</session-factory>
 </hibernate-configuration>
