@@ -1,5 +1,6 @@
 package com.rekest.runtime;
 
+//import com.rekest.controllers.impl.MainController;
 import com.rekest.controllers.impl.MainController;
 import com.rekest.enums.NotificationType;
 import com.rekest.utils.Utilitaire;
@@ -18,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
     	try {
-    	     mainController.initAuthentication();
+    	     mainController.initAuthentication(primaryStage);
     	} catch(Exception e) {
     		e.printStackTrace();
     		Utilitaire.notification(NotificationType.ERROR, 

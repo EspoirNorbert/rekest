@@ -177,11 +177,6 @@ public class Employe {
 	}
 	
 	
-	public void setEmployeProfil(String employeProfil) {
-		this.employeProfil = employeProfil;
-	}
-	
-	
 	@Override
 	public String toString() {
 		return "Employe [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", telephone=" + telephone + ", email="

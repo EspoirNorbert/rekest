@@ -70,9 +70,9 @@ public class AuthenticationController implements Initializable , IController {
 
 			if (user!= null) {
 				logger.info("{} connecté avec success", user.getEmployeProfil());
-				clearField(); // clear field
-				this.primaryStage.hide();
+				clearField();
 				this.setConnectedUser(user);
+				this.primaryStage.hide();
 				connectUserToSpace();
 				//Utilitaire.notification(NotificationType.INFO, "Bienvenue dans le votre ", "Vous etes connecté avec success !");
 			} else {
@@ -94,9 +94,8 @@ public class AuthenticationController implements Initializable , IController {
 					"User Data", 
 					"Error when Application try get user connected data !");
 		} else {
-
-			this.connectedUser.setEmployeProfil(Utilitaire.setEmployeeProfil(connectedUser));
-			String profil = this.connectedUser.getEmployeProfil();
+			
+			String profil = connectedUser.getEmployeProfil();
 
 			logger.info("Employe profil is {}" , profil );
 
@@ -108,7 +107,7 @@ public class AuthenticationController implements Initializable , IController {
 				if (profil.equals(ChefService.class.getSimpleName()) ||
 						profil.equals(Directeur.class.getSimpleName()) ||
 						profil.equals(DirecteurGeneral.class.getSimpleName())) {
-					mainController.initManagerRootLayout(connectedUser);
+					//mainController.initManagerRootLayout(connectedUser);
 				}
 
 				if (profil.equals(Gestionnaire.class.getSimpleName())) {
@@ -132,7 +131,7 @@ public class AuthenticationController implements Initializable , IController {
 	}
 
 	public AuthenticationController() {
-		logger.info("Instance of {} is created" , this.getClass().getName());
+		logger.info("Instance of {} is created" , this.getClass().getSimpleName());
 		mainController = MainController.getInstance();
 		data.initAllEntity();
 	}

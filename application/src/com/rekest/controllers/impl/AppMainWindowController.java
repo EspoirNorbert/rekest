@@ -27,7 +27,7 @@ public class AppMainWindowController implements IController {
 	@FXML
     void handleClickedAuthentification(ActionEvent event) {
 		Utilitaire.hideAndCloseStage(mainWindowStage, true);
-		MainController.getInstance().initAuthentication();
+		MainController.getInstance().initAuthentication(mainWindowStage);
     }
 	
 	public Stage getMainWindowStage() {

@@ -9,9 +9,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.github.javafaker.Faker;
 import com.rekest.entities.employes.Administrateur;
-import com.rekest.entities.employes.Utilisateur;
+import com.rekest.entities.employes.Employe;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
+import com.rekest.utils.Utilitaire;
 
 public class RekestData implements IRekestData {
 
@@ -33,36 +34,49 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initAdmins() {
 		List<Administrateur> admins = new ArrayList<>();
-		List<Utilisateur> findAdmins = 
-			feature.listerUtilisateurs("where employe_profil = 'Administrateur'");
-		logger.info(findAdmins.size());
-		return ;
-		/*
-		if (feature.listerUtilisateurs("where employe_profil = 'Administrateur'").isEmpty()) {
-			for (int i = 0; i <= 3; i++) {
-				String lastName = faker.name().lastName();
-				String firstName = faker.name().firstName();
-				String phoneNumber = faker.phoneNumber().cellPhone();
-				String email = faker.internet().emailAddress();
-				String adresse = faker.address().fullAddress();
-				admins.add(new Administrateur(lastName,firstName,phoneNumber, email, adresse));
-			}
-			// For each admin in ArrayList we add in database
-			admins.forEach(admin -> {
-				logger.info("{}" , admin.getNom());
-				Boolean resultat = feature.creerUtilisateur(admin);
-				if (resultat)
-					logger.info("Admin {} was created successfully " , 
-							admin.getNom() + " " + admin.getPrenom());
-		
-			});
+		for (int i = 0; i <= 3; i++) {
+			String lastName = faker.name().lastName();
+			String firstName = faker.name().firstName();
+			String phoneNumber = faker.phoneNumber().cellPhone();
+			String email = faker.internet().emailAddress();
+			String adresse = faker.address().fullAddress();
+			admins.add(new Administrateur(lastName,firstName,phoneNumber, email, adresse));
 		}
-		*/
+		// add defautl admin
+		admins.add(Utilitaire.getDefaultAdmin());
+		// For each admin in ArrayList we add in database
+		admins.forEach(admin -> {
+			logger.info("{}" , admin.getFullName());
+			Boolean resultat = feature.creerUtilisateur(admin);
+			if (resultat)
+				logger.info("Admin {} was created successfully " , 
+						admin.getNom() + " " + admin.getPrenom());
+	
+		});
 	}
 
 	@Override
 	public void initEmployes() {
-		// TODO Auto-generated method stub
+		List<Employe> employes = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			String lastName = faker.name().lastName();
+			String firstName = faker.name().firstName();
+			String phoneNumber = faker.phoneNumber().cellPhone();
+			String email = faker.internet().emailAddress();
+			String adresse = faker.address().fullAddress();
+			employes.add(new Employe(lastName,firstName,phoneNumber, email, adresse));
+		}
+		// add defautl admin
+		employes.add(Utilitaire.getDefaultAdmin());
+		// For each admin in ArrayList we add in database
+		employes.forEach(employe -> {
+			logger.info("{}" , employe.getFullName());
+			Boolean resultat = feature.creerEmploye(employe);
+			if (resultat)
+				logger.info("Admin {} was created successfully " , 
+						employe.getNom() + " " + employe.getPrenom());
+	
+		});
 
 	}
 

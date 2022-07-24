@@ -107,7 +107,7 @@ public class AdminRootLayoutController implements Initializable , IController {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		Utilitaire.setDimensionStage(primaryStage, 600, 1200);
+		Utilitaire.setDimensionStage(primaryStage, 650, 1200);
 		this.initData();
 	}
 
@@ -170,7 +170,7 @@ public class AdminRootLayoutController implements Initializable , IController {
 
 	@FXML
 	void handleClickedUtilisateur(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Profil");
+		Utilitaire.loadPageInRootLayout(rootLayout, "Utilisateurs");
 		Utilitaire.setTiteStage(primaryStage , "Utilisateurs" , userConnected);
 	}
 
@@ -242,7 +242,7 @@ public class AdminRootLayoutController implements Initializable , IController {
 		userConnected = Utilitaire.getConnectedUser(primaryStage);
 		logger.info(userConnected.getFullName());
 		Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
-		primaryStage.setTitle(currentPage);
+		Utilitaire.setTiteStage(primaryStage, currentPage, userConnected);
 	}
 
 }

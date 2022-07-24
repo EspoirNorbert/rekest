@@ -54,7 +54,7 @@ public class DepartementController implements Initializable {
 		this.service = Feature.getCurrentInstance();
 		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         addDepartmentObservableListToTheTable();
-        refreshCount();
+        //refreshCount();
      }
      
      private void addDepartmentObservableListToTheTable() {

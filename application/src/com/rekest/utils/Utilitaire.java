@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.Notifications;
 
 import com.rekest.controllers.impl.MainController;
+import com.rekest.controllers.impl.MainController;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
@@ -29,7 +30,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -122,7 +122,26 @@ public class Utilitaire {
 			if (notifcationType.equals(NotificationType.INFO)) {
 				notification.showInformation();
 			}
+			
+			if (notifcationType.equals(NotificationType.WARNING)) {
+				notification.showWarning();
+			}
 		
+	}
+	
+	
+	/**
+	 * Create Scene
+	 * @param root
+	 * @param stage
+	 * @param title
+	 * @return scene created
+	 */
+	public static Stage createScene(Parent root , Stage stage , String title) {
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.setTitle(title + " - " + propertyManager.getApplicationName());
+		return stage;
 	}
 
 
@@ -166,6 +185,8 @@ public class Utilitaire {
 		
 		if (rootLayout == null) {
 			logger.info("RootLayout is null" , rootLayout);
+			Utilitaire.notification(NotificationType.WARNING, 
+					"Reference Null", "La reference vers rootLayout est null");
 		} else
 			rootLayout.setCenter(page);
 	}
@@ -421,7 +442,7 @@ public class Utilitaire {
 	public static void logout(Stage primaryStage) {
 		primaryStage.close();
 		if (!primaryStage.isShowing()) {
-			MainController.getInstance().initAuthentication();
+			MainController.getInstance().initAuthentication(primaryStage);
 			Utilitaire.notification(NotificationType.INFO, 
 					"Deconnexion", "Aurevoir a la prochaine !");
 		}	
