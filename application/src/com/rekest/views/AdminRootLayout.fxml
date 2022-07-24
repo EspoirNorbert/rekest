@@ -116,7 +116,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="270.0" styleClass="btns">
                            <children>
-                              <FontAwesomeIconView glyphName="USERS" glyphStyle="-fx-fill:#7C8184" size="1.3em">
+                              <FontAwesomeIconView glyphName="BRIEFCASE" glyphStyle="-fx-fill:#7C8184" size="1.3em">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -231,7 +231,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="270.0" styleClass="btns">
                            <children>
-                              <FontAwesomeIconView glyphName="USERS-GEARS" glyphStyle="-fx-fill:#7C8184" size="1.3em">
+                              <FontAwesomeIconView glyphName="USERS" glyphStyle="-fx-fill:#7C8184" size="1.3em">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -264,7 +264,7 @@
          <children>
             <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.4" prefWidth="1250.4" styleClass="topbar" stylesheets="@../assets/css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="945.0">
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="850.0">
                      <children>
                         <ImageView fx:id="imageLogo" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -281,9 +281,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="300.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="400.0">
                      <children>
-                        <ButtonBar minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0">
+                        <ButtonBar minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0">
                            <buttons>
                               <Button fx:id="btnNotifications" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleClicledNotification" style="-fx-background-color: Transparent;" text="Notifications">
                                  <graphic>
@@ -296,6 +296,14 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
+                              <Button fx:id="btnRefresh" mnemonicParsing="false" onMouseClicked="#handleClickedRefresh" style="-fx-background-color: transparent;" text="Refresh">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="REFRESH" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
                               <Button fx:id="btnLogOut" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleClickedLogOut" style="-fx-background-color: Transparent;" text="Déconnexion">
                                  <font>
                                     <Font size="14.0" />
@@ -306,13 +314,10 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                                 <padding>
-                                    <Insets right="10.0" />
-                                 </padding>
                               </Button>
                            </buttons>
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets />
                            </HBox.margin>
                         </ButtonBar>
                      </children>

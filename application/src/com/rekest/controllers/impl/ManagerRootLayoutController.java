@@ -63,7 +63,11 @@ public class ManagerRootLayoutController implements Initializable , IController 
 		Utilitaire.setDimensionStage(primaryStage, 600, 1200);
 		this.initData();
 	}
-
+	
+	@Override
+	public void setUserData(Utilisateur auth) {
+		this.userConnected = auth;
+	}
 
 	@FXML
 	void handleClickedAccueil(MouseEvent event) {
@@ -87,12 +91,20 @@ public class ManagerRootLayoutController implements Initializable , IController 
 		Utilitaire.loadPageInRootLayout(rootLayout, "Profil", userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Profil", userConnected);
 	}
-
+	
 	@FXML
-	void handleClicledNotification(MouseEvent event) {
+	void handleClickedNotification(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications", userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Notifications", userConnected);
 	}
+
+
+    @FXML
+    void handleClickedRefresh(MouseEvent event) {
+
+    }
+	
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -122,8 +134,15 @@ public class ManagerRootLayoutController implements Initializable , IController 
 
 	@Override
 	public void initData() {
-		userConnected = Utilitaire.getConnectedUser(primaryStage);
-		logger.info(userConnected.getFullName());
-		Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
+		try {
+			Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);	
+			
+		} catch (Exception e) {
+			logger.info("------------------------------------------------");
+			e.printStackTrace();
+			logger.error("Error in initData {}" , e.getMessage());
+			logger.info("------------------------------------------------");
+		}
+		
 	}
 }

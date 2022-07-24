@@ -61,6 +61,11 @@ public class GestionnaireRootLayoutController implements Initializable , IContro
 	}
 	
 	@Override
+	public void setUserData(Utilisateur auth) {
+		this.userConnected = auth;
+	}
+	
+	@Override
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		Utilitaire.setDimensionStage(primaryStage, 600, 1200);
@@ -75,9 +80,15 @@ public class GestionnaireRootLayoutController implements Initializable , IContro
 	
 	@Override
 	public void initData() {
-		userConnected = Utilitaire.getConnectedUser(primaryStage);
-		logger.info(userConnected.getFullName());
-		Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
+		try {
+			Utilitaire.initData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);	
+			
+		} catch (Exception e) {
+			logger.info("------------------------------------------------");
+			e.printStackTrace();
+			logger.error("Error in initData {}" , e.getMessage());
+			logger.info("------------------------------------------------");
+		}
 	}
 
 	@FXML
@@ -98,11 +109,16 @@ public class GestionnaireRootLayoutController implements Initializable , IContro
 	}
 
 	@FXML
-	void handleClicledNotification(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications" , userConnected);
+	void handleClickedNotification(MouseEvent event) {
+		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications", userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Notifications", userConnected);
 	}
 
+
+    @FXML
+    void handleClickedRefresh(MouseEvent event) {
+
+    }
 
 	public void setRootLayout(BorderPane rootLayout) {
 		this.rootLayout = rootLayout;
@@ -116,5 +132,7 @@ public class GestionnaireRootLayoutController implements Initializable , IContro
 	public BorderPane getRootLayout() {
 		return rootLayout;
 	}
+	
+	
 
 }

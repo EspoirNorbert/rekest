@@ -37,12 +37,12 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Label text="REKEST">
+                        <Label prefHeight="54.0" prefWidth="134.0" text="REKEST">
                            <font>
                               <Font name="System Bold" size="36.0" />
                            </font>
                            <HBox.margin>
-                              <Insets right="70.0" />
+                              <Insets right="20.0" />
                            </HBox.margin>
                         </Label>
                         <Button fx:id="btnAuthentification" mnemonicParsing="false" onAction="#handleClickedAuthentification" styleClass="btnauth" stylesheets="@../assets/css/style.css" text="AUTHENTIFICATION" textFill="#1836b2">
@@ -55,6 +55,14 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnQuitter" mnemonicParsing="false" onAction="#handleClickedQuitter" styleClass="btnauth" stylesheets="@../assets/css/style.css">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="CLOSE" size="20" />
+                           </graphic>
                         </Button>
                      </children>
                   </HBox>

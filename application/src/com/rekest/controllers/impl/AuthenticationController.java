@@ -81,6 +81,11 @@ public class AuthenticationController implements Initializable , IController {
 			}
 		}
 	}
+	
+	@FXML
+	void handleClickedRetour(ActionEvent event) {
+		mainController.initApplication(primaryStage);
+	}
 
 	/**
 	 * Connect a user to this space according user profil

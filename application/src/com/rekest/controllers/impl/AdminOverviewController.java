@@ -66,4 +66,6 @@ public class AdminOverviewController implements Initializable {
 	private void refreshEntitiesCounter() {
 		this.initEntiesCounter();
 	}
+	
+	
 }

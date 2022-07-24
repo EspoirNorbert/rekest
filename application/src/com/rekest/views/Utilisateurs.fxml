@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="950.0" stylesheets="@../assets/css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.impl.UtilisateurController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="950.0" stylesheets="@../assets/css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.UtilisateurController">
    <children>
       <VBox layoutX="238.0" layoutY="-1.0" prefHeight="750.4" prefWidth="1040.0" styleClass="parent" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -92,6 +92,7 @@
                   <TableColumn fx:id="columnLogin" prefWidth="75.0" text="Login" />
                   <TableColumn fx:id="columnProfil" prefWidth="75.0" text="Profil" />
                   <TableColumn fx:id="columnService" prefWidth="75.0" text="Service" />
+                  <TableColumn fx:id="columnStatus" prefWidth="75.0" text="Status" />
                </columns>
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="20.0" />
@@ -105,7 +106,7 @@
                   <Insets bottom="5.0" left="20.0" right="20.0" />
                </VBox.margin>
                <children>
-                  <ButtonBar prefHeight="50.0" prefWidth="310.0">
+                  <ButtonBar prefHeight="50.0" prefWidth="550.0">
                      <buttons>
                         <Button fx:id="btnModifier" mnemonicParsing="false" onAction="#handleClickedModifier" styleClass="defaultbtns" text="Modifier">
                            <font>
@@ -124,6 +125,28 @@
                            </font>
                            <graphic>
                               <FontAwesomeIconView glyphName="TRASH" />
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnActiver" layoutX="449.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleClickedActiver" styleClass="defaultbtns" text="Activer">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="UNLOCK" />
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnDesactiver" layoutX="449.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleClickedDesactiver" styleClass="defaultbtns" text="Désactiver">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="LOCK" />
                            </graphic>
                            <cursor>
                               <Cursor fx:constant="HAND" />

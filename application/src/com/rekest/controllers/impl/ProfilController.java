@@ -10,7 +10,6 @@ import com.rekest.entities.employes.Utilisateur;
 import com.rekest.enums.NotificationType;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
-import com.rekest.utils.PropertyManager;
 import com.rekest.utils.Utilitaire;
 import com.rekest.utils.Validator;
 

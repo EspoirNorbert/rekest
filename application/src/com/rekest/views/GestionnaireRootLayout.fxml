@@ -93,7 +93,7 @@
          <children>
             <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1250.0" styleClass="topbar" stylesheets="@../assets/css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="950.0">
+                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="850.0">
                      <children>
                         <ImageView fx:id="imageLogo" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -110,11 +110,11 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="650.0">
+                  <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0">
                      <children>
-                        <ButtonBar minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0">
+                        <ButtonBar minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0">
                            <buttons>
-                              <Button fx:id="btnNotificationTop" mnemonicParsing="false" onMouseClicked="#handleClicledNotification" style="-fx-background-color: Transparent;" text="Notifications">
+                              <Button fx:id="btnNotification" mnemonicParsing="false" onMouseClicked="#handleClickedNotification" style="-fx-background-color: Transparent;" text="Notifications">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="BELL" />
                                  </graphic>
@@ -124,6 +124,14 @@
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                              </Button>
+                              <Button fx:id="btnRefresh" mnemonicParsing="false" onMouseClicked="#handleClickedRefresh" style="-fx-background-color: transparent;" text="Refresh">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="REFRESH" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                               </Button>
                               <Button fx:id="btnLogOut" mnemonicParsing="false" onMouseClicked="#handleClickedLogOut" style="-fx-background-color: Transparent;" text="Déconnexion">
                                  <font>

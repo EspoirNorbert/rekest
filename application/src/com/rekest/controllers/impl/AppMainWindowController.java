@@ -23,6 +23,13 @@ public class AppMainWindowController implements IController {
 	public void setPrimaryStage(Stage primaryStage) {
 		this.mainWindowStage = primaryStage;
 	}
+    
+
+    @FXML
+    void handleClickedQuitter(ActionEvent event) {
+ 	   
+    	System.exit(0);
+    }
 	
 	@FXML
     void handleClickedAuthentification(ActionEvent event) {

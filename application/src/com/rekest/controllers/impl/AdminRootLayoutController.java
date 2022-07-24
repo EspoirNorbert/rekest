@@ -159,12 +159,6 @@ public class AdminRootLayoutController implements Initializable , IController {
 
 
 	@FXML
-	void handleClickedParametre(MouseEvent event) {
-		Utilitaire.loadPageInRootLayout(rootLayout, "Parametres",userConnected);
-		Utilitaire.setTiteStage(primaryStage , "Parametres" , userConnected);
-	}
-
-	@FXML
 	void handleClickedProduit(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Produits",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Produits" , userConnected);
@@ -197,8 +191,7 @@ public class AdminRootLayoutController implements Initializable , IController {
 	@FXML
 	void handleClicledNotification(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Notifications",userConnected);
-		Utilitaire.setTiteStage(primaryStage , "Notifications" , userConnected);
-		
+		Utilitaire.setTiteStage(primaryStage , "Notifications" , userConnected);	
 	}
 
 	@FXML
@@ -210,6 +203,12 @@ public class AdminRootLayoutController implements Initializable , IController {
 	public void initialize(URL location, ResourceBundle resources) {
 		mainController = MainController.getInstance();
 	}
+	
+	   
+    @FXML
+    void handleClickedRefresh(MouseEvent event) {
+
+    }
 
 	public MainController getMainController() {
 		return mainController;

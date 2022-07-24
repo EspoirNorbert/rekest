@@ -8,7 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.Notifications;
 
+import com.rekest.controllers.impl.DemandeController;
 import com.rekest.controllers.impl.MainController;
+import com.rekest.controllers.impl.NotificationController;
 import com.rekest.controllers.impl.ProfilController;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefService;
@@ -182,11 +184,21 @@ public class Utilitaire {
 	 */
 	public static void loadPageInRootLayout(BorderPane rootLayout ,String filename , Utilisateur auth) {
 		FXMLLoader loader = Utilitaire.initFXMLoader(filename);
-		AnchorPane page   = (AnchorPane) Utilitaire.loadFXMLFile(loader, false) ;
+		AnchorPane page   = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
 		
 		if (filename.equals("Profil")) {
 			ProfilController profilController = loader.getController();
 			profilController.setConnectedUser(auth);
+		}
+		
+		if (filename.equals("Demandes")) {
+			DemandeController demandeController = loader.getController();
+			demandeController.setConnectedUser(auth);
+		}
+		
+		if (filename.equals("Notifications")) {
+			NotificationController notificationController = loader.getController();
+			notificationController.setConnectedUser(auth);
 		}
 		
 		if (rootLayout == null) {
@@ -525,6 +537,8 @@ public class Utilitaire {
 		
 		if (userConnected.getEmployeProfil().equals(Administrateur.class.getSimpleName()))
 			space = "Admin";
+		else if (userConnected.getEmployeProfil().equals(Gestionnaire.class.getSimpleName()))
+			space = "Gestionnaire";
 		else
 			space = Utilitaire.getTypeManager(userConnected);
 		

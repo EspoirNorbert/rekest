@@ -19,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
     	try {
-    	     mainController.initAuthentication(primaryStage);
+    	     mainController.initApplication(primaryStage);
     	} catch(Exception e) {
     		e.printStackTrace();
     		Utilitaire.notification(NotificationType.ERROR, 

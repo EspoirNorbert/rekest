@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.rekest.entities.Demande;
+import com.rekest.entities.employes.Utilisateur;
 import com.rekest.feature.IFeature;
 import com.rekest.utils.Utilitaire;
 
@@ -80,11 +81,18 @@ public class DemandeController implements Initializable {
     
    public Stage primaryStage;
 	
-	private IFeature service;
+   private IFeature service;
 	
-	public void setPrimaryStage(Stage primaryStage) {
+   private Utilisateur connectedUser;
+   
+   public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+   }
+	
+	public void setConnectedUser(Utilisateur connectedUser) {
+		this.connectedUser = connectedUser;
 	}
+	
 	
 	private DemandeEditDialogController demandeEditDialogController;
 
