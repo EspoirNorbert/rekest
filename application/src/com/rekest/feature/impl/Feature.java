@@ -2,35 +2,37 @@ package com.rekest.feature.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Stream;
 
 import com.rekest.dao.IDao;
 import com.rekest.dao.impl.HibernateDao;
 import com.rekest.entities.Demande;
 import com.rekest.entities.Departement;
 import com.rekest.entities.Note;
+import com.rekest.entities.Notification;
 import com.rekest.entities.Produit;
 import com.rekest.entities.Role;
 import com.rekest.entities.Service;
+import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Manager;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.exeptions.DAOException;
 import com.rekest.feature.IFeature;
+import com.rekest.notificationmanager.impl.NotificationManager;
+import com.rekest.observableList.impl.ObservableListChefDepartement;
 import com.rekest.observableList.impl.ObservableListDemande;
 import com.rekest.observableList.impl.ObservableListDepartement;
 import com.rekest.observableList.impl.ObservableListEmploye;
 import com.rekest.observableList.impl.ObservableListManager;
 import com.rekest.observableList.impl.ObservableListNote;
+import com.rekest.observableList.impl.ObservableListNotification;
 import com.rekest.observableList.impl.ObservableListProduit;
 import com.rekest.observableList.impl.ObservableListRole;
 import com.rekest.observableList.impl.ObservableListService;
 import com.rekest.observableList.impl.ObservableListUtilisateur;
-import com.rekest.utils.Utilitaire;
+import com.rekest.utils.ErrorLogFileManager;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert.AlertType;
 
 public class Feature implements IFeature {
 
@@ -45,24 +47,36 @@ public class Feature implements IFeature {
 	private ObservableListDemande observableListDemande ;
 	private ObservableListManager observableListManager ;
 	private ObservableListNote observableListNote ;
+	private ObservableListChefDepartement observableListChefDepartement ;
 	private ObservableListUtilisateur observableListUtilisateur;
 
+	private ObservableListNotification observableListNotification;
+
+	private static NotificationManager notifManager = new NotificationManager();
 
 	private Feature () {
-		observableListDepartement = new ObservableListDepartement();
-		observableListEmploye = new ObservableListEmploye();
-		observableListProduit = new ObservableListProduit();
-		observableListService = new ObservableListService();
-		observableListRole = new ObservableListRole();
-		observableListDemande = new ObservableListDemande();
-		observableListManager = new ObservableListManager();
-		observableListNote = new ObservableListNote();
-		observableListUtilisateur = new ObservableListUtilisateur();
+		observableListDepartement = new ObservableListDepartement ();
+		observableListEmploye = new ObservableListEmploye ();
+		observableListProduit = new ObservableListProduit ();
+		observableListService = new ObservableListService ();
+		observableListRole = new ObservableListRole ();
+		observableListDemande = new ObservableListDemande ();
+		observableListManager = new ObservableListManager ();
+		observableListNote = new ObservableListNote ();
+		observableListUtilisateur = new ObservableListUtilisateur ();
+		observableListNotification = new ObservableListNotification ();
+		observableListChefDepartement = new ObservableListChefDepartement ();
+
 	}
 
 	public static Feature getCurrentInstance () {
 		if (instance == null) instance = new Feature ();
 		return instance;
+	}
+
+	private static void AlertError (Exception e,String context) {
+		e.printStackTrace ();
+
 	}
 
 	public ObservableListDemande getObservableListDemande() {
@@ -101,541 +115,21 @@ public class Feature implements IFeature {
 		return observableListUtilisateur;
 	}
 
-
-	@Override
-	public List<Departement> listerDepartements ()   {
-
-		List<Object> objects =  null;
-		List<Departement> departements = new ArrayList<> ();
-		try {
-			objects = dao.list ( new Departement());
-
-			for (Object obj : objects) {
-				if (obj instanceof Departement) {
-					departements.add ( (Departement) obj);
-				}
-			}
-		} catch (DAOException e) {
-			Utilitaire.alert(AlertType.ERROR, null,
-					"Error", e.getClass() +
-					"Error while get departements",
-					e.getMessage());
-			e.printStackTrace();
-		}
-		return departements;
+	public ObservableListChefDepartement getObservableListChefDepartement() {
+		return observableListChefDepartement;
 	}
 
-	@Override
-	public List<Departement> listerDepartements (String whereClause)  {
-
-		List<Object> objects;
-		List<Departement> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( Departement.class, whereClause);
-			for (Object obj : objects) {
-				if (obj instanceof Departement) {
-					objs.add ( (Departement) obj);
-				}
-			}
-		} catch (DAOException e) {
-			Utilitaire.alert(AlertType.ERROR, null,
-					"Error", e.getClass() +
-					"Error while get departements",
-					e.getMessage());
-			e.printStackTrace();
-		}
-
-		return objs;
-	}
-
-	@Override
-	public boolean supprimerDepartement (Departement departement)   {
-		try {
-			dao.delete ( departement);
-			observableListDepartement.delete(departement);
-			loadDepartementsObservableList();
-			return true;
-		} catch (DAOException e) {
-			Utilitaire.alert(AlertType.ERROR, null,
-					"Error", e.getClass() +
-					"Error while delete an",
-					e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	@Override
-	public boolean modifierDepartement (Departement departement)   {
-
-		try {
-			dao.update ( departement);
-			loadDepartementsObservableList();
-			return true;
-		} catch (DAOException e) {
-			Utilitaire.alert(AlertType.ERROR, null,
-					"Error", e.getClass() +
-					"Error while edit department",
-					e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean creerDepartement (Departement departement)   {
-
-		try {
-			dao.save ( departement);
-			loadDepartementsObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
+	public ObservableListNotification getObservableListNotification() {
+		return observableListNotification;
 	}
 
 
 
-	@Override
-	public Departement rechercherDepartement (String whereClause)   {
-
-		try {
-			return (Departement) dao.find (  Departement.class, whereClause);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public Departement rechercherDepartement (Integer primaryKey)  {
-		try {
-			return (Departement) dao.find ( new Departement ( ) , primaryKey);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-
-
-	@Override
-	public boolean activerUtilisateur (Utilisateur utilisateur)   {
-
-		try {
-			dao.enableAccount (utilisateur);
-			loadUtilisateursObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean desactiverUtilisateur (Utilisateur utilisateur)   {
-
-		try {
-			dao.disableAccount (utilisateur);
-			loadUtilisateursObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/*
-	@Override
-	public boolean rafraichirUtilisateur (Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
-		return dao.;
-	}
-	 */
-
-	@Override
-	public List<Utilisateur> listerUtilisateurs ()   {
-
-		List<Object> objects;
-		List<Utilisateur> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( new Utilisateur());
-
-			for (Object obj : objects) {
-				if (obj instanceof Utilisateur) {
-					objs.add ( (Utilisateur) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return objs;
-	}
-
-	@Override
-	public List<Utilisateur> listerUtilisateurs (String whereClause)  {
-
-		List<Object> objects;
-		List<Utilisateur> objs = new ArrayList<> ();
-		try {
-			objects = dao.list (Utilisateur.class, whereClause);
-			for (Object obj : objects) {
-				if (obj instanceof Utilisateur) {
-					objs.add ( (Utilisateur) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return objs;
-	}
-
-	@Override
-	public boolean supprimerUtilisateur (Utilisateur utilisateur)   {
-		try {
-			dao.delete ( utilisateur);
-			loadUtilisateursObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	@Override
-	public boolean modifierUtilisateur (Utilisateur utilisateur)   {
-
-		try {
-			dao.update ( utilisateur);
-			loadUtilisateursObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean creerUtilisateur (Utilisateur utilisateur)   {
-
-		try {
-			dao.save ( utilisateur);
-			loadUtilisateursObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-
-	}
-
-
-
-	@Override
-	public Utilisateur rechercherUtilisateur (String whereClause)   {
-
-		try {
-			return (Utilisateur) dao.find (  Utilisateur.class, whereClause);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public Utilisateur rechercherUtilisateur (Integer primaryKey)  {
-		try {
-			return (Utilisateur) dao.find ( new Utilisateur ( ) , primaryKey);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public List<Role> listerRoles ()   {
-
-		List<Object> objects;
-		List<Role> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( new Role());
-
-			for (Object obj : objects) {
-				if (obj instanceof Role) {
-					objs.add ( (Role) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return objs;
-	}
-
-	@Override
-	public List<Role> listerRoles (String whereClause)  {
-
-		List<Object> objects;
-		List<Role> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( Role.class, whereClause);
-			for (Object obj : objects) {
-				if (obj instanceof Role) {
-					objs.add ( (Role) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-		return objs;
-	}
-
-	@Override
-	public boolean supprimerRole (Role role)   {
-		try {
-			dao.delete ( role);
-			loadRoleObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	@Override
-	public boolean modifierRole (Role role)   {
-
-		try {
-			dao.update ( role);
-			loadRoleObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean creerRole (Role role)   {
-
-		try {
-			dao.save ( role);
-			loadRoleObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-
-	}
-
-
-
-	@Override
-	public Role rechercherRole (String whereClause)   {
-
-		try {
-			return (Role) dao.find (  Role.class, whereClause);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public Role rechercherRole (Integer primaryKey)  {
-		try {
-			return (Role) dao.find ( new Role ( ) , primaryKey);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public List<Manager> listerManagers ()   {
-
-		List<Object> objects;
-		List<Manager> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( new Manager());
-
-			for (Object obj : objects) {
-				if (obj instanceof Manager) {
-					objs.add ( (Manager) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return objs;
-	}
-
-	@Override
-	public List<Manager> listerManagers (String whereClause)  {
-
-		List<Object> objects;
-		List<Manager> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( Manager.class, whereClause);
-			for (Object obj : objects) {
-				if (obj instanceof Manager) {
-					objs.add ( (Manager) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return objs;
-	}
-
-	@Override
-	public boolean supprimerManager (Manager manager)   {
-		try {
-			dao.delete ( manager);
-			loadManagerObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	@Override
-	public boolean modifierManager (Manager manager)   {
-
-		try {
-			dao.update ( manager);
-			loadManagerObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean creerManager (Manager manager)   {
-
-		try {
-			dao.save ( manager);
-			loadManagerObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-
-	}
-
-
-
-	@Override
-	public Manager rechercherManager (String whereClause)   {
-
-		try {
-			return (Manager) dao.find (  Manager.class, whereClause);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public Manager rechercherManager (Integer primaryKey)  {
-		try {
-			return (Manager) dao.find ( new Manager ( ) , primaryKey);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public List<Employe> listerEmployes ()   {
-
-		List<Object> objects;
-		List<Employe> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( new Employe());
-
-			for (Object obj : objects) {
-				if (obj instanceof Employe) {
-					objs.add ( (Employe) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return objs;
-	}
-
-	@Override
-	public List<Employe> listerEmployes (String whereClause)  {
-
-		List<Object> objects;
-		List<Employe> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( Employe.class, whereClause);
-			for (Object obj : objects) {
-				if (obj instanceof Employe) {
-					objs.add ( (Employe) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-		return objs;
-	}
-
-	@Override
 	public boolean supprimerEmploye (Employe employe)   {
 		try {
 			if ( employe.getService() != null )
 				dao.dissociateService ( employe, employe.getService());
-			
+
 			dao.delete ( employe);
 			observableListEmploye.delete(employe);
 			loadEmployesObservableList();
@@ -649,7 +143,6 @@ public class Feature implements IFeature {
 
 	}
 
-	@Override
 	public boolean modifierEmploye (Employe employe)   {
 
 		try {
@@ -669,7 +162,6 @@ public class Feature implements IFeature {
 		}
 	}
 
-	@Override
 	public boolean creerEmploye (Employe employe)   {
 
 		try {
@@ -677,7 +169,7 @@ public class Feature implements IFeature {
 				dao.associateService ( employe, employe.getService());
 
 			dao.save ( employe);
-			
+
 			loadEmployesObservableList();
 			return true;
 		} catch (DAOException e) {
@@ -691,36 +183,756 @@ public class Feature implements IFeature {
 
 
 
+
 	@Override
-	public Employe rechercherEmploye (String whereClause)   {
+	public List<Departement> listDepartements ()   {
+
+		List<Object> objects =  null;
+		List<Departement> departements = new ArrayList<> ();
+		try {
+			objects = dao.list ( new Departement ());
+
+			for (Object obj : objects) {
+				if (obj instanceof Departement) {
+					departements.add ( (Departement) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get departements");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return departements;
+	}
+
+	@Override
+	public List<Departement> listDepartements (String whereClause)  {
+
+		List<Object> objects;
+		List<Departement> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Departement.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof Departement) {
+					objs.add ( (Departement) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get departements");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+		return objs;
+	}
+
+	@Override
+	public boolean deleteDepartement (Departement departement)   {
+		try {
+			dao.delete ( departement);
+			loadDepartementsObservableList ();
+
+
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete departement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateDepartement (Departement departement)   {
+
+		try {
+			dao.update ( departement);
+			loadDepartementsObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update departement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createDepartement (Departement departement)   {
+
+		try {
+			dao.save ( departement);
+			loadDepartementsObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create departement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+
+
+	@Override
+	public Departement findDepartement (String whereClause)   {
+
+		try {
+			return (Departement) dao.find (  Departement.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find departement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public Departement findDepartement (Integer primaryKey)  {
+		try {
+			return (Departement) dao.find ( new Departement ( ) , primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find departement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+
+
+	@Override
+	public boolean enableUtilisateur (Utilisateur utilisateur)   {
+
+		try {
+			dao.enableAccount (utilisateur);
+			loadUtilisateursObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"enabling user");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean disableUtilisateur (Utilisateur utilisateur)   {
+
+		try {
+			dao.disableAccount (utilisateur);
+			loadUtilisateursObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"desabling user");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	/*
+	@Override
+	public boolean rafraichirUtilisateur (Utilisateur utilisateur) {
+		// TODO Auto-generated method stub
+		return dao.;
+	}
+	 */
+
+	@Override
+	public List<Utilisateur> listUtilisateurs ()   {
+
+		List<Object> objects;
+		List<Utilisateur> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( new Utilisateur ());
+
+			for (Object obj : objects) {
+				if (obj instanceof Utilisateur) {
+					objs.add ( (Utilisateur) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get users");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<Utilisateur> listUtilisateurs (String whereClause)  {
+
+		List<Object> objects;
+		List<Utilisateur> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Utilisateur.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof Utilisateur) {
+					objs.add ( (Utilisateur) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get users");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+
+		return objs;
+	}
+
+	@Override
+	public boolean deleteUtilisateur (Utilisateur utilisateur)   {
+		try {
+
+			List<Notification> notifs= utilisateur.getNotification();
+			while(notifs.isEmpty() != true) {
+				deleteNotificationFeature(notifs.get(0), null , null);
+				notifs.remove(0);
+			}
+			utilisateur.setNotifications(notifs);
+
+			List<Demande> demandes= utilisateur.getDemandesCreees();
+			while(demandes.isEmpty() != true) {
+				deleteDemande(demandes.get(0));
+				demandes.remove(0);
+			}
+			utilisateur.setDemandesCreees(demandes);
+
+
+			dao.delete ( utilisateur);
+			loadUtilisateursObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete user");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateUtilisateur (Utilisateur utilisateur)   {
+
+		try {
+			dao.update ( utilisateur);
+			loadUtilisateursObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update user");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createUtilisateur (Utilisateur utilisateur)   {
+
+		try {
+			dao.save ( utilisateur);
+			loadUtilisateursObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create user");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+
+	}
+
+
+
+	@Override
+	public Utilisateur findUtilisateur (String whereClause)   {
+
+		try {
+			return (Utilisateur) dao.find (  Utilisateur.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find user");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public Utilisateur findUtilisateur (Integer primaryKey)  {
+		try {
+			return (Utilisateur) dao.find ( new Utilisateur ( ) , primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find user");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public List<Notification> listNotifications ()   {
+
+		List<Object> objects;
+		List<Notification> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( new Notification ());
+
+			for (Object obj : objects) {
+				if (obj instanceof Notification) {
+					objs.add ( (Notification) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get notifications");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<Notification> listNotifications (String whereClause)  {
+
+		List<Object> objects;
+		List<Notification> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Notification.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof Notification) {
+					objs.add ( (Notification) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get notifications");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public boolean deleteNotificationFeature  (Notification notification, Utilisateur utilisateur, Demande demande)   {
+		try {
+			notifManager.deleteNotification(notification, utilisateur, demande);
+			loadNotificationObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete notification");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateNotification (Notification notification)   {
+
+		try {
+			dao.update ( notification);
+			loadNotificationObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update notification");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createNotificationFeature (Utilisateur utilisateur, Demande demande, String message)    {
+
+		try {
+			notifManager.createNotification(utilisateur, demande, message);
+			loadNotificationObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create notification");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+
+	}
+
+
+
+	@Override
+	public Notification findNotification (String whereClause)   {
+
+		try {
+			return (Notification) dao.find (  Notification.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find notification");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public Notification findNotification (Integer primaryKey)  {
+		try {
+			return (Notification) dao.find ( new Notification ( ) , primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find notification");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public List<Role> listRoles ()   {
+
+		List<Object> objects;
+		List<Role> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( new Role ());
+
+			for (Object obj : objects) {
+				if (obj instanceof Role) {
+					objs.add ( (Role) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get roles");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<Role> listRoles (String whereClause)  {
+
+		List<Object> objects;
+		List<Role> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Role.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof Role) {
+					objs.add ( (Role) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get roles");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public boolean deleteRole (Role role)   {
+		try {
+			dao.delete ( role);
+			loadRoleObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete role");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateRole (Role role)   {
+
+		try {
+			dao.update ( role);
+			loadRoleObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update role");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createRole (Role role)   {
+
+		try {
+			dao.save ( role);
+			loadRoleObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create role");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+
+	}
+
+
+
+	@Override
+	public Role findRole (String whereClause)   {
+
+		try {
+			return (Role) dao.find (  Role.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find role");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public Role findRole (Integer primaryKey)  {
+		try {
+			return (Role) dao.find ( new Role ( ) , primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find role");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+
+
+	@Override
+	public List<Manager> listManagers ()   {
+
+		List<Object> objects;
+		List<Manager> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( new Manager ());
+
+			for (Object obj : objects) {
+				if (obj instanceof Manager) {
+					objs.add ( (Manager) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get managers");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<Manager> listManagers (String whereClause)  {
+
+		List<Object> objects;
+		List<Manager> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Manager.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof Manager) {
+					objs.add ( (Manager) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get managers");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public boolean deleteManager (Manager manager)   {
+		try {
+			dao.delete ( manager);
+			loadManagerObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete manager");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateManager (Manager manager)   {
+
+		try {
+			dao.update ( manager);
+			loadManagerObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update manager");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createManager (Manager manager)   {
+
+		try {
+			dao.save ( manager);
+			loadManagerObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create manager");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+
+	}
+
+
+
+	@Override
+	public Manager findManager (String whereClause)   {
+
+		try {
+			return (Manager) dao.find (  Manager.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find manager");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public Manager findManager (Integer primaryKey)  {
+		try {
+			return (Manager) dao.find ( new Manager ( ) , primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find manager");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public List<Employe> listEmployes ()   {
+
+		List<Object> objects;
+		List<Employe> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( new Employe ());
+
+			for (Object obj : objects) {
+				if (obj instanceof Employe) {
+					objs.add ( (Employe) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get employes");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<Employe> listEmployes (String whereClause)  {
+
+		List<Object> objects;
+		List<Employe> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Employe.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof Employe) {
+					objs.add ( (Employe) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get employes");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+
+
+		return objs;
+	}
+
+	@Override
+	public boolean deleteEmploye (Employe employe)   {
+		try {
+			
+			if ( employe.getService() != null )
+				dao.dissociateService ( employe, employe.getService());
+
+			if ( employe.getEmployeProfil() == "ChefService") {
+				Service service = findService("WHERE chefService = '"+employe.getId()+"'");
+				if(service != null) {
+					service.setChefService(null);
+					dao.update(service);
+					
+				}
+					
+			}
+			else
+			if ( employe.getEmployeProfil() == "ChefDepartement") {
+				Departement departement = findDepartement("WHERE chefDepartement = '"+employe.getId()+"'");
+				if(departement != null) {
+					departement.setChefDepartement(null);;
+					dao.update(departement);
+					
+				}
+					
+			}
+
+			dao.delete ( employe);
+			loadEmployesObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete employe");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateEmploye (Employe employe)   {
+
+		try {
+			
+			if ( employe.getService() != null && employe.getOldService() != employe.getService() && employe.getEmployeProfil()!="ChefService") {
+				if ( employe.getOldService() != null)
+					dao.dissociateService ( employe, employe.getOldService());
+				dao.associateService ( employe, employe.getService());
+			}
+
+			dao.update ( employe);
+			loadEmployesObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update employe");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createEmploye (Employe employe)   {
+
+		try {
+			dao.save ( employe);
+			loadEmployesObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create employe");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+
+	}
+
+
+
+	@Override
+	public Employe findEmploye (String whereClause)   {
 
 		try {
 			return (Employe) dao.find (  Employe.class, whereClause);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"find employe");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return null;
 	}
 
 	@Override
-	public Employe rechercherEmploye (Integer primaryKey)  {
+	public Employe findEmploye (Integer primaryKey)  {
 		try {
 			return (Employe) dao.find ( new Employe ( ) , primaryKey);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"find employe");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return null;
 	}
 
 	@Override
-	public List<Service> listerServices ()   {
+	public List<Service> listServices ()   {
 
 		List<Object> objects;
 		List<Service> objs = new ArrayList<> ();
 		try {
-			objects = dao.list ( new Service());
+			objects = dao.list ( new Service ());
 
 			for (Object obj : objects) {
 				if (obj instanceof Service) {
@@ -728,14 +940,14 @@ public class Feature implements IFeature {
 				}
 			}
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"get services");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return objs;
 	}
 
 	@Override
-	public List<Service> listerServices (String whereClause)  {
+	public List<Service> listServices (String whereClause)  {
 
 		List<Object> objects;
 		List<Service> objs = new ArrayList<> ();
@@ -748,8 +960,8 @@ public class Feature implements IFeature {
 			}
 
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"get services");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 
 
@@ -758,43 +970,61 @@ public class Feature implements IFeature {
 	}
 
 	@Override
-	public boolean supprimerService (Service service)   {
+	public boolean deleteService (Service service)   {
 		try {
+
+			List<Employe> emps= service.getEmployes();
+			while(emps.isEmpty() != true) {
+				;
+				deleteEmploye(emps.remove(0));
+
+			}
+			
+			service.setChefService(null);
+			service.setEmployes(emps);
+
+
 			dao.delete ( service);
-			loadServicesObservableList();
+			loadServicesObservableList ();
+
+			loadEmployesObservableList ();
+			loadManagerObservableList ();
+			loadUtilisateursObservableList ();
+
+
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"delete service");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
 
 	}
 
 	@Override
-	public boolean modifierService (Service service)   {
+	public boolean updateService (Service service)   {
 
 		try {
 			dao.update ( service);
-			loadServicesObservableList();
+			loadServicesObservableList ();
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"update service");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
 	}
 
 	@Override
-	public boolean creerService (Service service)   {
+	public boolean createService (Service service)   {
 
 		try {
 			dao.save ( service);
-			loadServicesObservableList();
+			loadServicesObservableList ();
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"create service");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
 
@@ -804,35 +1034,497 @@ public class Feature implements IFeature {
 
 
 	@Override
-	public Service rechercherService (String whereClause)   {
+	public Service findService (String whereClause)   {
 
 		try {
 			return (Service) dao.find (  Service.class, whereClause);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"find service");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return null;
 	}
 
 	@Override
-	public Service rechercherService (Integer primaryKey)  {
+	public Service findService (Integer primaryKey)  {
 		try {
 			return (Service) dao.find ( new Service ( ) , primaryKey);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"find service");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return null;
 	}
 
 	@Override
-	public List<Produit> listerProduits ()   {
+	public List<ChefDepartement> listChefDepartements ()   {
+
+		List<Object> objects;
+		List<ChefDepartement> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( new ChefDepartement ());
+
+			for (Object obj : objects) {
+				if (obj instanceof ChefDepartement) {
+					objs.add ( (ChefDepartement) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get chefDepartements");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<ChefDepartement> listChefDepartements (String whereClause)  {
+
+		List<Object> objects;
+		List<ChefDepartement> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( ChefDepartement.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof ChefDepartement) {
+					objs.add ( (ChefDepartement) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get chefDepartements");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+
+
+		return objs;
+	}
+
+	@Override
+	public boolean deleteChefDepartement (ChefDepartement chefDepartement)   {
+		try {
+			dao.delete ( chefDepartement);
+			loadChefDepartementObservableList();
+			loadDemandesObservableList();
+			loadNoteObservableList();
+			loadNotificationObservableList();
+
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete chefDepartement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateChefDepartement (ChefDepartement chefDepartement)   {
+
+		try {
+			dao.update ( chefDepartement);
+			loadChefDepartementObservableList();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update chefDepartement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createChefDepartement (ChefDepartement chefDepartement)   {
+
+		try {
+			dao.save ( chefDepartement);
+			loadChefDepartementObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"cretae chefDepartement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+
+	}
+
+
+
+	@Override
+	public ChefDepartement findChefDepartement (String whereClause)   {
+
+		try {
+			return (ChefDepartement) dao.find (  ChefDepartement.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find chefDepartement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public ChefDepartement findChefDepartement (Integer primaryKey)  {
+		try {
+			return (ChefDepartement) dao.find ( new ChefDepartement ( ) , primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find chefDepartement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public List<Note> listNotes ()    {
+
+		List<Note> objs = new ArrayList<> ();
+		List<Object> objects;
+		try {
+			objects = dao.list ( new Note ());
+			for (Object obj : objects) {
+				if (obj instanceof Note) {
+					objs.add ( (Note) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get notes");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<Note> listNotes (String whereClause)   {
+
+		List<Object> objects;
+		List<Note> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Note.class, whereClause);
+			for (Object obj : objects) {
+				if (obj instanceof Note) {
+					objs.add ( (Note) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get notes");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return objs;
+
+	}
+
+	@Override
+	public boolean deleteNote (Note note)   {
+
+		try {
+			dao.delete ( note);
+			loadNoteObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete note");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+
+	}
+
+	@Override
+	public boolean updateNote (Note note)   {
+
+		try {
+			dao.update ( note);
+			loadNoteObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update note");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean createNote (Note note)   {
+
+		try {
+			dao.save ( note); 
+			loadNoteObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create note");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public Note findNote (String whereClause)   {
+
+		try {
+			return (Note) dao.find ( Note.class, whereClause);
+		} catch (DAOException e) {
+
+			AlertError (e,"find note");
+			ErrorLogFileManager.appendError (e.getMessage ());
+
+			AlertError(e,"find note");
+			ErrorLogFileManager.appendError(e.getStackTrace().toString());
+
+		}
+		return null;
+	}
+
+	@Override
+	public Note findNote (Integer primaryKey)   {
+		try {
+			return (Note) dao.find ( new Note (), primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find note");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<Demande> listDemandes ()    {
+
+		List<Demande> objs = new ArrayList<> ();
+		List<Object> objects;
+		try {
+			objects = dao.list ( new Demande ());
+			for (Object obj : objects) {
+				if (obj instanceof Demande) {
+					objs.add ( (Demande) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get demandes");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+
+		return objs;
+	}
+
+	@Override
+	public List<Demande> listDemandes (String whereClause)   {
+
+		List<Object> objects;
+		List<Demande> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Demande.class, whereClause);
+
+			for (Object obj : objects) {
+				if (obj instanceof Demande) {
+					objs.add ( (Demande) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError (e,"get demandes");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+		return objs;
+
+	}
+
+	@Override
+	public boolean deleteDemande (Demande demande)   {
+
+		try {
+
+
+
+			List<Notification> notifications= demande.getNotifications();
+
+			while(notifications.isEmpty() != true) {
+				deleteNotificationFeature(notifications.remove(0), null , demande);
+
+			}
+			demande.setNotifications(notifications);
+
+
+
+			dao.delete ( demande);
+			loadDemandesObservableList ();
+			loadNoteObservableList();
+			loadNotificationObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"delete demande");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean updateDemande (Demande demande)   {
+
+		try {
+			dao.update ( demande);
+			loadDemandesObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"update demande");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+	}
+
+	@Override
+	public boolean createDemande (Demande demande)   {
+		try {
+			dao.save ( demande);
+			loadDemandesObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"create demande");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}	
+	}
+
+	@Override
+	public Demande findDemande (String whereClause)   {
+		try {
+			return (Demande) dao.find ( Demande.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find demande");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	@Override
+	public Demande findDemande (Integer primaryKey)   {
+
+		try {
+			return (Demande) dao.find ( new Demande (), primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find demande");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<Notification> listerNotifications ()    {
+
+		List<Notification> objs = new ArrayList<> ();
+		List<Object> objects;
+		try {
+			objects = dao.list ( new Notification());
+			for  (Object obj : objects) {
+				if  (obj instanceof Notification) {
+					objs.add (  (Notification) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError(e,"get notificatons");
+			ErrorLogFileManager.appendError(e.getMessage());
+		}
+		return objs;
+	}
+
+	@Override
+	public List<Notification> listerNotifications (String whereClause)   {
+
+		List<Object> objects;
+		List<Notification> objs = new ArrayList<> ();
+		try {
+			objects = dao.list ( Notification.class, whereClause);
+			for  (Object obj : objects) {
+				if  (obj instanceof Notification) {
+					objs.add (  (Notification) obj);
+				}
+			}
+		} catch (DAOException e) {
+			AlertError(e,"get notes");
+			ErrorLogFileManager.appendError(e.getMessage());
+		}
+		return objs;
+
+	}
+
+	@Override
+	public boolean supprimerNotification (Notification notification)   {
+
+		try {
+			dao.delete ( notification);
+			loadNotificationObservableList();
+			return true;
+		} catch (DAOException e) {
+			AlertError(e,"delete notification");
+			ErrorLogFileManager.appendError(e.getMessage());
+			return false;
+		}
+
+
+	}
+
+	@Override
+	public boolean modifierNotification (Notification notification)   {
+
+		try {
+			dao.update ( notification);
+			loadNotificationObservableList();
+			return true;
+		} catch (DAOException e) {
+			AlertError(e,"update notification");
+			ErrorLogFileManager.appendError(e.getMessage());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean creerNotification (Notification notification)   {
+
+		try {
+			dao.save ( notification); 
+			loadNotificationObservableList();
+			return true;
+		} catch (DAOException e) {
+			AlertError(e,"create notification");
+			ErrorLogFileManager.appendError(e.getMessage());
+			return false;
+		}
+
+	}
+
+	@Override
+	public Service rechercherNotification (String whereClause)   {
+
+		try {
+			return   (Service) dao.find ( Notification.class, whereClause);
+		} catch (DAOException e) {
+			AlertError(e,"find notification");
+			ErrorLogFileManager.appendError(e.getMessage());
+		}
+		return null;
+	}
+
+	@Override
+	public Service rechercherNotification (Integer primaryKey)   {
+		try {
+			return   (Service) dao.find ( new Notification(), primaryKey);
+		} catch (DAOException e) {
+			AlertError(e,"find notification");
+			ErrorLogFileManager.appendError(e.getMessage());
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<Produit> listProduits ()   {
 
 		List<Object> objects;
 		List<Produit> objs = new ArrayList<> ();
 		try {
-			objects = dao.list ( new Produit());
+			objects = dao.list ( new Produit ());
 
 			for (Object obj : objects) {
 				if (obj instanceof Produit) {
@@ -840,14 +1532,14 @@ public class Feature implements IFeature {
 				}
 			}
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"get produits");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return objs;
 	}
 
 	@Override
-	public List<Produit> listerProduits (String whereClause)  {
+	public List<Produit> listProduits (String whereClause)  {
 
 		List<Object> objects;
 		List<Produit> objs = new ArrayList<> ();
@@ -859,8 +1551,8 @@ public class Feature implements IFeature {
 				}
 			}
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"get produits");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 
 
@@ -869,43 +1561,47 @@ public class Feature implements IFeature {
 	}
 
 	@Override
-	public boolean supprimerProduit (Produit produit)   {
+	public boolean deleteProduit (Produit produit)   {
 		try {
 			dao.delete ( produit);
-			loadProduitsObservableList();
+			loadProduitsObservableList ();
+			loadDemandesObservableList();
+			loadNoteObservableList();
+			loadNotificationObservableList();
+
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"delete produit");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
 
 	}
 
 	@Override
-	public boolean modifierProduit (Produit produit)   {
+	public boolean updateProduit (Produit produit)   {
 
 		try {
 			dao.update ( produit);
-			loadProduitsObservableList();
+			loadProduitsObservableList ();
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"update produit");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
 	}
 
 	@Override
-	public boolean creerProduit (Produit produit)   {
+	public boolean createProduit (Produit produit)   {
 
 		try {
 			dao.save ( produit);
-			loadProduitsObservableList();
+			loadProduitsObservableList ();
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"cretae produit");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
 
@@ -915,249 +1611,29 @@ public class Feature implements IFeature {
 
 
 	@Override
-	public Produit rechercherProduit (String whereClause)   {
+	public Produit findProduit (String whereClause)   {
 
 		try {
 			return (Produit) dao.find (  Produit.class, whereClause);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"find produit");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return null;
 	}
 
 	@Override
-	public Produit rechercherProduit (Integer primaryKey)  {
+	public Produit findProduit (Integer primaryKey)  {
 		try {
 			return (Produit) dao.find ( new Produit ( ) , primaryKey);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public List<Note> listerNotes ()    {
-		Note truc = new Note();
-		List<Note> objs = new ArrayList<> ();
-		List<Object> objects;
-		try {
-			objects = dao.list ( truc);
-			for  (Object obj : objects) {
-				if  (obj instanceof Note) {
-					objs.add (  (Note) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-		return objs;
-	}
-
-	@Override
-	public List<Note> listerNotes (String whereClause)   {
-
-		List<Object> objects;
-		List<Note> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( Note.class, whereClause);
-			for  (Object obj : objects) {
-				if  (obj instanceof Note) {
-					objs.add (  (Note) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return objs;
-
-	}
-
-	@Override
-	public boolean supprimerNote (Note note)   {
-
-		try {
-			dao.delete ( note);
-			loadNoteObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-
-	}
-
-	@Override
-	public boolean modifierNote (Note note)   {
-
-		try {
-			dao.update ( note);
-			loadNoteObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	@Override
-	public boolean creerNote (Note note)   {
-
-		try {
-			dao.save ( note); 
-			loadNoteObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	@Override
-	public Note rechercherNote (String whereClause)   {
-
-		try {
-			return   (Note) dao.find ( Note.class, whereClause);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public Note rechercherNote (Integer primaryKey)   {
-
-
-		try {
-			return   (Note) dao.find ( new Note(), primaryKey);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"find produit");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return null;
 	}
 
 
-	@Override
-	public List<Demande> listerDemandes ()    {
-
-		List<Demande> objs = new ArrayList<> ();
-		List<Object> objects;
-		try {
-			objects = dao.list ( new Demande());
-			for  (Object obj : objects) {
-				if  (obj instanceof Demande) {
-					objs.add (  (Demande) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		return objs;
-	}
-
-	@Override
-	public List<Demande> listerDemandes (String whereClause)   {
-
-		List<Object> objects;
-		List<Demande> objs = new ArrayList<> ();
-		try {
-			objects = dao.list ( Demande.class, whereClause);
-
-			for  (Object obj : objects) {
-				if  (obj instanceof Demande) {
-					objs.add (  (Demande) obj);
-				}
-			}
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return objs;
-
-	}
-
-	@Override
-	public boolean supprimerDemande (Demande demande)   {
-
-		try {
-			dao.delete ( demande);
-			loadDemandesObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	@Override
-	public boolean modifierDemande (Demande demande)   {
-
-		try {
-			dao.update ( demande);
-			loadDemandesObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public boolean creerDemande (Demande demande)   {
-		try {
-			dao.save ( demande);
-			loadDemandesObservableList();
-			return true;
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}	
-	}
-
-	@Override
-	public Demande rechercherDemande (String whereClause)   {
-		try {
-			return   (Demande) dao.find ( Demande.class, whereClause);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public Demande rechercherDemande (Integer primaryKey)   {
-
-		try {
-			return   (Demande) dao.find ( new Demande(), primaryKey);
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	@Override
 	public String getTheDaoImplementationClassname () {
@@ -1166,107 +1642,127 @@ public class Feature implements IFeature {
 
 
 	@Override
-	public Integer RetournerNombreDemandesTotal () {
-		return listerDemandes().size();
+	public Integer getNumberDemandes () {
+		return listDemandes ().size ();
 	}
 
 	@Override
-	public Integer RetournerNombreEmployesTotal () {
-		return listerEmployes().size();
+	public Integer getNumberEmployes () {
+		return listEmployes ().size ();
 	}
 
 	@Override
-	public Integer RetournerNombreDepartementsTotal () {
-		return listerDepartements().size();
+	public Integer getNumberDepartements () {
+		return listDepartements ().size ();
 	}
 
 	@Override
-	public Integer RetournerNombreServicesTotal () {
-		return listerServices().size();
+	public Integer getNumberServices () {
+		return listServices ().size ();
 	}
 
 	@Override
-	public Integer RetournerNombreProduitsTotal () {
-		return listerProduits().size();
+	public Integer getNumberProduits () {
+		return listProduits ().size ();
 	}
 
 	@Override
-	public ObservableList<Role> loadRoleObservableList()   {
+	public Integer RetournerNombreNotificationsTotal () {
+		return listerNotifications().size();
+	}
+
+	@Override
+	public ObservableList<Role> loadRoleObservableList ()   {
 		try {
-			observableListRole.clear();
-			observableListRole.addAll(  dao.list ( new Role() ));
+			observableListRole.clear ();
+			observableListRole.addAll (  dao.list ( new Role () ));
 		} catch (DAOException e) {
-			e.printStackTrace();
+			AlertError (e,"loading roles");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
-		return observableListRole.getData();
+		return observableListRole.getData ();
 	}
 
-	@Override
-	public ObservableList<Produit> loadProduitsObservableList()   {
 
+	@Override
+	public ObservableList<Notification> loadNotificationObservableList ()   {
 		try {
-			observableListProduit.clear();
-			observableListProduit.addAll(  dao.list ( new Produit() ));
+			observableListNotification.clear ();
+			observableListNotification.addAll (  dao.list ( new Notification () ));
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"loading notifications");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
-		return observableListProduit.getData();
-
+		return observableListNotification.getData ();
 	}
 
-	@Override
-	public ObservableList<Service> loadServicesObservableList()   {
-
-		try {
-			observableListService.clear();
-			observableListService.addAll(  dao.list ( new Service() ));
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return observableListService.getData();
-	}
 
 	@Override
-	public ObservableList<Departement> loadDepartementsObservableList()   {
-
+	public ObservableList<Produit> loadProduitsObservableList ()   {
 
 		try {
-			observableListDepartement.clear();
-			observableListDepartement.addAll(  dao.list ( new Departement() ));
+			observableListProduit.clear ();
+			observableListProduit.addAll (  dao.list ( new Produit () ));
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"loading produits");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
-		return observableListDepartement.getData();
+		return observableListProduit.getData ();
+
+	}
+
+	@Override
+	public ObservableList<Service> loadServicesObservableList ()   {
+
+		try {
+			observableListService.clear ();
+			observableListService.addAll (  dao.list ( new Service () ));
+		} catch (DAOException e) {
+			AlertError (e,"loading services");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return observableListService.getData ();
+	}
+
+	@Override
+	public ObservableList<Departement> loadDepartementsObservableList ()   {
+
+
+		try {
+			observableListDepartement.clear ();
+			observableListDepartement.addAll (  dao.list ( new Departement () ));
+		} catch (DAOException e) {
+			AlertError (e,"loading departement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return observableListDepartement.getData ();
 	}
 
 	@Override
 	public ObservableList<Demande> loadDemandesObservableList ()  {
 
 		try {
-			observableListDemande.clear();
-			observableListDemande.addAll(  dao.list ( new Demande() ));
+			observableListDemande.clear ();
+			observableListDemande.addAll (  dao.list ( new Demande () ));
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"loading demandes");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
-		return observableListDemande.getData();
+		return observableListDemande.getData ();
 	}
 
 	@Override
 	public ObservableList<Employe> loadEmployesObservableList ()  {
 
 		try {
-			observableListEmploye.clear();
-			observableListEmploye.addAll(  dao.list ( new Employe() ));
+			observableListEmploye.clear ();
+			observableListEmploye.addAll (  dao.list ( new Employe () ));
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"loading employes");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 
-		return observableListEmploye.getData();
+		return observableListEmploye.getData ();
 	}
 
 
@@ -1285,83 +1781,118 @@ public class Feature implements IFeature {
 
 
 	@Override
-	public ObservableList<Manager> loadManagerObservableList() {
+	public ObservableList<Manager> loadManagerObservableList () {
 
 		try {
-			observableListManager.clear();
-			observableListManager.addAll(  dao.list ( new Manager() ));
+			observableListManager.clear ();
+			observableListManager.addAll (  dao.list ( new Manager () ));
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"loading manages");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 
-		return observableListManager.getData();
+		return observableListManager.getData ();
+	}
+
+
+	@Override
+	public ObservableList<ChefDepartement> loadChefDepartementObservableList () {
+
+		try {
+			observableListChefDepartement.clear ();
+			observableListChefDepartement.addAll (  dao.list ( new ChefDepartement () ));
+		} catch (DAOException e) {
+			AlertError (e,"loading chefDepartement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+		return observableListChefDepartement.getData ();
+	}
+
+
+	@Override
+	public ObservableList<Note> loadNoteObservableList () {
+
+		try {
+			observableListNote.clear ();
+			observableListNote.addAll (  dao.list ( new Note () ));
+		} catch (DAOException e) {
+			AlertError (e,"loading notes");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+
+		return observableListNote.getData ();
 	}
 
 	@Override
-	public ObservableList<Note> loadNoteObservableList() {
+	public ObservableList<Utilisateur> loadUtilisateursObservableList () {
 
 		try {
-			observableListNote.clear();
-			observableListNote.addAll(  dao.list ( new Note() ));
+			observableListUtilisateur.clear ();
+			observableListUtilisateur.addAll (  dao.list ( new Utilisateur () ));
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"loading utilisateurs");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 
-		return observableListNote.getData();
+		return observableListUtilisateur.getData ();
 	}
 
-	@Override
-	public ObservableList<Utilisateur> loadUtilisateursObservableList() {
 
-		try {
-			observableListUtilisateur.clear();
-			observableListUtilisateur.addAll(  dao.list ( new Utilisateur() ));
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		return observableListUtilisateur.getData();
-	}
 	@Override
-	public boolean repondreDemande (Demande demande, String reponse)    {
+	public boolean requestDemande (Demande demande, String reponse)    {
 		try {
 			dao.requestResponse (demande, reponse);
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"requesting demande");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}	
 	}
 
 	@Override
-	public Object validerIdentifiants(String login, String password)   {
+	public Object validateCredential (String login, String password)   {
 
-		Object obj = new Object();
+		Object obj = new Object ();
 
 		try {
-			obj = HibernateDao.getCurrentInstance().validateCredential( login,  password);
+			obj = HibernateDao.getCurrentInstance ().validateCredential ( login,  password);
 
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"validating credentials");
+			ErrorLogFileManager.appendError (e.getMessage ());
 		}
 		return obj;
 	}
 
+
 	@Override
-	public boolean associerService(Employe employe, Service service)   {
+	public boolean associateService (Employe employe, Service service)   {
 
 		try {
-			HibernateDao.getCurrentInstance().associateService( employe, service) ;
-			loadEmployesObservableList();
+			HibernateDao.getCurrentInstance ().associateService ( employe, service) ;
+			loadEmployesObservableList ();
 			return true;
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertError (e,"associating service");
+			ErrorLogFileManager.appendError (e.getMessage ());
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean associateDepartement(Service service, Departement departement)  {
+
+		try {
+			HibernateDao.getCurrentInstance ().associateDepartement(service, departement);
+			loadEmployesObservableList ();
+			return true;
+		} catch (DAOException e) {
+			AlertError (e,"associating service to departement");
+			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
 
