@@ -7,13 +7,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.rekest.entities.employes.Utilisateur;
+import com.rekest.enums.NotificationType;
+import com.rekest.feature.IFeature;
+import com.rekest.feature.impl.Feature;
+import com.rekest.utils.PropertyManager;
 import com.rekest.utils.Utilitaire;
+import com.rekest.utils.Validator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.scene.control.Alert.AlertType;
 
 public class ProfilController implements Initializable {
 
@@ -22,41 +29,49 @@ public class ProfilController implements Initializable {
 	 */
 	public final static Logger logger = LogManager.getLogger(ProfilController.class);
 	
-    @FXML
-    private Button btnSauveegarder;
+	private Stage primaryStage;
 
-    @FXML
-    private TextField textFieldAdresse;
+	@FXML
+	private Button btnSauveegarder;
 
-    @FXML
-    private TextField textFieldEmail;
+	@FXML
+	private TextField textFieldAdresse;
 
-    @FXML
-    private TextField textFieldNom;
+	@FXML
+	private TextField textFieldEmail;
 
-    @FXML
-    private TextField textFieldPrenom;
+	@FXML
+	private TextField textFieldNom;
 
-    @FXML
-    private TextField textFieldTelephone;
+	@FXML
+	private TextField textFieldPrenom;
 
-    private Utilisateur connectedUser;
-    
-    public void setConnectedUser(Utilisateur connectedUser) {
+	@FXML
+	private TextField textFieldTelephone;
+
+	private Utilisateur connectedUser;
+	
+	private IFeature feature = Feature.getCurrentInstance();
+
+	public void setStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
+	
+	public void setConnectedUser(Utilisateur connectedUser) {
 		this.connectedUser = connectedUser;
 		initUserData();
 	}
-    
-    public ProfilController() {
+
+	public ProfilController() {
 		logger.info("Creation du profil controller avec utilisateur {} ");
 	}
-    
-    
+
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		logger.info("All composants is charged");
 	}
-	
+
 	private void initUserData() {
 		if (connectedUser != null) {
 			Utilitaire.setTextField(textFieldNom,  connectedUser.getNom());
@@ -69,9 +84,64 @@ public class ProfilController implements Initializable {
 		}
 	}
 
-	
-	   @FXML
-	    void handleClickedSauvegarder(ActionEvent event) {
 
-	    }
+	@FXML
+	void handleClickedSauvegarder(ActionEvent event) {
+		
+		if (isInputValid()) {
+			this.connectedUser.setNom(textFieldNom.getText());
+			this.connectedUser.setPrenom(textFieldPrenom.getText());
+			this.connectedUser.setAdresse(textFieldAdresse.getText());
+			this.connectedUser.setTelephone(textFieldTelephone.getText());
+			this.connectedUser.setEmail(textFieldEmail.getText());
+			
+			Boolean result = feature.modifierUtilisateur(connectedUser);
+			
+			if (result)
+				Utilitaire.notification(NotificationType.INFO, "Update profile", 
+						"Votre profil a été modifié avec success !");
+		}
+	}
+	
+	/**
+	 * Validates the user input in the text fields.
+	 *
+	 * @return true if the input is valid
+	 */
+	private boolean isInputValid() {
+		String errorMessage = "";
+
+		if (textFieldNom.getText() == null || textFieldNom.getText().length() == 0) {
+			errorMessage += "Le nom de l'employe est invalide!\n";
+		}
+
+		if (textFieldPrenom.getText() == null || textFieldPrenom.getText().length() == 0) {
+			errorMessage += "Le prenom de l'employe est invalide!\n";
+		}
+
+		if (textFieldEmail.getText() == null || textFieldEmail.getText().length() == 0) {
+			errorMessage += "L'email de l'employe est invalide!\n";
+		}
+
+		if (textFieldAdresse.getText() == null || textFieldAdresse.getText().length() == 0) {
+			errorMessage += "L'adresse de l'employe est invalide!\n";
+		}
+
+		if (textFieldTelephone.getText() == null || textFieldTelephone.getText().length() == 0) {
+			errorMessage += "Le telephone de l'employe est invalide!\n";
+		}
+		
+
+		if (!Validator.validateText(errorMessage)) {
+			return true;
+		} else {
+			Utilitaire.alert(AlertType.WARNING, 
+					primaryStage, 
+					"Invalid Fields", 
+					"Please correct invalid fields", 
+					errorMessage);
+
+			return false;
+		}
+	}
 }
