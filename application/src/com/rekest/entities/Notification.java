@@ -20,12 +20,12 @@ public class Notification {
 	
 	private String message;
 	
-	@Column(name = "is_read")
+	@Column(name="is_read")
 	private boolean isRead = false;
 	
 	@Basic
 	@Temporal(TemporalType.DATE)
-	@Column(name = "created_at")
+	@Column(name="created_at")
 	private Date createdAt;
 	
 	public Notification() {}
