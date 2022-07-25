@@ -36,6 +36,24 @@ public class EmployeEditDialogController {
 
 	@FXML
 	private ComboBox<String> comboBoxService;
+	
+	@FXML
+	private TextField textFieldLogin;
+	
+	@FXML
+	private TextField textFieldPassword;
+	
+	@FXML
+	private Label labelPassword;
+	
+	@FXML
+	private Label labelLogin;
+	
+	@FXML
+	private Label labelDepartement;
+	
+	@FXML
+	private ComboBox<String> comboBoxDepartement;
 
 	@FXML
 	private Label labelFenetre;
@@ -72,8 +90,16 @@ public class EmployeEditDialogController {
 	 * Sets the stage of this dialog.
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	public void setDialogStage(Stage dialogStage, String title) {
 		this.dialogStage = dialogStage;
+		labelFenetre.setText(title);
+		labelLogin.setVisible(false);
+		labelDepartement.setVisible(false);
+		labelPassword.setVisible(false);
+		textFieldLogin.setVisible(false);
+		textFieldPassword.setVisible(false);
+		comboBoxDepartement.setVisible(false);
+
 	}
 
 	/**

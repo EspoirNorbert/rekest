@@ -219,7 +219,7 @@ public class DepartementController implements Initializable {
 
 			// Set the department into the controller.
 			departementEditDialogController = loader.getController();
-			departementEditDialogController.setDialogStage(dialogStage);
+			departementEditDialogController.setDialogStage(dialogStage, title);
 			departementEditDialogController.setDepartement(department);
 
 			// Show the dialog and wait until the user closes it

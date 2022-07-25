@@ -229,7 +229,7 @@ public class ServiceController implements Initializable{
 
 			// Set the department into the controller.
 			serviceEditDialogController = loader.getController();
-			serviceEditDialogController.setDialogStage(dialogStage);
+			serviceEditDialogController.setDialogStage(dialogStage, title);
 			serviceEditDialogController.setService(service);
 			serviceEditDialogController.setDepartements();
 

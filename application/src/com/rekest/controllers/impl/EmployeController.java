@@ -166,7 +166,7 @@ public class EmployeController implements Initializable {
 
 			// Set the employe into the controller.
 			employeEditDialogController = loader.getController();
-			employeEditDialogController.setDialogStage(dialogStage);
+			employeEditDialogController.setDialogStage(dialogStage, title);
 			employeEditDialogController.setEmploye(employe);
 			employeEditDialogController.setServices();
 			employeEditDialogController.setProfiles();

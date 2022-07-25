@@ -12,7 +12,7 @@ public class DepartementEditDialogController {
 
 	@FXML
 	private Label labelDepartement;
-
+	
 	@FXML
 	private TextField textFieldNom;
 
@@ -24,8 +24,9 @@ public class DepartementEditDialogController {
 	 * Sets the stage of this dialog.
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	public void setDialogStage(Stage dialogStage, String title) {
 		this.dialogStage = dialogStage;
+		labelDepartement.setText(title);
 	}
 
 	/**

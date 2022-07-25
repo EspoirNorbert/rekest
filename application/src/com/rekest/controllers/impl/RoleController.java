@@ -226,7 +226,7 @@ public class RoleController implements Initializable {
 
 			// Set the department into the controller.
 			roleEditDialogController = loader.getController();
-			roleEditDialogController.setDialogStage(dialogStage);
+			roleEditDialogController.setDialogStage(dialogStage, title);
 			roleEditDialogController.setRole(role);
 
 			// Show the dialog and wait until the user closes it

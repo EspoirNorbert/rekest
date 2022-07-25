@@ -86,7 +86,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Service" GridPane.rowIndex="8">
+                  <Label text="Service" GridPane.rowIndex="6">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -116,42 +116,42 @@
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </TextField>
-                  <ComboBox fx:id="comboBoxProfil" prefHeight="19.0" prefWidth="326.0" promptText="- Type -" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <ComboBox fx:id="comboBoxProfil" prefHeight="19.0" prefWidth="326.0" promptText="- Profil -" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <ComboBox fx:id="comboBoxService" prefHeight="26.0" prefWidth="326.0" promptText=" " GridPane.rowIndex="9">
+                  <ComboBox fx:id="comboBoxService" prefHeight="26.0" prefWidth="326.0" promptText="- Service -" GridPane.rowIndex="7">
                      <GridPane.margin>
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <ComboBox fx:id="comboBoxDepartement" prefHeight="26.0" prefWidth="335.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <ComboBox fx:id="comboBoxDepartement" prefHeight="26.0" prefWidth="335.0" promptText="- Departement -" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <GridPane.margin>
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <Label text="Département" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <Label fx:id="labelDepartement" text="Département" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Login" GridPane.rowIndex="6">
+                  <Label fx:id="labelLogin" text="Login" GridPane.rowIndex="8">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label text="Password" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <Label fx:id="labelPassword" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textFieldLogin" layoutX="10.0" layoutY="41.0" GridPane.rowIndex="7">
+                  <TextField fx:id="textFieldLogin" layoutX="10.0" layoutY="41.0" GridPane.rowIndex="9">
                      <GridPane.margin>
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="textFieldPassword" layoutX="340.0" layoutY="41.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <TextField fx:id="textFieldPassword" layoutX="340.0" layoutY="41.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                      <GridPane.margin>
                         <Insets right="15.0" />
                      </GridPane.margin>

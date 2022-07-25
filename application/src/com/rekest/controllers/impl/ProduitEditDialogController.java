@@ -55,8 +55,9 @@ public class ProduitEditDialogController {
 	 * Sets the stage of this dialog.
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	public void setDialogStage(Stage dialogStage, String title) {
 		this.dialogStage = dialogStage;
+		labelNomFenetre.setText(title);
 	}
 
     public Produit getProduit() {
