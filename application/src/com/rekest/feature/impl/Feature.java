@@ -32,7 +32,7 @@ import com.rekest.observableList.impl.ObservableListRole;
 import com.rekest.observableList.impl.ObservableListService;
 import com.rekest.observableList.impl.ObservableListUtilisateur;
 import com.rekest.utils.ErrorLogFileManager;
-
+import com.rekest.utils.Utilitaire;
 import javafx.collections.ObservableList;
 
 public class Feature implements IFeature {
@@ -422,6 +422,8 @@ public class Feature implements IFeature {
 	public boolean createUtilisateur (Utilisateur utilisateur)   {
 
 		try {
+			String passwdHash = Utilitaire.hashPassword(utilisateur.getPassword());
+			utilisateur.setPassword(passwdHash);
 			dao.save ( utilisateur);
 			loadUtilisateursObservableList ();
 			return true;
@@ -748,6 +750,8 @@ public class Feature implements IFeature {
 	public boolean createManager (Manager manager)   {
 
 		try {
+			String passwdHash = Utilitaire.hashPassword(manager.getPassword());
+			manager.setPassword(passwdHash);
 			dao.save ( manager);
 			loadManagerObservableList ();
 			return true;
@@ -1135,6 +1139,8 @@ public class Feature implements IFeature {
 	public boolean createChefDepartement (ChefDepartement chefDepartement)   {
 
 		try {
+			String passwdHash = Utilitaire.hashPassword(chefDepartement.getPassword());
+			chefDepartement.setPassword(passwdHash);
 			dao.save ( chefDepartement);
 			loadChefDepartementObservableList ();
 			return true;

@@ -24,7 +24,6 @@ public class FileDemandeManager {
 	private static Sheet sheetDemandes = wb.createSheet("Demandes"); 
 	  
 	
-	
     public static void createWorkBook(File file) {
     	
         
@@ -82,12 +81,7 @@ public class FileDemandeManager {
             	row.createCell(cellCounter).setCellValue(obj.getId());
             	cellCounter++ ;
 			}
-            
-
-            
-            
-
-            
+        
             wb.write(os);  
         }catch(Exception e) {  
             System.out.println(e.getMessage());  

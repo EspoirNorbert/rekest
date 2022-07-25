@@ -1,6 +1,8 @@
 package com.rekest.utils;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -574,6 +576,28 @@ public class Utilitaire {
 			imageView.setImage(new Image(propertyManager.getApplicationUserProfilAdmin()));
 		}
 		
+	}
+	
+	public static String hashPassword(String password) {
+
+        MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+	        md.update(password.getBytes());
+	        byte[] byteData = md.digest();
+	
+	        //convertir le tableau de bits en une format hexadécimal
+	        StringBuffer sb = new StringBuffer();
+	        for (int i = 0; i < byteData.length; i++) {
+	         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+	        }
+	
+	        return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	

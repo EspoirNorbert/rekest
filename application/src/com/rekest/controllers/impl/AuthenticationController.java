@@ -64,9 +64,10 @@ public class AuthenticationController implements Initializable , IController {
 	@FXML
 	void handleClickedConnexion(ActionEvent event) {
 		if (isInputValid()) {
+			String hash = Utilitaire.hashPassword(Utilitaire.getTextField(txtPassword));
 			Utilisateur user = (Utilisateur) service.validateCredential(
 					Utilitaire.getTextField(txtLogin), 
-					Utilitaire.getTextField(txtPassword));
+					hash);
 
 			if (user!= null) {
 				logger.info("{} connect� avec success", user.getEmployeProfil());
