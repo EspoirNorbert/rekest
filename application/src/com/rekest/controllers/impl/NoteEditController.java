@@ -4,33 +4,30 @@ package com.rekest.controllers.impl;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.rekest.entities.Note;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class NoteEditController implements Initializable {
 
 	@FXML
-	private Button btnAnnuler;
-
-	@FXML
-	private Button btnEmettre;
-
-	@FXML
-	private Button btnFermer;
-
-	@FXML
-	private Button btnAjoutNote;
-
-	@FXML
-	private TextArea textArea;
+	private TextArea textAreaMessage;
 
 	private Stage dialogStage;
 
 	private boolean okClicked = false;
+
+	private Note note;
+
+	public void setNote(Note note) {
+		this.note = note;
+		textAreaMessage.setText(note.getMessage());
+	}
 
 	/**
 	 * Sets the stage of this dialog.
@@ -44,21 +41,51 @@ public class NoteEditController implements Initializable {
 		return okClicked;
 	}
 
+
 	@FXML
-	void handleClickedCloturer(ActionEvent event) {
+	void handleClickedAnnuler(ActionEvent event) {
 		dialogStage.close();
 	}
 
 	@FXML
-	void handleClickedSoumettre(ActionEvent event) {
+	void handleClickedOK(ActionEvent event) {
+		if (isInputValid()) {
+			note.setMessage(textAreaMessage.getText());
+			okClicked = true;
+			dialogStage.close();
+		}
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 
 	}
 
+	/**
+	 * Validates the user input in the text fields.
+	 *
+	 * @return true if the input is valid
+	 */
+	private boolean isInputValid() {
+		String errorMessage = "";
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		if (textAreaMessage.getText() == null || textAreaMessage.getText().length() == 0) {
+			errorMessage += "Le messsage est invalid!\n";
+		}
 
+
+		if (errorMessage.length() == 0) {
+			return true;
+		} else {
+			// Show the error message.
+			com.rekest.utils.Utilitaire.alert(AlertType.WARNING, 
+					dialogStage, 
+					"Invalid Field", 
+					"Please correct invalid field", 
+					errorMessage);
+
+			return false;
+		}
 	}
 
 }

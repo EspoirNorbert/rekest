@@ -43,7 +43,6 @@ public class Service {
 	private Departement departement; 
 	
 	
-	
 	public Service() {}
 
 	public Service(String nom) {

@@ -128,7 +128,6 @@ public class DepartementController implements Initializable {
 			Boolean statut = service.createDepartement(tempDepartment);
 			if(statut) {
 				refreshCount();
-
 			}
 		}
 	}

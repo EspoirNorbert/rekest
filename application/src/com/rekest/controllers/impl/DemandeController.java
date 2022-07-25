@@ -4,12 +4,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.rekest.entities.Demande;
+import com.rekest.entities.Departement;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.Gestionnaire;
 import com.rekest.entities.employes.Utilisateur;
+import com.rekest.enums.NotificationType;
 import com.rekest.feature.IFeature;
+import com.rekest.feature.impl.Feature;
 import com.rekest.utils.Utilitaire;
+import com.sun.javafx.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -83,13 +89,33 @@ public class DemandeController implements Initializable {
 
 	public Stage primaryStage;
 
-	private IFeature service;
+	private IFeature feature = Feature.getCurrentInstance();
 
 	private Utilisateur connectedUser;
 
-	private Demande demande;
-
 	private DetailsDemandesController detailsDemandesController;
+	
+	private ObservableList<Demande> demandes = FXCollections.observableArrayList();
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		initProperties();
+		addDemandeObservableListToTheTable();
+		refreshCount();
+		addListeners();
+	}
+
+	private void addListeners() {}
+
+	private void initProperties() {
+		columnReference.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colomnProduitID.setCellValueFactory(new PropertyValueFactory<>("produitId"));
+		columnEmployeID.setCellValueFactory(new PropertyValueFactory<>("employeId"));
+		columnEmploye.setCellValueFactory(new PropertyValueFactory<>("nomEmploye"));
+		columnUtilisateur.setCellValueFactory(new PropertyValueFactory<>("utilisateurId"));
+		columnUtilisateurID.setCellValueFactory(new PropertyValueFactory<>("nomUtilisateur"));
+		columnEtat.setCellValueFactory(new PropertyValueFactory<>("etat"));
+	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -118,17 +144,18 @@ public class DemandeController implements Initializable {
 
 
 	private void addDemandeObservableListToTheTable() {
-		// Add observable list data to the table
-		ObservableList<Demande> demandes = service.loadDemandesObservableList();
-		tableViewDemandes.setItems(demandes);
-		if (demandes.size() > 0)
-			tableViewDemandes.getSelectionModel().select(0);	
+		setDemandes(feature.loadDemandesObservableList());
+		tableViewDemandes.setItems(getDemandes());
+
+		if (getDemandes().size() > 0) 
+			tableViewDemandes.getSelectionModel().select(0);
+
+		refreshCount();	
 
 	}
 
 	public void refreshCount() {
 		countDemandes.setText(String.valueOf(tableViewDemandes.getItems().size()));
-
 	}
 
 	@FXML
@@ -161,10 +188,14 @@ public class DemandeController implements Initializable {
 		Demande tempDemande = new Demande();
 		boolean okClicked = showDemandeEditDialog(tempDemande, "Creation d'une demande");
 		if (okClicked) {
-			Boolean statut = service.createDemande(tempDemande);
+			Boolean statut = feature.createDemande(connectedUser,  
+					tempDemande , tempDemande.getEmploye());
 			if(statut) {
 				refreshCount();
 
+			} else {
+				Utilitaire.notification(NotificationType.ERROR, "Creation d'une demane", 
+						"Une erreur est arrivé dans la creation de la demande .");
 			}
 		}
 
@@ -199,7 +230,7 @@ public class DemandeController implements Initializable {
 			
 			demandeEditDialogController.setEmployes();
 			demandeEditDialogController.setProduits();
-			//demandeEditDialogController.setUsers();
+			demandeEditDialogController.setUsers();
 
 			// Show the dialog and wait until the user closes it
 			Utilitaire.showDialog(dialogStage);
@@ -217,12 +248,26 @@ public class DemandeController implements Initializable {
 
 	@FXML
 	void handleClickedDetails(ActionEvent event) {
-		showDetailsDemandeEditDialog("Creation d'une demande");
+		Demande selectedDemande = 
+				tableViewDemandes.getSelectionModel().getSelectedItem();        
+
+		if (selectedDemande != null) {
+			 System.out.println(selectedDemande);
+			
+			showDetailsDemandeEditDialog(selectedDemande,"Details de la demande " + selectedDemande.getId());
+
+		} else {
+			// Nothing selected.
+			Utilitaire.alert(AlertType.WARNING, primaryStage,
+					"No Selection", 
+					"No Demande Selected", 
+					"Please select a Demand in the table.");
+		}
+		
 	}
 
 
-	private boolean showDetailsDemandeEditDialog(String title) {
-		// TODO Auto-generated method stub
+	private boolean showDetailsDemandeEditDialog(Demande demand, String title) {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = Utilitaire.initFXMLoader("DetailsDemandes");
@@ -230,17 +275,20 @@ public class DemandeController implements Initializable {
 
 			// Create the dialog Stage.
 			Stage dialogStage = Utilitaire.createDialog(root, primaryStage, title);
-
+			
+			//System.out.println("DEMANDE "+ demande.getEtat() + " " + demande.getId());
+			
 			// Set the demande into the controller.
 			detailsDemandesController = loader.getController();
 			detailsDemandesController.setDialogStage(dialogStage);
-			// detailsDemandesController.setDemande(demande);
+			detailsDemandesController.setDemande(demand);
 
 			// Show the dialog and wait until the user closes it
 			Utilitaire.showDialog(dialogStage);
-
+			
 			return detailsDemandesController.isOkClicked();
 		} catch (Exception e) {
+			e.printStackTrace();
 			Utilitaire.alert(AlertType.WARNING, 
 					null, 
 					"REKEST ERROR","Echec ",e.getMessage());
@@ -248,12 +296,18 @@ public class DemandeController implements Initializable {
 
 		return false;
 	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+	
+	
+	public void setDemandes(ObservableList<Demande> demandes) {
+		this.demandes = demandes;
 	}
+	
+	
+	public ObservableList<Demande> getDemandes() {
+		return demandes;
+	}
+
+	
 
 }
 

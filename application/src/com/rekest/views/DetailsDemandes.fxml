@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="431.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.impl.DetailsDemandesController">
+<AnchorPane prefHeight="431.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rekest.controllers.impl.DetailsDemandesController">
    <children>
       <VBox layoutX="238.0" layoutY="-1.0" prefHeight="484.0" prefWidth="840.0" styleClass="parent" stylesheets="@../assets/css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -28,7 +28,7 @@
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin></FontAwesomeIconView>
-                  <Label alignment="TOP_LEFT" prefHeight="27.0" prefWidth="116.0" text="Demandes N">
+                  <Label alignment="TOP_LEFT" prefHeight="27.0" prefWidth="132.0" text="Demandes N°">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -36,12 +36,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="demandeID" prefHeight="27.0" prefWidth="54.0" text="XXXX">
+                  <Label fx:id="demandeID" prefHeight="27.0" prefWidth="60.0" text="XXXX">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="demandeState" prefHeight="27.0" prefWidth="97.0" text="- Etat">
+                  <Label fx:id="demandeState" prefHeight="27.0" prefWidth="95.0" text="- Etat">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -169,7 +169,7 @@
                               </Label>
                            </children>
                         </VBox>
-                        <ListView layoutX="15.0" layoutY="53.0" prefHeight="247.0" prefWidth="353.0" />
+                        <ListView fx:id="listViewNotes" layoutX="15.0" layoutY="53.0" prefHeight="247.0" prefWidth="353.0" />
                      </children>
                   </Pane>
                </children>
