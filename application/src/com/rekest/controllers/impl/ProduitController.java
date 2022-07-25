@@ -40,11 +40,6 @@ public class ProduitController implements Initializable {
 	@FXML
 	private Button btnSupprimer;
 
-	@FXML
-	private TableColumn<?, ?> columnDateCreation;
-
-	@FXML
-	private TableColumn<?, ?> columnDateMiseAJour;
 
 	@FXML
 	private TableColumn<Produit, String> columnDescription;
