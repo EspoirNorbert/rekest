@@ -447,6 +447,14 @@ public class Utilitaire {
 		return profiles;
 	}
 	
+	public static List<String> getProduitTypes(){
+		List<String> types = new ArrayList<>();
+		types.add("Materiel");
+		types.add("Service");
+		
+		return types;
+	}
+	
 	public static Administrateur getDefaultAdmin() {
 		Administrateur admin= new Administrateur(
 				propertyManager.getApplicationAdminFirstname(), 

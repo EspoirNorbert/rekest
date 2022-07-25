@@ -29,7 +29,7 @@ public class DepartementController implements Initializable {
 
 	@FXML
 	private TableColumn<Departement, String> columnNom;
-	
+
 	@FXML
 	private TableView<Departement> tableViewDepartement;
 
@@ -38,78 +38,78 @@ public class DepartementController implements Initializable {
 
 	@FXML
 	private TextField textRecherche;
-	
+
 	private ObservableList<Departement> departements =  FXCollections.observableArrayList();
-	
+
 	public Stage primaryStage;
-	
+
 	private IFeature service;
-	
+
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 
-	
+
 	private DepartementEditDialogController departementEditDialogController;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.service = Feature.getCurrentInstance();
 		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        addDepartmentObservableListToTheTable();
-        refreshCount();
-        addListeners();
-     }
-     
-     private void addDepartmentObservableListToTheTable() {
-     	// Add observable list data to the table
-    	 setDepartements(service.loadDepartementsObservableList());
-	     	tableViewDepartement.setItems(departements);
-	 		if (departements.size() > 0)
-	 			tableViewDepartement.getSelectionModel().select(0);	
-   					
- 	}
-     
-    private void addListeners() {
-    	// Wrap the ObservaleList in a FilteredList (initially display all data)
-    			FilteredList<Departement> filteredDepartments = new FilteredList<>(getDepartements(), b -> true);
+		addDepartmentObservableListToTheTable();
+		refreshCount();
+		addListeners();
+	}
 
-    			// Set the filter Predicate whenever the filter changes
-    			textRecherche.textProperty().addListener((observable, oldValue, newValue) -> {
-    				
-    				filteredDepartments.setPredicate(department -> {
-    					// If filter text is blank or null or empty -> display all departments
-    					if(newValue.isBlank() || newValue.isEmpty() || newValue == null) 
-    						return true;
+	private void addDepartmentObservableListToTheTable() {
+		// Add observable list data to the table
+		setDepartements(service.loadDepartementsObservableList());
+		tableViewDepartement.setItems(departements);
+		if (departements.size() > 0)
+			tableViewDepartement.getSelectionModel().select(0);	
 
-    					// Compare the name of every department with keyword
-    					String keyword = newValue.toLowerCase();
+	}
 
-    					if(department.getNom().toLowerCase().indexOf(keyword) > -1) {
-    						return true; // Filter matches name
-    					}    				
-    					else {
-    						return false; // No matches
-    					}
+	private void addListeners() {
+		// Wrap the ObservaleList in a FilteredList (initially display all data)
+		FilteredList<Departement> filteredDepartments = new FilteredList<>(getDepartements(), b -> true);
 
-    				});
-    			});
+		// Set the filter Predicate whenever the filter changes
+		textRecherche.textProperty().addListener((observable, oldValue, newValue) -> {
 
-    			// Wrap the FilteredList in a SortedList 
-    			SortedList<Departement> sortedDepartments = new SortedList<>(filteredDepartments);
+			filteredDepartments.setPredicate(department -> {
+				// If filter text is blank or null or empty -> display all departments
+				if(newValue.isBlank() || newValue.isEmpty() || newValue == null) 
+					return true;
 
-    			// Bind the SortedList comparator to the TableView comparator, otherwise sorting will have no effect
-    			sortedDepartments.comparatorProperty().bind(tableViewDepartement.comparatorProperty());
+				// Compare the name of every department with keyword
+				String keyword = newValue.toLowerCase();
 
-    			// Add sorted (and filtered) data to the table 
-    			tableViewDepartement.setItems(sortedDepartments);
-    }
-     
-     public void refreshCount() {
-    	 countDepartement.setText(String.valueOf(getDepartements().size()));
+				if(department.getNom().toLowerCase().indexOf(keyword) > -1) {
+					return true; // Filter matches name
+				}    				
+				else {
+					return false; // No matches
+				}
 
- 	}
+			});
+		});
+
+		// Wrap the FilteredList in a SortedList 
+		SortedList<Departement> sortedDepartments = new SortedList<>(filteredDepartments);
+
+		// Bind the SortedList comparator to the TableView comparator, otherwise sorting will have no effect
+		sortedDepartments.comparatorProperty().bind(tableViewDepartement.comparatorProperty());
+
+		// Add sorted (and filtered) data to the table 
+		tableViewDepartement.setItems(sortedDepartments);
+	}
+
+	public void refreshCount() {
+		countDepartement.setText(String.valueOf(getDepartements().size()));
+
+	}
 
 	public ObservableList<Departement> getDepartements() {
 		return departements;
@@ -122,110 +122,110 @@ public class DepartementController implements Initializable {
 
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
-		  Departement tempDepartment = new Departement();
-	      boolean okClicked = showDepartmentEditDialog(tempDepartment, "Creation d'un departement ");
-	        if (okClicked) {
-					Boolean statut = service.createDepartement(tempDepartment);
-					if(statut) {
-						refreshCount();
-						
-					}
-	        }
+		Departement tempDepartment = new Departement();
+		boolean okClicked = showDepartmentEditDialog(tempDepartment, "Creation d'un departement ");
+		if (okClicked) {
+			Boolean statut = service.createDepartement(tempDepartment);
+			if(statut) {
+				refreshCount();
+
+			}
+		}
 	}
 
 	@FXML
 	void handleClickedModifier(ActionEvent event) {
-		  Departement selectedDepartement = 
-				  tableViewDepartement.getSelectionModel().getSelectedItem();        
-          
-	        if (selectedDepartement != null) {
-	            boolean okClicked = showDepartmentEditDialog(selectedDepartement, "Modification d'un departement ");
-	            if (okClicked) {
-						Boolean statut = service.updateDepartement(selectedDepartement);
-						if(statut) {
-							refreshCount();
-							
-						}
-	            }
-	            
-	        } else {
-	            // Nothing selected.
-	        	Utilitaire.alert(AlertType.WARNING, primaryStage,
-	        			"No Selection", 
-	        			"No Department Selected", 
-	        			"Please select a department in the table.");
-	        }
+		Departement selectedDepartement = 
+				tableViewDepartement.getSelectionModel().getSelectedItem();        
+
+		if (selectedDepartement != null) {
+			boolean okClicked = showDepartmentEditDialog(selectedDepartement, "Modification d'un departement ");
+			if (okClicked) {
+				Boolean statut = service.updateDepartement(selectedDepartement);
+				if(statut) {
+					refreshCount();
+
+				}
+			}
+
+		} else {
+			// Nothing selected.
+			Utilitaire.alert(AlertType.WARNING, primaryStage,
+					"No Selection", 
+					"No Department Selected", 
+					"Please select a department in the table.");
+		}
 	}
-	
+
 	@FXML
 	void handleClickedSupprimer(ActionEvent event) {
 		int selectedIndex = tableViewDepartement.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0 && tableViewDepartement.getSelectionModel().isSelected(selectedIndex)) {
-        	Departement selectedDepartement = tableViewDepartement.getSelectionModel().getSelectedItem();
-        
-        	Boolean confirmStatus = Utilitaire.confirm(AlertType.CONFIRMATION,
+		if (selectedIndex >= 0 && tableViewDepartement.getSelectionModel().isSelected(selectedIndex)) {
+			Departement selectedDepartement = tableViewDepartement.getSelectionModel().getSelectedItem();
+
+			Boolean confirmStatus = Utilitaire.confirm(AlertType.CONFIRMATION,
 					null, 
 					"Delete",
 					"Delete \""+selectedDepartement.getNom()+ "\" ? ",
 					"Are you sure you want to delete this department?");
-        	
-        	if(confirmStatus) {
-//              tableViewDepartement.getItems().remove(selectedIndex);
-                Boolean statut = service.deleteDepartement(selectedDepartement);
-                if(statut) {
-                	refreshCount();
-                	
-                }
 
-        	}
-        	
-        } else {
-            // Nothing selected.
-        	Utilitaire.alert(AlertType.WARNING, primaryStage,
-        			"No Selection", 
-        			"No Department Selected", 
-        			"Please select a department in the table.");
-        }
+			if(confirmStatus) {
+				//              tableViewDepartement.getItems().remove(selectedIndex);
+				Boolean statut = service.deleteDepartement(selectedDepartement);
+				if(statut) {
+					refreshCount();
+
+				}
+
+			}
+
+		} else {
+			// Nothing selected.
+			Utilitaire.alert(AlertType.WARNING, primaryStage,
+					"No Selection", 
+					"No Department Selected", 
+					"Please select a department in the table.");
+		}
 	}
 
 	@FXML
 	void handleClickedRecherche(ActionEvent event) {}
 
-	
-    /**
-     * Opens a dialog to edit details for the specified person. If the user
-     * clicks OK, the changes are saved into the provided person object and true
-     * is returned.
-     *
-     * @param person the person object to be edited
-     * @return true if the user clicked OK, false otherwise.
-     */
-    public boolean showDepartmentEditDialog(Departement department, String title) {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = Utilitaire.initFXMLoader("DepartementEditDialog");
-            AnchorPane root = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
 
-            // Create the dialog Stage.
-            Stage dialogStage = Utilitaire.createDialog(root, primaryStage, title);
+	/**
+	 * Opens a dialog to edit details for the specified person. If the user
+	 * clicks OK, the changes are saved into the provided person object and true
+	 * is returned.
+	 *
+	 * @param person the person object to be edited
+	 * @return true if the user clicked OK, false otherwise.
+	 */
+	public boolean showDepartmentEditDialog(Departement department, String title) {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = Utilitaire.initFXMLoader("DepartementEditDialog");
+			AnchorPane root = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
 
-            // Set the department into the controller.
-            departementEditDialogController = loader.getController();
-            departementEditDialogController.setDialogStage(dialogStage);
-            departementEditDialogController.setDepartement(department);
-            
-            // Show the dialog and wait until the user closes it
-            Utilitaire.showDialog(dialogStage);
+			// Create the dialog Stage.
+			Stage dialogStage = Utilitaire.createDialog(root, primaryStage, title);
 
-            return departementEditDialogController.isOkClicked();
-        } catch (Exception e) {
-        	Utilitaire.alert(AlertType.WARNING, 
+			// Set the department into the controller.
+			departementEditDialogController = loader.getController();
+			departementEditDialogController.setDialogStage(dialogStage);
+			departementEditDialogController.setDepartement(department);
+
+			// Show the dialog and wait until the user closes it
+			Utilitaire.showDialog(dialogStage);
+
+			return departementEditDialogController.isOkClicked();
+		} catch (Exception e) {
+			Utilitaire.alert(AlertType.WARNING, 
 					null, 
 					"REKEST ERROR","Echec ",e.getMessage());
-        }
-        
-        return false;
-    }
+		}
 
-	
+		return false;
+	}
+
+
 }
