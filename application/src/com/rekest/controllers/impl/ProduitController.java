@@ -244,7 +244,7 @@ public class ProduitController implements Initializable {
 
 			// Set the department into the controller.
 			produitEditDialogController = loader.getController();
-			produitEditDialogController.setDialogStage(dialogStage);
+			produitEditDialogController.setDialogStage(dialogStage, title);
 			produitEditDialogController.setProduit(produit);
 			produitEditDialogController.setTypes();
 

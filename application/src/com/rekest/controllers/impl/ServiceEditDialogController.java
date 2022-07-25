@@ -50,8 +50,9 @@ public class ServiceEditDialogController {
 	 * Sets the stage of this dialog.
 	 * @param dialogStage
 	 */
-	public void setDialogStage(Stage dialogStage) {
+	public void setDialogStage(Stage dialogStage, String title) {
 		this.dialogStage = dialogStage;
+		labelService.setText(title);
 	}
 
 	public Service getService() {

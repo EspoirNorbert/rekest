@@ -94,6 +94,7 @@ public class ServiceController implements Initializable{
 	public void initProperties() {
 		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
 		columnChefService.setCellValueFactory(new PropertyValueFactory<>("nomChefService"));
+		columnDepartementAssocie.setCellValueFactory(new PropertyValueFactory<>("nomDepartement"));
 
 	}
 
@@ -228,7 +229,7 @@ public class ServiceController implements Initializable{
 
 			// Set the department into the controller.
 			serviceEditDialogController = loader.getController();
-			serviceEditDialogController.setDialogStage(dialogStage);
+			serviceEditDialogController.setDialogStage(dialogStage, title);
 			serviceEditDialogController.setService(service);
 			serviceEditDialogController.setDepartements();
 

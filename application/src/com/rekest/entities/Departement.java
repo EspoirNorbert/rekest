@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Departement {
@@ -34,11 +35,22 @@ public class Departement {
 	@OneToOne(targetEntity=ChefDepartement.class)
 	@JoinColumn(name="id_chefdepartement")
 	private ChefDepartement chefDepartement;
+	
+	@Transient
+	private String nomChefDepartement;
 
 	public Departement() {}
 	
 	public Departement(String nom) {
 		this.nom = nom;
+	}
+
+	public String getNomChefDepartement() {
+		return chefDepartement != null?  chefDepartement.getNom() + " " + chefDepartement.getPrenom() : null;
+	}
+
+	public void setNomChefDepartement(String nomChefDepartement) {
+		this.nomChefDepartement = nomChefDepartement;
 	}
 
 	public int getId() {
