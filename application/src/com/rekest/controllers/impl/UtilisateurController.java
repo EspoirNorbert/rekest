@@ -17,5 +17,10 @@ public class UtilisateurController {
 	@FXML
 	void handleClickedSupprimer(ActionEvent event) {}
 
+	@FXML
+	void handleClickedActiver(ActionEvent event) {}
 	
+	@FXML
+	void handleClickedDesactiver(ActionEvent event) {}
+
 }
