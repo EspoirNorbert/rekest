@@ -29,6 +29,9 @@ public class DepartementController implements Initializable {
 
 	@FXML
 	private TableColumn<Departement, String> columnNom;
+	
+	@FXML
+	private TableColumn<Departement, String> columnChefDepartement;
 
 	@FXML
 	private TableView<Departement> tableViewDepartement;
@@ -43,7 +46,7 @@ public class DepartementController implements Initializable {
 
 	public Stage primaryStage;
 
-	private IFeature service;
+	private IFeature feature = Feature.getCurrentInstance();
 
 
 	public void setPrimaryStage(Stage primaryStage) {
@@ -55,16 +58,22 @@ public class DepartementController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.service = Feature.getCurrentInstance();
-		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+		initProperties();
 		addDepartmentObservableListToTheTable();
 		refreshCount();
 		addListeners();
 	}
+	
 
+	private void initProperties() {
+		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+		columnChefDepartement.setCellValueFactory(new PropertyValueFactory<>("nomChefDepartement"));
+		
+	}
+	
 	private void addDepartmentObservableListToTheTable() {
 		// Add observable list data to the table
-		setDepartements(service.loadDepartementsObservableList());
+		setDepartements(feature.loadDepartementsObservableList());
 		tableViewDepartement.setItems(departements);
 		if (departements.size() > 0)
 			tableViewDepartement.getSelectionModel().select(0);	
@@ -125,7 +134,7 @@ public class DepartementController implements Initializable {
 		Departement tempDepartment = new Departement();
 		boolean okClicked = showDepartmentEditDialog(tempDepartment, "Creation d'un departement ");
 		if (okClicked) {
-			Boolean statut = service.createDepartement(tempDepartment);
+			Boolean statut = feature.createDepartement(tempDepartment);
 			if(statut) {
 				refreshCount();
 
@@ -141,7 +150,7 @@ public class DepartementController implements Initializable {
 		if (selectedDepartement != null) {
 			boolean okClicked = showDepartmentEditDialog(selectedDepartement, "Modification d'un departement ");
 			if (okClicked) {
-				Boolean statut = service.updateDepartement(selectedDepartement);
+				Boolean statut = feature.updateDepartement(selectedDepartement);
 				if(statut) {
 					refreshCount();
 
@@ -171,7 +180,7 @@ public class DepartementController implements Initializable {
 
 			if(confirmStatus) {
 				//              tableViewDepartement.getItems().remove(selectedIndex);
-				Boolean statut = service.deleteDepartement(selectedDepartement);
+				Boolean statut = feature.deleteDepartement(selectedDepartement);
 				if(statut) {
 					refreshCount();
 
