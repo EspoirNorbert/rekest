@@ -42,6 +42,8 @@ public class Service {
 	@Transient
 	private Departement departement; 
 	
+	@Transient
+	private String nomDepartement;
 	
 	
 	public Service() {}
@@ -108,6 +110,14 @@ public class Service {
 	
 	public String getDepartementString() {
 		return departement!= null? departement.getId() + " - " + departement.getNom() : null;
+	}
+
+	public String getNomDepartement() {
+		return departement!= null? departement.getNom() : null;
+	}
+
+	public void setNomDepartement(String nomDepartement) {
+		this.nomDepartement = nomDepartement;
 	}
 
 	public static void copy(Service service, Service entity) {

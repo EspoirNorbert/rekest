@@ -94,6 +94,7 @@ public class ServiceController implements Initializable{
 	public void initProperties() {
 		columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
 		columnChefService.setCellValueFactory(new PropertyValueFactory<>("nomChefService"));
+		columnDepartementAssocie.setCellValueFactory(new PropertyValueFactory<>("nomDepartement"));
 
 	}
 
