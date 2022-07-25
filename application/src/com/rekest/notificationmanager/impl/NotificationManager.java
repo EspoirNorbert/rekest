@@ -16,6 +16,7 @@ public class NotificationManager implements INotificationManager {
 	public final static Logger logger = LogManager.getLogger(HibernateDao.class);
 	private IDao dao = HibernateDao.getCurrentInstance();
 	private static Session session = null;
+	
 	@Override
 	public boolean createNotification(Utilisateur utilisateur, Demande demande, String message) throws DAOException {
 		

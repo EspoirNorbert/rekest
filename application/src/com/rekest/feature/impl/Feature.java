@@ -13,6 +13,7 @@ import com.rekest.entities.Produit;
 import com.rekest.entities.Role;
 import com.rekest.entities.Service;
 import com.rekest.entities.employes.ChefDepartement;
+import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Employe;
 import com.rekest.entities.employes.Manager;
 import com.rekest.entities.employes.Utilisateur;
@@ -829,7 +830,7 @@ public class Feature implements IFeature {
 	@Override
 	public boolean deleteEmploye (Employe employe)   {
 		try {
-			
+
 			if ( employe.getService() != null )
 				dao.dissociateService ( employe, employe.getService());
 
@@ -838,20 +839,20 @@ public class Feature implements IFeature {
 				if(service != null) {
 					service.setChefService(null);
 					dao.update(service);
-					
+
 				}
-					
+
 			}
 			else
-			if ( employe.getEmployeProfil() == "ChefDepartement") {
-				Departement departement = findDepartement("WHERE chefDepartement = '"+employe.getId()+"'");
-				if(departement != null) {
-					departement.setChefDepartement(null);;
-					dao.update(departement);
-					
+				if ( employe.getEmployeProfil() == "ChefDepartement") {
+					Departement departement = findDepartement("WHERE chefDepartement = '"+employe.getId()+"'");
+					if(departement != null) {
+						departement.setChefDepartement(null);;
+						dao.update(departement);
+
+					}
+
 				}
-					
-			}
 
 			dao.delete ( employe);
 			loadEmployesObservableList ();
@@ -868,7 +869,7 @@ public class Feature implements IFeature {
 	public boolean updateEmploye (Employe employe)   {
 
 		try {
-			
+
 			if ( employe.getService() != null && employe.getOldService() != employe.getService() && employe.getEmployeProfil()!="ChefService") {
 				if ( employe.getOldService() != null)
 					dao.dissociateService ( employe, employe.getOldService());
@@ -979,7 +980,7 @@ public class Feature implements IFeature {
 				deleteEmploye(emps.remove(0));
 
 			}
-			
+
 			service.setChefService(null);
 			service.setEmployes(emps);
 
@@ -1242,9 +1243,10 @@ public class Feature implements IFeature {
 	}
 
 	@Override
-	public boolean createNote (Note note)   {
+	public boolean createNote (Note note , Demande demande)   {
 
 		try {
+			demande.addNote(note);
 			dao.save ( note); 
 			loadNoteObservableList ();
 			return true;
@@ -1373,16 +1375,38 @@ public class Feature implements IFeature {
 	}
 
 	@Override
-	public boolean createDemande (Demande demande)   {
+	public boolean createDemande (Utilisateur utilisateur, Demande demande , Employe employe)   {
 		try {
-			dao.save ( demande);
-			loadDemandesObservableList ();
-			return true;
+			demande.setEtat("Created");
+		
+			utilisateur.addDemandeCreee(demande);
+			
+			if (employe != null)
+				employe.addDemandeSoumise(demande);
+			else
+				utilisateur.addDemandeSoumise(demande);
+			
+			notifManager.createNotification(utilisateur ,demande , "Une demande a été créé par vous !");
+			
+			if (utilisateur.getService() != null) {
+				Service service = utilisateur.getService();
+				ChefService chef = service.getChefService();
+
+				notifManager.createNotification(chef , demande ,"Une nouvelle demande a été soumise a votre appreciation !");
+
+				loadNotificationObservableList();
+				loadDemandesObservableList ();
+
+				return true;
+			} else {
+				return false;
+			}
+			
 		} catch (DAOException e) {
 			AlertError (e,"create demande");
 			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
-		}	
+		}  	
 	}
 
 	@Override
@@ -1645,7 +1669,7 @@ public class Feature implements IFeature {
 	public Integer getNumberDemandes () {
 		return listDemandes ().size ();
 	}
-	
+
 	@Override
 	public Integer getNumberRoles() {
 		return listRoles ().size ();

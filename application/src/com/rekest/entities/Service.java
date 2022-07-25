@@ -45,7 +45,6 @@ public class Service {
 	@Transient
 	private String nomDepartement;
 	
-	
 	public Service() {}
 
 	public Service(String nom) {

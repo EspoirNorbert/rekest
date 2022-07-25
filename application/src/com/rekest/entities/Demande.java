@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.rekest.entities.employes.Employe;
+import com.rekest.entities.employes.Utilisateur;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +18,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
+
 
 @Entity
 public class Demande {
@@ -45,6 +50,26 @@ public class Demande {
 	@JoinColumn(name="id_demande")
 	private List<Notification> notifications = new ArrayList<>();
 
+	@Transient
+	private Employe employe;
+	
+	@Transient
+	private Utilisateur utilisateur;
+	
+	@Transient
+	private String produitId;
+	
+	@Transient
+	private String nomEmploye;
+	
+	@Transient
+	private String employeId;
+	
+	@Transient
+	private String utilisateurId;
+	
+	@Transient
+	private String nomUtilisateur;
 
 	public Demande() {
 		this.createdAt = new java.util.Date();
@@ -122,9 +147,86 @@ public class Demande {
 
 	}
 
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	
+	public void setEmploye(Employe employe) {
+		this.employe = employe;
+	}
 
 	public String getProduitString() {
 		return produit!= null? produit.getId() + " - " + produit.getNom() : null;
 	}
+
+	public String getEmployeString() {
+		return employe!= null? employe.getId() + " - " + employe.getFullName() : null;
+	}
+
+	public String getUserString() {
+		return utilisateur!= null? utilisateur.getId() + " - " + utilisateur.getFullName() : null;
+	}
+	
+	public Employe getEmploye() {
+		return employe;
+	}
+
+	public String getProduitId() {
+		return String.valueOf(produit.getId());
+	}
+
+	public void setProduitId(String produitId) {
+		this.produitId = produitId;
+	}
+
+	public String getNomEmploye() {
+		return this.getEmployeString();
+	}
+
+	public void setNomEmploye(String nomEmploye) {
+		this.nomEmploye = nomEmploye;
+	}
+
+	public String getEmployeId() {
+		return String.valueOf(employe.getId());
+	}
+
+	public void setEmployeId(String employeId) {
+		this.employeId = employeId;
+	}
+
+	public String getUtilisateurId() {
+		return String.valueOf(utilisateur.getId() == 0 ? 0 : utilisateur.getId());
+	}
+
+	public void setUtilisateurId(String utilisateurId) {
+		this.utilisateurId = utilisateurId;
+	}
+
+	public String getNomUtilisateur() {
+		return this.getUserString();
+	}
+
+	public void setNomUtilisateur(String nomUtilisateur) {
+		this.nomUtilisateur = nomUtilisateur;
+	}
+
+	public Produit getProduit() {
+		return produit;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	@Override
+	public String toString() {
+		return "Demande [id=" + id + ", etat=" + etat + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+				+ ", produit=" + produit + ", employe=" + employe + ", utilisateur=" + utilisateur + ", produitId="
+				+ produitId + ", nomEmploye=" + nomEmploye + ", employeId=" + employeId + ", utilisateurId="
+				+ utilisateurId + ", nomUtilisateur=" + nomUtilisateur + "]";
+	}
+	
+	
 	
 }

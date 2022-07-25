@@ -714,8 +714,7 @@ public interface IFeature {
 	 * 
 	 * @param service
 	 */
-	public boolean createDemande (Demande Demande)   ;
-
+	public boolean createDemande (Utilisateur utilisateur, Demande demande , Employe employe)   ;
 
 	/**
 	 * Find and return the 'Demande' set in parameter if it exist, else null.
@@ -782,10 +781,11 @@ public interface IFeature {
 	/**
 	 * Save the 'note' set in parameter. 
 	 * Returns true if it succeeded, else false. 
+	 * @param demande 
 	 * 
 	 * @param service
 	 */
-	public boolean createNote (Note note)   ;
+	public boolean createNote (Note note, Demande demande)   ;
 
 
 	/**

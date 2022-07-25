@@ -137,7 +137,6 @@ public class DepartementController implements Initializable {
 			Boolean statut = feature.createDepartement(tempDepartment);
 			if(statut) {
 				refreshCount();
-
 			}
 		}
 	}
