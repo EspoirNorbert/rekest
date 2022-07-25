@@ -1645,6 +1645,12 @@ public class Feature implements IFeature {
 	public Integer getNumberDemandes () {
 		return listDemandes ().size ();
 	}
+	
+	@Override
+	public Integer getNumberRoles() {
+		return listRoles ().size ();
+	}
+
 
 	@Override
 	public Integer getNumberEmployes () {
@@ -1897,6 +1903,7 @@ public class Feature implements IFeature {
 		}
 
 	}
+
 
 	/*
 	 * 

@@ -879,6 +879,12 @@ public Service rechercherNotification( Integer primaryKey)   ;
 	public Integer getNumberDemandes();
 	
 	/**
+	 * Returns the number of 'Roles'
+	 * @return
+	 */
+	public Integer getNumberRoles();
+	
+	/**
 	 * Returns the number of 'Employes'
 	 * 
 	 * @return
@@ -1223,6 +1229,7 @@ public Service rechercherNotification( Integer primaryKey)   ;
 	 * 
 	 */
 	default void initAllEntity() {}
+
 	
 	
 }
