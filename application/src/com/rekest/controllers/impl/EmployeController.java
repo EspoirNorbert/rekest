@@ -8,6 +8,7 @@ import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.utils.Utilitaire;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -64,7 +65,7 @@ public class EmployeController implements Initializable {
 	private TableColumn<Employe, String> columnTelephone;
 
 	@FXML
-	private Label countEmployes;
+	private Label countEmploye;
 
 	@FXML
 	private TableView<Employe> tableViewEmployes;
@@ -78,15 +79,15 @@ public class EmployeController implements Initializable {
 
 	private IFeature feature = Feature.getCurrentInstance();
 
-	private ObservableList<Employe> employees;
+	private ObservableList<Employe> employees = FXCollections.observableArrayList();
 
 	@FXML
 	void handleClickedAjouter(ActionEvent event) {
 		Employe tempEmp = new Employe();
-		boolean okClicked = showEmployeEditDialog(tempEmp, "Creation d'un employe");
+		boolean okClicked = showEmployeEditDialog(tempEmp, "Creation d'un employe ");
 		if (okClicked) {
 			tempEmp = employeEditDialogController.getEmploye();
-			Boolean statut =  feature.creerEmploye(tempEmp);
+			Boolean statut =  feature.createEmploye(tempEmp);
 			if (statut) {
 				refreshCount();
 			}
@@ -98,10 +99,10 @@ public class EmployeController implements Initializable {
 		
 		Employe selectedEmploye = tableViewEmployes.getSelectionModel().getSelectedItem();
 		if (selectedEmploye != null) {
-			boolean okClicked = showEmployeEditDialog(selectedEmploye, "Modification d'un employe");
+			boolean okClicked = showEmployeEditDialog(selectedEmploye, "Modification d'un employe ");
 			if (okClicked) {
 				Employe tempEmp = employeEditDialogController.getEmploye();
-				Boolean statut =  feature.modifierEmploye(tempEmp);
+				Boolean statut =  feature.updateEmploye(tempEmp);
 				if (statut) {
 					refreshCount();
 
@@ -120,21 +121,7 @@ public class EmployeController implements Initializable {
 	}
 
 	@FXML
-	void handleClickedRecherche(ActionEvent event) {
-		
-		// NO NEEDED WHEN USING EVENT ON TEXTFIELD RECHERCHE
-
-//		String whereClause;
-//		if(!textRecherche.getText().isEmpty()) {
-//			System.out.println("EmployeController.handleClickedRecherche()" + textRecherche.getText());
-//			whereClause = "WHERE nom LIKE '%"+textRecherche.getText()+"%'";
-//			System.out.println("EmployeController.handleClickedRecherche()" + whereClause);
-//			List<Employe> employeTrouve = feature.listerEmployes(whereClause);
-//
-//			if(employeTrouve!=null)
-//				System.out.println("EmployeController.handleClickedRecherche()" + employeTrouve.toString());
-//		}
-	}
+	void handleClickedRecherche(ActionEvent event) {}
 
 	@FXML
 	void handleClickedSupprimer(ActionEvent event) {
@@ -151,12 +138,8 @@ public class EmployeController implements Initializable {
 
 			if(confirmStatus) {
 //				tableViewEmployes.getItems().remove(selectedIndex);
-				Boolean statut = feature.supprimerEmploye(selectedEmploye);
+				Boolean statut = feature.deleteEmploye(selectedEmploye);
 				if(statut) {
-					for (Employe employe : tableViewEmployes.getItems()) {
-						System.out.println("EmployeController.handleClickedSupprimer()"
-					+employe.getId() + " " +employe.getNom() +"  "+ employe.getServiceName() + "\n");
-					}
 					refreshCount();
 					
 				}
@@ -205,7 +188,7 @@ public class EmployeController implements Initializable {
 
 		// Add observable list data to the table
 		setEmployees(feature.loadEmployesObservableList());
-		tableViewEmployes.setItems(getEmployees());
+		tableViewEmployes.setItems(FXCollections.observableArrayList(getEmployees()));
 
 		if (getEmployees().size() > 0) 
 			tableViewEmployes.getSelectionModel().select(0);
@@ -256,7 +239,7 @@ public class EmployeController implements Initializable {
 		columnPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
 		columnAdresse.setCellValueFactory(new PropertyValueFactory<>("adresse"));
 		columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		columnProfil.setCellValueFactory(new PropertyValueFactory<>("employeProfil"));
+//		columnProfil.setCellValueFactory(new PropertyValueFactory<>("employeProfil"));
 		columnTelephone.setCellValueFactory(new PropertyValueFactory<>("telephone"));
 		columnService.setCellValueFactory(new PropertyValueFactory<>("serviceName"));
 
@@ -268,11 +251,12 @@ public class EmployeController implements Initializable {
 	}
 
 	public void setEmployees(ObservableList<Employe> employees) {
+		this.employees.clear();
 		this.employees = employees;
 	}
 
 	public void refreshCount() {
-		countEmployes.setText(String.valueOf(getEmployees().size()));
+		countEmploye.setText(String.valueOf(getEmployees().size()));
 
 	}
 

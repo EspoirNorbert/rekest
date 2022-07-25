@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Service {
@@ -32,13 +33,29 @@ public class Service {
 	private List<Employe> employes = new ArrayList<>();
 
 	@OneToOne(targetEntity=ChefService.class)
-	@JoinColumn(name = "id_chefservice")
+	@JoinColumn(name="id_chefservice")
 	private ChefService chefService;
+	
+	@Transient
+	private String nomChefService;
+	
+	@Transient
+	private Departement departement; 
+	
+	
 	
 	public Service() {}
 
 	public Service(String nom) {
 		this.nom = nom;
+	}
+
+	public List<Employe> getEmployes() {
+		return employes;
+	}
+
+	public void setEmployes(List<Employe> employes) {
+		this.employes = employes;
 	}
 
 	public int getId() {
@@ -61,7 +78,7 @@ public class Service {
 		employes.add(employe);	
 	}
 
-	public void deleteEmploye(Employe employe) {
+	public void removeEmploye(Employe employe) {
 		employes.remove(employe);
 	}
 	
@@ -71,6 +88,26 @@ public class Service {
 
 	public void setChefService(ChefService chefService) {
 		this.chefService = chefService;
+	}
+
+	public String getNomChefService() {
+		return ( getChefService()!= null) ? getChefService().getNom() + " " + getChefService().getPrenom() : null;
+	}
+
+	public void setNomChefService(String nomChefService) {
+		this.nomChefService = nomChefService;
+	}
+
+	public Departement getDepartement() {
+		return departement;
+	}
+
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
+	}
+	
+	public String getDepartementString() {
+		return departement!= null? departement.getId() + " - " + departement.getNom() : null;
 	}
 
 	public static void copy(Service service, Service entity) {

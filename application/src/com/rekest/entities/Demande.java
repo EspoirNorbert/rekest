@@ -34,7 +34,7 @@ public class Demande {
 	private Date updatedAt;
 	
 	@OneToOne(targetEntity=Produit.class)
-	@JoinColumn(name = "id_produit")
+	@JoinColumn(name="id_produit")
 	private Produit produit;
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -93,9 +93,30 @@ public class Demande {
 		this.notes.add(note);
 		this.updatedAt = new java.util.Date();
 	}
-//	public void addNotification(Notification notification) {
-//		this.notifications.add(notification);
-//	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
+
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	public void addNotification(Notification notification) {
+		this.notifications.add(notification);
+	}
+	
+	public void removeNotification(Notification notification) {
+		this.notifications.remove(notification);
+	}
 
 	public static void copy(Demande demande, Demande entity) {
 		

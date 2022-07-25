@@ -1,13 +1,21 @@
 package com.rekest.controllers.impl;
 
-import com.rekest.entities.Service;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.rekest.entities.Departement;
+import com.rekest.entities.Service;
+import com.rekest.feature.IFeature;
+import com.rekest.feature.impl.Feature;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class ServiceEditDialogController {
@@ -19,13 +27,17 @@ public class ServiceEditDialogController {
     private Button btnOk;
 
     @FXML
-    private ComboBox<?> comboBoxService;
+    private ComboBox<String> comboBoxDepartement;
 
     @FXML
     private Label labelService;
 
     @FXML
     private TextField textFieldNom;
+    
+	private ObservableList<Departement> departmentsList;
+	
+	private IFeature feature = Feature.getCurrentInstance();
     
 	private Stage dialogStage;
 	
@@ -42,6 +54,10 @@ public class ServiceEditDialogController {
 		this.dialogStage = dialogStage;
 	}
 
+	public Service getService() {
+		return service;
+	}
+
 	/**
 	 * Sets the person to be edited in the dialog.
 	 *
@@ -50,6 +66,44 @@ public class ServiceEditDialogController {
 	public void setService(Service service) {
 		this.service = service;
 		textFieldNom.setText(service.getNom());
+	}
+	
+	public void setDepartements() {
+		setDepartmentsList(feature.loadDepartementsObservableList());
+
+		comboBoxDepartement.setItems(FXCollections.observableArrayList(serialize(getDepartmentsList())));
+
+		if(this.service!=null && this.service.getDepartementString()!=null) 
+			comboBoxDepartement.setValue(this.service.getDepartementString());
+		
+	}
+
+	public ObservableList<Departement> getDepartmentsList() {
+		return departmentsList;
+	}
+
+	public void setDepartmentsList(ObservableList<Departement> departmentsList) {
+		this.departmentsList = departmentsList;
+	}
+	
+	public List<String> serialize(ObservableList<Departement> departmentList){
+
+		List<String> strings = new ArrayList<>();
+
+		for (Departement department : departmentList) {
+			strings.add(department.getId() + " - " + department.getNom());
+		}
+
+		return strings;
+	}
+	
+	public Departement getCurrentComboBoxDepartement() {
+		Departement tempDepartment = null ;
+		for (Departement department : getDepartmentsList()) {
+			if ((department.getId() + " - " + department.getNom()).equals(comboBoxDepartement.getValue()))
+				tempDepartment =  department;
+		}
+		return tempDepartment;
 	}
 
 	/**
@@ -68,6 +122,8 @@ public class ServiceEditDialogController {
 	private void handleClickedOk() {
 		if (isInputValid()) {
 			service.setNom(textFieldNom.getText());
+			service.setDepartement(getCurrentComboBoxDepartement());
+
 			okClicked = true;
 			dialogStage.close();
 		}
@@ -92,7 +148,10 @@ public class ServiceEditDialogController {
 		if (textFieldNom.getText() == null || textFieldNom.getText().length() == 0) {
 			errorMessage += "Le nom du service est invalid!\n";
 		}
-
+		
+		if (comboBoxDepartement.getValue() == null || comboBoxDepartement.getValue().length() == 0) {
+			errorMessage += "Le nom du departement est invalid!\n";
+		}
 
 		if (errorMessage.length() == 0) {
 			return true;

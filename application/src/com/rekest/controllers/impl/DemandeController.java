@@ -161,7 +161,7 @@ public class DemandeController implements Initializable {
 		Demande tempDemande = new Demande();
 		boolean okClicked = showDemandeEditDialog(tempDemande, "Creation d'une demande");
 		if (okClicked) {
-			Boolean statut = service.creerDemande(tempDemande);
+			Boolean statut = service.createDemande(tempDemande);
 			if(statut) {
 				refreshCount();
 

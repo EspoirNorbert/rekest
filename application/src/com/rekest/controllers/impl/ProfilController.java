@@ -94,7 +94,7 @@ public class ProfilController implements Initializable {
 			this.connectedUser.setTelephone(textFieldTelephone.getText());
 			this.connectedUser.setEmail(textFieldEmail.getText());
 			
-			Boolean result = feature.modifierUtilisateur(connectedUser);
+			Boolean result = feature.updateUtilisateur(connectedUser);
 			
 			if (result)
 				Utilitaire.notification(NotificationType.INFO, "Update profile", 

@@ -12,7 +12,8 @@ public class TestDataBase {
 	public final static Logger logger = LogManager.getLogger(TestDataBase.class);
 
 	public static void main(String[] args) {
-		RekestData.getInstance().initAdmins();
+		RekestData rekestData = new RekestData();
+		rekestData.initAdmins();
 
 	}
 	

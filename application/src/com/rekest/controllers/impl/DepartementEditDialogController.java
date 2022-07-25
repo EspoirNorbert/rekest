@@ -38,6 +38,10 @@ public class DepartementEditDialogController {
 		textFieldNom.setText(departement.getNom());
 	}
 
+	public Departement getDepartement() {
+		return departement;
+	}
+
 	/**
 	 * Returns true if the department clicked OK, false otherwise.
 	 *
