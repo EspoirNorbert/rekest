@@ -13,8 +13,7 @@ public class TestDataBase {
 
 	public static void main(String[] args) {
 		RekestData rekestData = new RekestData();
-		rekestData.initAdmins();
-
+		rekestData.initAllEntity();
 	}
 	
 	

@@ -1,6 +1,5 @@
 package com.rekest.runtime;
 
-//import com.rekest.controllers.impl.MainController;
 import com.rekest.controllers.impl.MainController;
 import com.rekest.enums.NotificationType;
 import com.rekest.utils.Utilitaire;

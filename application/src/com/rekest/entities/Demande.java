@@ -19,24 +19,24 @@ import jakarta.persistence.TemporalType;
 @Entity
 public class Demande {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_demande")
 	private int id;
-	
+
 	private String etat;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_At", columnDefinition="TIMESTAMP")
 	private Date  createdAt;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_At", columnDefinition="TIMESTAMP")
 	private Date updatedAt;
-	
+
 	@OneToOne(targetEntity=Produit.class)
 	@JoinColumn(name="id_produit")
 	private Produit produit;
-	
+
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_demande")
 	private List<Note> notes = new ArrayList<>();
@@ -44,21 +44,21 @@ public class Demande {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="id_demande")
 	private List<Notification> notifications = new ArrayList<>();
-	
-	
+
+
 	public Demande() {
-		  this.createdAt = new java.util.Date();
+		this.createdAt = new java.util.Date();
 	}
 
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 		this.updatedAt = new java.util.Date();
 	}
-	
+
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 		this.updatedAt = new java.util.Date();
@@ -88,7 +88,7 @@ public class Demande {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
 	public void addNote(Note note) {
 		this.notes.add(note);
 		this.updatedAt = new java.util.Date();
@@ -113,12 +113,18 @@ public class Demande {
 	public void addNotification(Notification notification) {
 		this.notifications.add(notification);
 	}
-	
+
 	public void removeNotification(Notification notification) {
 		this.notifications.remove(notification);
 	}
 
 	public static void copy(Demande demande, Demande entity) {
-		
+
 	}
+
+
+	public String getProduitString() {
+		return produit!= null? produit.getId() + " - " + produit.getNom() : null;
+	}
+	
 }

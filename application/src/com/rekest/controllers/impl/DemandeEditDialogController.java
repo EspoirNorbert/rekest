@@ -106,10 +106,9 @@ public class DemandeEditDialogController {
 
 		comboBoxProduit.setItems(FXCollections.observableArrayList(this.serializeProduits(produitList)));
 
-		if(this.produit !=null && this.produit.getProduitString()!=null) {
-			
+		if(this.demande!=null && this.demande.getProduitString()!=null) {
+			comboBoxProduit.setValue(this.demande.getProduitString());
 		}
-			//comboBoxProduit.setValue(this.produit.getProduitString());
 
 	}
 	

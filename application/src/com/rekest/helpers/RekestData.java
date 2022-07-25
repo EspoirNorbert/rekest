@@ -251,6 +251,7 @@ public class RekestData implements IRekestData {
 		this.initManagers();
 		this.initDepartement();
 		this.initService();
+		initProduit();
 	}
 
 
