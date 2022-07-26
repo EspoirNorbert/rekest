@@ -37,9 +37,13 @@ import javafx.collections.ObservableList;
 
 public class Feature implements IFeature {
 
-	private static Feature instance = null;
+	private static Feature instance = new Feature();
 	private static IDao dao = HibernateDao.getCurrentInstance();
-
+	private static NotificationManager notifManager = new NotificationManager();
+	
+	/**
+	 * ObservaList
+	 */
 	private ObservableListDepartement observableListDepartement;
 	private ObservableListEmploye observableListEmploye ;
 	private ObservableListProduit observableListProduit ;
@@ -50,10 +54,7 @@ public class Feature implements IFeature {
 	private ObservableListNote observableListNote ;
 	private ObservableListChefDepartement observableListChefDepartement ;
 	private ObservableListUtilisateur observableListUtilisateur;
-
 	private ObservableListNotification observableListNotification;
-
-	private static NotificationManager notifManager = new NotificationManager();
 
 	private Feature () {
 		observableListDepartement = new ObservableListDepartement ();
