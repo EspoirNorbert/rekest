@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.rekest.entities.Notification;
-import com.rekest.entities.Service;
 import com.rekest.entities.employes.Utilisateur;
+import com.rekest.enums.NotificationType;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.utils.PropertyManager;
@@ -59,9 +59,7 @@ public class NotificationController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadNotifications();
-		listenerNotification();
-		
-			
+		listenerNotification();	
 	}
 	
 	private void listenerNotification() {
@@ -77,7 +75,23 @@ public class NotificationController implements Initializable {
 	private void loadNotificationDetail() {
 		
 		if (selectNotification != null) {
-			Utilitaire.setLabel(labelDate, Utilitaire.parseState(selectNotification.getCreatedAt()));
+			Utilitaire.setLabel(labelDate, Utilitaire.getFullDate(selectNotification.getCreatedAt()));
+			Utilitaire.setLabel(labelHeure, Utilitaire.getHourFromDate(selectNotification.getCreatedAt()));
+			//Utilitaire.setLabel(labelNumeroDemande,String.valueOf(selectNotification.getDemande().getId()));
+			Utilitaire.setLabel(labelNoteEmisse,selectNotification.isRead() ? " Lu " : "Non lu");
+			
+			
+			
+			selectNotification.setRead(true);
+			feature.updateNotification(selectNotification);
+			
+			if (!selectNotification.isRead())
+					Utilitaire.notification(NotificationType.INFO, "Lecture de notification", 
+					"Le statut de la notification à été mise a jour");
+					loadNotifications();
+			
+			
+			
 		} else {
 			Utilitaire.alert(AlertType.WARNING, 
 					null, 
@@ -89,18 +103,10 @@ public class NotificationController implements Initializable {
 		
 	}
 
-	/**
-	 * Initialize the value of combox box service
-	 * 
-	 */
+	
 	public void loadNotifications(){
 		notificationList.clear();
-		List<Notification> notifications = feature.listerNotifications();
-		for (Notification notification : notifications) {
-			notificationList.add(notification);
-		}
-		
-		
+		feature.listerNotifications().forEach(notif -> notificationList.add(notif));
 		
 		listViewNotifications.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
 			

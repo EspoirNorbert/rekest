@@ -21,6 +21,7 @@ public class NotificationManager implements INotificationManager {
 	public boolean createNotification(Utilisateur utilisateur, Demande demande, String message) throws DAOException {
 		
 		Notification notification = new Notification(message);
+		notification.setDemande(demande);
 		dao.save(notification);
 		
 		utilisateur.addNotification(notification);		
