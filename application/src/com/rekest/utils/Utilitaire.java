@@ -610,4 +610,12 @@ public class Utilitaire {
 		  return formatter.format(date);  
 	}
 	
+	public static String getHourFromDate(Date date) {
+		  return (new SimpleDateFormat("HH:mm:ss")).format(date);  	 
+	}
+	
+	public static String getFullDate(Date date) {
+		  return (new SimpleDateFormat("dd/MM/yyyy")).format(date);  
+		 
+	}
 }
