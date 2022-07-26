@@ -60,12 +60,7 @@
                      </GridPane.margin>
                   </ComboBox>
                   <ComboBox fx:id="comboBoxEmploye" prefHeight="25.0" prefWidth="321.0" promptText="Sélectionnez l'employé" GridPane.rowIndex="3" />
-                  <Label prefHeight="17.0" prefWidth="84.0" text="Récepteur" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="comboBoxRecepteur" prefHeight="25.0" prefWidth="332.0" promptText="Sélectionnez l'employé" GridPane.rowIndex="5" />
+                  
                </children>
                <VBox.margin>
                   <Insets left="25.0" right="25.0" top="10.0" />

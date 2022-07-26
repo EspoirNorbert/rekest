@@ -62,14 +62,14 @@ public class Utilisateur extends Employe {
 		this.email = email;
 		this.adresse = adresse;
 		this.createdAt = new java.util.Date();
-		Utilitaire.generateLoginAndPassword(this);
 		this.setEmployeProfil();
+		Utilitaire.generateLoginAndPassword(this);
 	}
 	
 	public Utilisateur(String nom, String prenom, String login, String password) {
 		super(nom, prenom);
 		this.login = login;
-		this.password = password;
+		this.setPassword(password);
 		this.createdAt = new java.util.Date();
 		this.setEmployeProfil();
 	}

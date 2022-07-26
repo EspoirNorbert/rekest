@@ -3,6 +3,8 @@ package com.rekest.utils;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import com.rekest.controllers.impl.MainController;
 import com.rekest.controllers.impl.NotificationController;
 import com.rekest.controllers.impl.ProfilController;
 import com.rekest.entities.employes.Administrateur;
+import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
 import com.rekest.entities.employes.DirecteurGeneral;
@@ -111,7 +114,7 @@ public class Utilitaire {
 				.text(message)
 				.graphic(new ImageView(new Image(propertyManager.getApplicationIcon())))
 				.hideAfter(Duration.seconds(5))
-				.position(Pos.TOP_CENTER)
+				.position(Pos.BOTTOM_RIGHT)
 				.onAction(new EventHandler<ActionEvent>() {
 					
 					@Override
@@ -172,9 +175,10 @@ public class Utilitaire {
 	public static String setUserProfil(Utilisateur u) {
 		if (u instanceof Administrateur ) return "admin";
 		if (u instanceof Gestionnaire ) return "gestionnaire";
-		if (u instanceof ChefService ) return "chef";
+		if (u instanceof ChefService ) return "chefService";
 		if (u instanceof Directeur ) return "directeur";
 		if (u instanceof DirecteurGeneral ) return "dg";
+		if (u instanceof ChefDepartement ) return "chefDepartement";
 		return null;
 	}
 
@@ -600,5 +604,10 @@ public class Utilitaire {
 		}
 	}
 	
+	
+	public static String parseState(Date date) {
+		  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		  return formatter.format(date);  
+	}
 	
 }

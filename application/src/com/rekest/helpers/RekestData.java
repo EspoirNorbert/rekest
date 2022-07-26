@@ -141,7 +141,7 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initDepartement() {
 		List<Departement> departements = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 			departements.add(new Departement(faker.commerce().department()));
 		}
 		// For each admin in ArrayList we add in database
@@ -161,12 +161,12 @@ public class RekestData implements IRekestData {
 			for (int i = 0; i <= 10; i++) {
 				ChefService chefService = new ChefService(faker.name().firstName(), faker.name().lastName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
-				Utilitaire.generateLoginAndPassword(chefService);
+			
 				dao.save(chefService);
 
 				ChefDepartement chefDefpartement = new ChefDepartement(faker.name().firstName(), faker.name().lastName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
-				Utilitaire.generateLoginAndPassword(chefDefpartement);
+				
 				dao.save(chefDefpartement);
 
 				Departement department = 
@@ -204,9 +204,13 @@ public class RekestData implements IRekestData {
 	public void initProduit() {
 		List<Produit> produits = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
-			produits.add(new Produit(faker.commerce().productName(), 
+			Produit p = new Produit(faker.commerce().productName(), 
 					Integer.parseInt(faker.commerce().price().replace(",", "")), 
-					new Random().nextInt() * 2));
+					new Random().nextInt() * 2);
+		
+			
+			p.setType("Materiel");
+			produits.add(p);
 		}
 		// For each admin in ArrayList we add in database
 		produits.forEach(produit -> {
@@ -248,10 +252,12 @@ public class RekestData implements IRekestData {
 	public void initAllEntity() {
 		this.initAdmins();
 		this.initEmployes();
-		this.initManagers();
-		this.initDepartement();
+		this.initProduit();
+		//this.initManagers();
+		//this.initDepartement();
 		this.initService();
-		initProduit();
+		this.initRole();
+		
 	}
 
 

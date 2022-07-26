@@ -230,7 +230,7 @@ public class DemandeController implements Initializable {
 			
 			demandeEditDialogController.setEmployes();
 			demandeEditDialogController.setProduits();
-			demandeEditDialogController.setUsers();
+		
 
 			// Show the dialog and wait until the user closes it
 			Utilitaire.showDialog(dialogStage);

@@ -85,7 +85,6 @@ public class DemandeEditDialogController {
 		if (isInputValid()) {
 
 			demande.setProduit(getCurrentComboBoxProduit());
-			demande.setUtilisateur(getCurrentComboBoxUser());
 			demande.setEmploye(getCurrentComboBoxEmploye());
 
 			okClicked = true;

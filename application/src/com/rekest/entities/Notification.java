@@ -24,7 +24,7 @@ public class Notification {
 	private boolean isRead = false;
 	
 	@Basic
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_at")
 	private Date createdAt;
 	
