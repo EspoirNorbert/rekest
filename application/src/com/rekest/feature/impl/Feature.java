@@ -392,6 +392,29 @@ public class Feature implements IFeature {
 			}
 			utilisateur.setDemandesCreees(demandes);
 
+			
+			if ( utilisateur.getService() != null )
+				dao.dissociateService ( utilisateur, utilisateur.getService());
+
+			if ( utilisateur.getEmployeProfil() == "ChefService") {
+				Service service = findService("WHERE chefService = '"+utilisateur.getId()+"'");
+				if(service != null) {
+					service.setChefService(null);
+					dao.update(service);
+
+				}
+
+			}
+			else
+				if ( utilisateur.getEmployeProfil() == "ChefDepartement") {
+					Departement departement = findDepartement("WHERE chefDepartement = '"+utilisateur.getId()+"'");
+					if(departement != null) {
+						departement.setChefDepartement(null);;
+						dao.update(departement);
+
+					}
+
+				}
 
 			dao.delete ( utilisateur);
 			loadUtilisateursObservableList ();
@@ -408,6 +431,7 @@ public class Feature implements IFeature {
 	public boolean updateUtilisateur (Utilisateur utilisateur)   {
 
 		try {
+			
 			dao.update ( utilisateur);
 			loadUtilisateursObservableList ();
 			return true;
@@ -750,6 +774,7 @@ public class Feature implements IFeature {
 		try {
 			dao.save ( manager);
 			loadManagerObservableList ();
+			loadUtilisateursObservableList ();
 			return true;
 		} catch (DAOException e) {
 			AlertError (e,"create manager");
@@ -1137,6 +1162,7 @@ public class Feature implements IFeature {
 		try {
 			dao.save ( chefDepartement);
 			loadChefDepartementObservableList ();
+			loadUtilisateursObservableList ();
 			return true;
 		} catch (DAOException e) {
 			AlertError (e,"cretae chefDepartement");
@@ -1165,6 +1191,27 @@ public class Feature implements IFeature {
 	public ChefDepartement findChefDepartement (Integer primaryKey)  {
 		try {
 			return (ChefDepartement) dao.find ( new ChefDepartement ( ) , primaryKey);
+		} catch (DAOException e) {
+			AlertError (e,"find chefDepartement");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+	
+	public ChefService findChefService (String whereClause)   {
+
+		try {
+			return (ChefService) dao.find (  ChefService.class, whereClause);
+		} catch (DAOException e) {
+			AlertError (e,"find ChefService");
+			ErrorLogFileManager.appendError (e.getMessage ());
+		}
+		return null;
+	}
+
+	public ChefService findChefService (Integer primaryKey)  {
+		try {
+			return (ChefService) dao.find ( new ChefService ( ) , primaryKey);
 		} catch (DAOException e) {
 			AlertError (e,"find chefDepartement");
 			ErrorLogFileManager.appendError (e.getMessage ());
@@ -1386,13 +1433,13 @@ public class Feature implements IFeature {
 			else
 				utilisateur.addDemandeSoumise(demande);
 			
-			notifManager.createNotification(utilisateur ,demande , "Une demande a été créé par vous !");
+			notifManager.createNotification(utilisateur ,demande , "Une demande a ï¿½tï¿½ crï¿½ï¿½ par vous !");
 			
 			if (utilisateur.getService() != null) {
 				Service service = utilisateur.getService();
 				ChefService chef = service.getChefService();
 
-				notifManager.createNotification(chef , demande ,"Une nouvelle demande a été soumise a votre appreciation !");
+				notifManager.createNotification(chef , demande ,"Une nouvelle demande a ï¿½tï¿½ soumise a votre appreciation !");
 
 				loadNotificationObservableList();
 				loadDemandesObservableList ();
