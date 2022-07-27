@@ -15,6 +15,7 @@ import com.rekest.controllers.impl.MainController;
 import com.rekest.controllers.impl.NotificationController;
 import com.rekest.controllers.impl.ProfilController;
 import com.rekest.entities.employes.Administrateur;
+import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
 import com.rekest.entities.employes.DirecteurGeneral;
@@ -34,9 +35,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -173,6 +174,7 @@ public class Utilitaire {
 		if (u instanceof Administrateur ) return "admin";
 		if (u instanceof Gestionnaire ) return "gestionnaire";
 		if (u instanceof ChefService ) return "chef";
+		if (u instanceof ChefDepartement ) return "chef";
 		if (u instanceof Directeur ) return "directeur";
 		if (u instanceof DirecteurGeneral ) return "dg";
 		return null;
@@ -598,7 +600,7 @@ public class Utilitaire {
 	        md.update(password.getBytes());
 	        byte[] byteData = md.digest();
 	
-	        //convertir le tableau de bits en une format hexadécimal
+	        //convertir le tableau de bits en une format hexadï¿½cimal
 	        StringBuffer sb = new StringBuffer();
 	        for (int i = 0; i < byteData.length; i++) {
 	         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
