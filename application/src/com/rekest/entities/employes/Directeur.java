@@ -13,6 +13,11 @@ public class Directeur extends Manager {
 		super(nom, prenom, telephone, email, adresse);
 	}
 
+	public Directeur(String nom, String prenom, String telephone, String email, String adresse,  String login, String password) {
+		super(nom, prenom, telephone, email, adresse);
+		this.login = login;
+		this.password = password;
+	}
 	
 	public Directeur(String nom, String prenom, String login, String password) {
 		super(nom, prenom, login, password);

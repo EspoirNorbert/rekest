@@ -25,6 +25,12 @@ public class Gestionnaire extends Utilisateur {
 		super(nom, prenom, telephone, email, adresse);
 	}
 	
+	public Gestionnaire(String nom, String prenom, String telephone, String email, String adresse,  String login, String password) {
+		super(nom, prenom, telephone, email, adresse);
+		this.login = login;
+		this.password = password;
+	}
+	
 	public Gestionnaire(String nom, String prenom, String login, String password) {
 		super(nom, prenom, login, password);		
 	}
