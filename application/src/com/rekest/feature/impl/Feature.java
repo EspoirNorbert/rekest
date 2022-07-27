@@ -432,6 +432,9 @@ public class Feature implements IFeature {
 
 		try {
 			
+//			String passwdHash = Utilitaire.hashPassword(utilisateur.getPassword());
+//			utilisateur.setPassword(passwdHash);
+			
 			dao.update ( utilisateur);
 			loadUtilisateursObservableList ();
 			return true;
