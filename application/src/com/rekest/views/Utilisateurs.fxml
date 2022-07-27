@@ -36,7 +36,7 @@
             <HBox alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="900.0">
                <children>
                   <Label text="Total Utilisateur : " />
-                  <Label fx:id="countEmploye" text="Count">
+                  <Label fx:id="countUtilisateur" text="Count">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -82,7 +82,7 @@
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="tableViewEmployes" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="900.0">
+            <TableView fx:id="tableViewUtilisateurs" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="900.0">
                <columns>
                   <TableColumn fx:id="columnNom" prefWidth="75.0" text="Nom" />
                   <TableColumn fx:id="columnPrenom" prefWidth="75.0" text="Prénom" />
