@@ -87,7 +87,7 @@ public class Utilisateur extends Employe {
 	}
 	
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = Utilitaire.hashPassword(password);
 	}
 	
 	@Override
