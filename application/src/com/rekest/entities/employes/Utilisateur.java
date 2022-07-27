@@ -109,6 +109,10 @@ public class Utilisateur extends Employe {
 		return isEnable;
 	}
 
+	public String getIsEnable() {
+		return isEnable? "Enabled" : "Disabled";
+	}
+	
 	public void setEnable(boolean isEnable) {
 		this.isEnable = isEnable;
 	}
