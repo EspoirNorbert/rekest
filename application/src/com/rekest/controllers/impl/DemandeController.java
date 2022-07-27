@@ -156,7 +156,7 @@ public class DemandeController implements Initializable {
 
 		if (selectedDemande != null) {
 			String state  = selectedDemande.getEtat();
-			if (state.equals("soumis")) {
+			if (state.equals("soumise")) {
 				sendReponseDemand(auth.getEmployeProfil() , response , selectedDemande);
 			} else {
 				Utilitaire.notification(NotificationType.ERROR, 
@@ -173,13 +173,13 @@ public class DemandeController implements Initializable {
 
 	private void sendReponseDemand(String employeProfil , String response , Demande demand) {
 		String changeStateText = "";
-		
+
 		if (response.equals("Rejeter"))
 			changeStateText =  "Rejetée";
-		 
+
 		else if (response.equals("Valider"))
 			changeStateText  = "Approuvée";
-		
+
 		else {
 			Utilitaire.notification(NotificationType.ERROR, "Statut Invalid", 
 					"Seule Approuver & Rejeter sont authorisée");
@@ -188,24 +188,12 @@ public class DemandeController implements Initializable {
 
 		if(employeProfil.equals(ChefService.class.getSimpleName())) {
 			feature.requestDemande(demand, changeStateText + "N1");
-
-			try {
-				notificationManager.createNotification(auth, demand, 
-						"Une demandé a été valider par vous ");
-
-				ChefDepartement chefDepartement = 
-						auth.getService().getDepartement().getChefDepartement();
-
-				notificationManager.createNotification(chefDepartement, demand, 
-						"Une nouvelle demandé a été soumise a votre appreciation");
-
-			} catch (DAOException e) {
-				e.printStackTrace();
-			}	
+			sendNotificationToChefDepartement(demand ,"Une demandé a été " + changeStateText + " par vous !");
 		}
 
 		if(employeProfil.equals(ChefDepartement.class.getSimpleName())) {
 			feature.requestDemande(demand,changeStateText+ "N2");
+			// sendNotificationToDirection(demand, changeStateText);
 		} 
 
 		if(employeProfil.equals(Directeur.class.getSimpleName())) {
@@ -217,6 +205,28 @@ public class DemandeController implements Initializable {
 			feature.creerNotification(null);
 		}
 	}
+
+	private void sendNotificationToChefDepartement(Demande demand , String message) {
+		try {
+			notificationManager.createNotification(auth, demand, message);
+			ChefDepartement chefDepartement = 
+					auth.getService().getDepartement().getChefDepartement();
+
+			if (chefDepartement != null) {
+				notificationManager.createNotification(chefDepartement, demand, 
+						"Une nouvelle demandé a été soumise a votre appreciation");
+
+			} else {
+				Utilitaire.notification(NotificationType.ERROR, 
+						"Chef De departement Non definis", 
+						"Le chef de departement n'a pas été definis");
+			}
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	@FXML
 	void handleClickedSoumettre(ActionEvent event) {
