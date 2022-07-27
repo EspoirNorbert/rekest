@@ -3,6 +3,10 @@ package com.rekest.feature.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.rekest.controllers.impl.AdminRootLayoutController;
 import com.rekest.dao.IDao;
 import com.rekest.dao.impl.HibernateDao;
 import com.rekest.entities.Demande;
@@ -37,6 +41,8 @@ import javafx.collections.ObservableList;
 
 public class Feature implements IFeature {
 
+	public final static Logger logger = LogManager.getLogger(Feature.class);
+	
 	private static Feature instance = new Feature();
 	private static IDao dao = HibernateDao.getCurrentInstance();
 	private static NotificationManager notifManager = new NotificationManager();
@@ -1253,8 +1259,12 @@ public class Feature implements IFeature {
 	public boolean createNote (Note note , Demande demande)   {
 
 		try {
+			dao.save(note);
+			
+			// update demande
 			demande.addNote(note);
-			dao.save ( note); 
+			this.updateDemande(demande);
+			
 			loadNoteObservableList ();
 			return true;
 		} catch (DAOException e) {
@@ -1385,7 +1395,7 @@ public class Feature implements IFeature {
 	public boolean createDemande (Utilisateur utilisateur, Demande demande , Employe employe)   {
 		try {
 			demande.setEtat("Created");
-		
+	
 			utilisateur.addDemandeCreee(demande);
 			
 			if (employe != null)
@@ -1394,20 +1404,22 @@ public class Feature implements IFeature {
 				utilisateur.addDemandeSoumise(demande);
 			
 			notifManager.createNotification(utilisateur ,demande , "Une demande a été créé par vous !");
+		
+			logger.info("Service of user {} " , utilisateur.getService()  );
 			
 			if (utilisateur.getService() != null) {
 				Service service = utilisateur.getService();
 				ChefService chef = service.getChefService();
 
+				demande.setEtat("Submited");
 				notifManager.createNotification(chef , demande ,"Une nouvelle demande a été soumise a votre appreciation !");
 
 				loadNotificationObservableList();
 				loadDemandesObservableList ();
 
 				return true;
-			} else {
+			} else 
 				return false;
-			}
 			
 		} catch (DAOException e) {
 			AlertError (e,"create demande");
@@ -1917,7 +1929,6 @@ public class Feature implements IFeature {
 			ErrorLogFileManager.appendError (e.getMessage ());
 			return false;
 		}
-
 	}
 
 	@Override

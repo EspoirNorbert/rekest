@@ -29,69 +29,75 @@ import javafx.util.Callback;
 public class NotificationController implements Initializable {
 
 	private ObservableList<Notification> notificationList = FXCollections.observableArrayList();
-	
-    @FXML private Label labelDate;
 
-    @FXML private Label labelHeure;
+	@FXML private Label labelDate;
 
-    @FXML private Label labelNoteEmisse;
+	@FXML private Label labelHeure;
 
-    @FXML private Label labelNumeroDemande;
+	@FXML private Label labelNoteEmisse;
 
-    @FXML private ListView<Notification> listViewNotifications;
-    
-    private IFeature feature = Feature.getCurrentInstance();
-    
-    private Utilisateur connectedUser;
+	@FXML private Label labelNumeroDemande;
+
+	@FXML private ListView<Notification> listViewNotifications;
+
+	private IFeature feature = Feature.getCurrentInstance();
+
+	private Utilisateur connectedUser;
 
 	private Stage primaryStage;
-    
+
 	private Notification selectNotification;
-	
-    public void setPrimaryStage(Stage primaryStage) {
- 		this.primaryStage = primaryStage;
-    }
- 	
- 	public void setConnectedUser(Utilisateur connectedUser) {
- 		this.connectedUser = connectedUser;
- 	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
+
+	public void setConnectedUser(Utilisateur connectedUser) {
+		this.connectedUser = connectedUser;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadNotifications();
 		listenerNotification();	
+		initDetailsNotification();
 	}
-	
+
+	private void initDetailsNotification() {
+		Utilitaire.setLabel(labelDate, "");
+		Utilitaire.setLabel(labelHeure, "");
+		Utilitaire.setLabel(labelNumeroDemande,"");
+		Utilitaire.setLabel(labelNoteEmisse,"");
+	}
+
 	private void listenerNotification() {
 		listViewNotifications.getSelectionModel().selectedItemProperty()
 		.addListener(ov -> {
 			if (notificationList.size() > 0)
 				selectNotification = listViewNotifications.getSelectionModel().getSelectedItem();
-			
+
 			this.loadNotificationDetail();
 		});
 	}
 
 	private void loadNotificationDetail() {
-		
+
 		if (selectNotification != null) {
 			Utilitaire.setLabel(labelDate, Utilitaire.getFullDate(selectNotification.getCreatedAt()));
 			Utilitaire.setLabel(labelHeure, Utilitaire.getHourFromDate(selectNotification.getCreatedAt()));
-			//Utilitaire.setLabel(labelNumeroDemande,String.valueOf(selectNotification.getDemande().getId()));
+			Utilitaire.setLabel(labelNumeroDemande,String.valueOf(selectNotification.getDemande().getId()));
 			Utilitaire.setLabel(labelNoteEmisse,selectNotification.isRead() ? " Lu " : "Non lu");
-			
-			
-			
+
 			selectNotification.setRead(true);
 			feature.updateNotification(selectNotification);
-			
+
 			if (!selectNotification.isRead())
-					Utilitaire.notification(NotificationType.INFO, "Lecture de notification", 
-					"Le statut de la notification à été mise a jour");
-					loadNotifications();
-			
-			
-			
+				Utilitaire.notification(NotificationType.INFO, "Lecture de notification", 
+						"Le statut de la notification à été mise a jour");
+			loadNotifications();
+
+
+
 		} else {
 			Utilitaire.alert(AlertType.WARNING, 
 					null, 
@@ -100,25 +106,28 @@ public class NotificationController implements Initializable {
 					"Please select an notifications into the list ");
 
 		}
-		
+
 	}
 
-	
+
 	public void loadNotifications(){
 		notificationList.clear();
 		feature.listerNotifications().forEach(notif -> notificationList.add(notif));
-		
+
 		listViewNotifications.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
-			
+
 			@Override
 			public ListCell<Notification> call(ListView<Notification> param) {
 				ListCell<Notification> cell = new ListCell<Notification>() {
-					
+
 					protected void updateItem(Notification item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
 							setGraphic(new ImageView(new Image(PropertyManager.getInstance().getApplicationIcon())));
-							setText(item.getMessage() + "\n" + (item.isRead() ? " (Lu) " : " (Non lu) "));
+							setText("Demande N°" + 
+									item.getDemande().getId() + " - " + 
+									item.getMessage() + "\n" + 
+									(item.isRead() ? " (Lu) " : " (Non lu) "));
 						}
 					};
 				};
@@ -127,8 +136,8 @@ public class NotificationController implements Initializable {
 		});
 		listViewNotifications.setItems(notificationList);
 	}
-	
-	
+
+
 	/**
 	 * Serialize a observablelist of services 
 	 * @param service list
@@ -141,9 +150,9 @@ public class NotificationController implements Initializable {
 		for (Notification notification : notificationList) {
 			strings.add(notification.getId()+ " " + notification.getMessage() + " - le " + 
 					Utilitaire.parseState(notification.getCreatedAt())
-			         + (notification.isRead() ? " (Lu) " : " (Non lu) "));
+			+ (notification.isRead() ? " (Lu) " : " (Non lu) "));
 		}
-		
+
 		for (String string : strings) {
 			System.out.println(string);
 		}

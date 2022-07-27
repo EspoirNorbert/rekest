@@ -49,13 +49,20 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initAdmins() {
 		try {
-			dao.save(createDefaultAdmin());
+			Service service = new Service("Informatique");
+			dao.save(service);
+			Administrateur defaultAdmin = createDefaultAdmin();
+			defaultAdmin.setService(service);
+			dao.save(defaultAdmin);
 			for (int i = 0; i <= 3; i++) {
+				
 				Administrateur admin = new Administrateur(
 						faker.name().lastName(),
 						faker.name().firstName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
-
+				
+				admin.setService(service);
+				
 				dao.save(admin);
 			}
 		} catch (DAOException e) {
@@ -158,20 +165,19 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initService() {
 		try {
-			for (int i = 0; i <= 10; i++) {
+			for (int i = 0; i <= 3; i++) {
 				ChefService chefService = new ChefService(faker.name().firstName(), faker.name().lastName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
 			
 				dao.save(chefService);
 
-				ChefDepartement chefDefpartement = new ChefDepartement(faker.name().firstName(), faker.name().lastName(),
+				ChefDepartement chefDefpartement = 
+						new ChefDepartement(faker.name().firstName(), faker.name().lastName(),
 						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
 				
 				dao.save(chefDefpartement);
 
-				Departement department = 
-						new Departement(faker.commerce().department());
-
+				Departement department = new Departement(faker.commerce().department());
 				Service service = new Service(faker.commerce().department());
 
 				service.setChefService(chefService);
@@ -179,8 +185,8 @@ public class RekestData implements IRekestData {
 
 				department.addService(service);
 				department.setChefDepartement(chefDefpartement);
-				dao.save(department);
-
+				
+				dao.save(department);	
 			}
 		} catch (DAOException e) {
 			System.err.println(e.getMessage());
@@ -203,12 +209,11 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initProduit() {
 		List<Produit> produits = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 			Produit p = new Produit(faker.commerce().productName(), 
 					Integer.parseInt(faker.commerce().price().replace(",", "")), 
 					new Random().nextInt() * 2);
 		
-			
 			p.setType("Materiel");
 			produits.add(p);
 		}
@@ -228,21 +233,14 @@ public class RekestData implements IRekestData {
 	@Override
 	public void initManagers() {
 		try {
-			for (int i = 0; i <= 10; i++) {
-				ChefService chefService = new ChefService(faker.name().firstName(), faker.name().lastName(),
-						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
-				Utilitaire.generateLoginAndPassword(chefService);
-				dao.save(chefService);
-				Directeur directeur = new Directeur(faker.name().firstName(), faker.name().lastName(),
-						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
-				Utilitaire.generateLoginAndPassword(directeur);
-				dao.save(directeur);
-				DirecteurGeneral directeurGeneral = new DirecteurGeneral(faker.name().firstName(),
-						faker.name().lastName(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress(),
-						faker.address().fullAddress());
-				Utilitaire.generateLoginAndPassword(directeurGeneral);
-				dao.save(directeur);
-			}
+			Directeur directeur = new Directeur(faker.name().firstName(), 
+						faker.name().lastName(),faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
+			dao.save(directeur);
+			
+			DirecteurGeneral directeurGeneral = new DirecteurGeneral(faker.name().firstName(),
+					faker.name().lastName(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress(),faker.address().fullAddress());
+			
+			dao.save(directeurGeneral);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -253,7 +251,7 @@ public class RekestData implements IRekestData {
 		this.initAdmins();
 		this.initEmployes();
 		this.initProduit();
-		//this.initManagers();
+		this.initManagers();
 		//this.initDepartement();
 		this.initService();
 		this.initRole();

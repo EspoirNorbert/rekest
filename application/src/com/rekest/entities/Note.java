@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Note {
@@ -15,7 +15,7 @@ public class Note {
 	@Column(name="id_note")
 	private int id;
 	
-	@Transient
+	@ManyToOne
 	private Demande demande;
 	
 	private String message;
@@ -42,14 +42,17 @@ public class Note {
 		this.message = message;
 	}
 	
+	public void setDemande(Demande demande) {
+		this.demande = demande;
+	}
+	
 	public Demande getDemande() {
 		return demande;
 	}
 
 	@Override
 	public String toString() {
-		return "Note " +
-				this.getDemande().getUtilisateur().getFullName() + " - " + this.getMessage()
+		return "Note" +  this.getMessage()
 				+ "]";
 	}
 	

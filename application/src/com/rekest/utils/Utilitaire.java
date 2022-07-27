@@ -56,7 +56,7 @@ public class Utilitaire {
 	public final static Logger logger = LogManager.getLogger(Utilitaire.class);
 
 	private static PropertyManager propertyManager = PropertyManager.getInstance();
-	
+
 	/**
 	 * Alert Function for javaFX
 	 * @param alertType
@@ -71,7 +71,7 @@ public class Utilitaire {
 		alert.setTitle(title);
 		alert.setHeaderText(headerText);
 		alert.setContentText(contentText);
-	
+
 		alert.showAndWait();
 
 		/*
@@ -80,7 +80,7 @@ public class Utilitaire {
 			System.exit(-1);
 		 */     		
 	}
-	
+
 	/**
 	 * Confirm Function for javaFX
 	 * @param alertType
@@ -91,18 +91,18 @@ public class Utilitaire {
 	 * @return true when the user clicks YES and false otherwise
 	 */
 	public static Boolean confirm(AlertType alertType, Window onwer, String title, String headerText, String contentText) {
-	  
+
 		Alert alert = new Alert(alertType,null,ButtonType.YES, ButtonType.NO);
 		alert.initOwner(onwer);
 		alert.setTitle(title);
 		alert.setHeaderText(headerText);
 		alert.setContentText(contentText);
-		
+
 		alert.showAndWait();
 		return (alert.getResult() == ButtonType.YES)? true :  false;
-	
+
 	}
-    /*
+	/*
 	 * Notification Push Function
 	 * @param notifcationType
 	 * @param title
@@ -116,29 +116,29 @@ public class Utilitaire {
 				.hideAfter(Duration.seconds(5))
 				.position(Pos.BOTTOM_RIGHT)
 				.onAction(new EventHandler<ActionEvent>() {
-					
+
 					@Override
 					public void handle(ActionEvent event) {
 						System.out.println("Cliquer sur la notification");
 					}
 				});
-		
-			if (notifcationType.equals(NotificationType.ERROR)) {
-				notification.showError();
-			}
-			
 
-			if (notifcationType.equals(NotificationType.INFO)) {
-				notification.showInformation();
-			}
-			
-			if (notifcationType.equals(NotificationType.WARNING)) {
-				notification.showWarning();
-			}
-		
+		if (notifcationType.equals(NotificationType.ERROR)) {
+			notification.showError();
+		}
+
+
+		if (notifcationType.equals(NotificationType.INFO)) {
+			notification.showInformation();
+		}
+
+		if (notifcationType.equals(NotificationType.WARNING)) {
+			notification.showWarning();
+		}
+
 	}
-	
-	
+
+
 	/**
 	 * Create Scene
 	 * @param root
@@ -192,22 +192,22 @@ public class Utilitaire {
 	public static void loadPageInRootLayout(BorderPane rootLayout ,String filename , Utilisateur auth) {
 		FXMLLoader loader = Utilitaire.initFXMLoader(filename);
 		AnchorPane page   = (AnchorPane) Utilitaire.loadFXMLFile(loader, false);
-		
+
 		if (filename.equals("Profil")) {
 			ProfilController profilController = loader.getController();
 			profilController.setConnectedUser(auth);
 		}
-		
+
 		if (filename.equals("Demandes")) {
 			DemandeController demandeController = loader.getController();
 			demandeController.setConnectedUser(auth);
 		}
-		
+
 		if (filename.equals("Notifications")) {
 			NotificationController notificationController = loader.getController();
 			notificationController.setConnectedUser(auth);
 		}
-		
+
 		if (rootLayout == null) {
 			logger.info("RootLayout is null" , rootLayout);
 			Utilitaire.notification(NotificationType.WARNING, 
@@ -215,7 +215,7 @@ public class Utilitaire {
 		} else
 			rootLayout.setCenter(page);
 	}
-	
+
 	public static Parent loadFXMLFile(FXMLLoader loader, Boolean isRoot) {
 		Parent root = null;
 		try {
@@ -223,18 +223,18 @@ public class Utilitaire {
 				root = (BorderPane) loader.load();
 			else
 				root = (AnchorPane) loader.load();
-			
+
 			logger.info(root);
 			return root;
 		} catch (IOException | IllegalStateException | NullPointerException io) {
-			  io.printStackTrace();
-			  Utilitaire.alert(AlertType.ERROR, null,
-		                "Error", io.getClass() +
-		                " Error while loading fxml file",
-		                io.getMessage());
-				return null;
+			io.printStackTrace();
+			Utilitaire.alert(AlertType.ERROR, null,
+					"Error", io.getClass() +
+					" Error while loading fxml file",
+					io.getMessage());
+			return null;
 		}
-	
+
 	}
 
 	/**
@@ -252,15 +252,15 @@ public class Utilitaire {
 	 * @return
 	 */
 	public static FXMLLoader initFXMLoader(String filename){
-	    FXMLLoader	fxmlLoader = new FXMLLoader ();
+		FXMLLoader	fxmlLoader = new FXMLLoader ();
 		fxmlLoader.setLocation(MainController.class.getResource(Utilitaire.getFileInViews(filename)));
-			
+
 		if (fxmlLoader.getLocation() != null) 
 			logger.info("Chargement de la vue {} avec le chemin {}",filename,fxmlLoader.getLocation().toString()); 
-		
+
 		return fxmlLoader;
 	}
-	
+
 	/**
 	 * Create Scene
 	 * @param root
@@ -276,17 +276,17 @@ public class Utilitaire {
 			Stage newStage = new Stage();
 			// set scene to stage
 			newStage.setScene(scene);
-			
+
 			if (title == null)
 				newStage.setTitle(propertyManager.getApplicationName());
 			else
 				newStage.setTitle(title + " - " + propertyManager.getApplicationName());
-			
+
 			if (isDecorated == true) {
 				logger.info("Decorated is called");	
 				newStage.initStyle(StageStyle.UNDECORATED);
 			}
-				
+
 			Utilitaire.setImageToStage(newStage);
 			logger.info("stage [titre={}, scene={} , style={}] " , newStage.getTitle() , newStage.getScene() , newStage.getStyle());
 			return newStage;
@@ -296,15 +296,15 @@ public class Utilitaire {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Set Image to Stage
 	 * @param stage
 	 */
 	public static void setImageToStage(Stage stage) {
-		 stage.getIcons().add(new Image(propertyManager.getApplicationIcon()));
+		stage.getIcons().add(new Image(propertyManager.getApplicationIcon()));
 	}
-	
+
 	/**
 	 * Create Dialog Box
 	 * @param root
@@ -313,16 +313,16 @@ public class Utilitaire {
 	 * @return
 	 */
 	public static Stage createDialog(Parent root , Stage primaryStage , String title) {
-		  Stage dialogStage = new Stage();
-          dialogStage.setTitle(title + "- Rekest");
-          dialogStage.getIcons().add(new Image(propertyManager.getApplicationIcon()));
-          dialogStage.initModality(Modality.WINDOW_MODAL);
-          dialogStage.initOwner(primaryStage);
-          Scene scene = new Scene(root);
-          dialogStage.setScene(scene);
-          return dialogStage;
+		Stage dialogStage = new Stage();
+		dialogStage.setTitle(title + "- Rekest");
+		dialogStage.getIcons().add(new Image(propertyManager.getApplicationIcon()));
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(primaryStage);
+		Scene scene = new Scene(root);
+		dialogStage.setScene(scene);
+		return dialogStage;
 	}
-	
+
 	/**
 	 * Show Dialog
 	 * @param dialogStage
@@ -330,7 +330,7 @@ public class Utilitaire {
 	public static void showDialog(Stage dialogStage) {
 		dialogStage.showAndWait();
 	}
-	
+
 	/**
 	 * Show Stage
 	 * @param stage
@@ -338,7 +338,7 @@ public class Utilitaire {
 	public static void showStage(Stage stage) {
 		stage.show();
 	}
-	
+
 	/**
 	 * Show Stage
 	 * @param stage
@@ -355,19 +355,19 @@ public class Utilitaire {
 	 * @return
 	 */
 	public static int getCurrentIndexTableView(TableView<?> tableView , Stage stage) {
-    	int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            return selectedIndex;
-        } else {
-            // Nothing selected.
-        	Utilitaire.alert(AlertType.WARNING, stage,
-        			"No Selection", 
-        			"No Item Selected", 
-        			"Please select a item in the table.");
-        	return 0;
-        }
+		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			return selectedIndex;
+		} else {
+			// Nothing selected.
+			Utilitaire.alert(AlertType.WARNING, stage,
+					"No Selection", 
+					"No Item Selected", 
+					"Please select a item in the table.");
+			return 0;
+		}
 	}
-	
+
 	/**
 	 * Get value Label value
 	 * @param Labeled
@@ -376,16 +376,16 @@ public class Utilitaire {
 	public static String getLabel(Labeled labeled) {
 		return labeled.getText();
 	}
-	
+
 	/**
 	 * Set label
 	 * @param labeled
 	 * @param value
 	 */
 	public static void setLabel(Labeled labeled, String value) {
-		 labeled.setText(value);
+		labeled.setText(value);
 	}
-	
+
 
 	/**
 	 * Get value TextField value
@@ -395,14 +395,14 @@ public class Utilitaire {
 	public static String getTextField(TextField textFilField) {
 		return textFilField.getText();
 	}
-	
+
 	/**
 	 * Set TextField
 	 * @param textFilField
 	 * @param value
 	 */
 	public static void setTextField(TextField textFilField, String value) {
-		 textFilField.setText(value);
+		textFilField.setText(value);
 	}
 
 
@@ -415,7 +415,7 @@ public class Utilitaire {
 			Utilitaire.setTextField(textField, "");
 		}
 	}
-	
+
 	/**
 	 * Set Windows title for connected user 
 	 * @param utilisateur
@@ -425,7 +425,7 @@ public class Utilitaire {
 	public static String setUserWindowTitle(Utilisateur utilisateur , String typeSpace) {
 		return utilisateur.getFullName() +" is connected - "+ typeSpace +" Space -  Rekest";
 	}
-	
+
 	public static String getFullNameApp() {
 		return propertyManager.getApplicationName() + " " + propertyManager.getApplicationBrand(); 
 	}
@@ -441,7 +441,7 @@ public class Utilitaire {
 	}
 
 	public static  List<String> getProfiles(){
-		
+
 		List<String> profiles  = new ArrayList<>();
 		profiles.add("Administrateur");
 		profiles.add("Employe");
@@ -449,18 +449,18 @@ public class Utilitaire {
 		profiles.add("Gestionnaire");
 		profiles.add("Directeur");
 		profiles.add("DirecteurGeneral");
-		
+
 		return profiles;
 	}
-	
+
 	public static List<String> getProduitTypes(){
 		List<String> types = new ArrayList<>();
 		types.add("Materiel");
 		types.add("Service");
-		
+
 		return types;
 	}
-	
+
 	public static Administrateur getDefaultAdmin() {
 		Administrateur admin= new Administrateur(
 				propertyManager.getApplicationAdminFirstname(), 
@@ -471,7 +471,7 @@ public class Utilitaire {
 		admin.setLogin(propertyManager.getApplicationAdminLogin());
 		return admin;
 	}
-	
+
 	public static void logout(Stage primaryStage) {
 		primaryStage.close();
 		if (!primaryStage.isShowing()) {
@@ -480,7 +480,7 @@ public class Utilitaire {
 					"Deconnexion", "Aurevoir a la prochaine !");
 		}	
 	}
-	
+
 	/**
 	 * Initialize Data for connected user
 	 * @param connectedUser 
@@ -491,11 +491,11 @@ public class Utilitaire {
 	 * @return
 	 */
 	public static void initLabelData(Utilisateur connectedUser , 
-		Stage stage , Labeled labelProfil , Labeled labelUsername , String currentPage) {
+			Stage stage , Labeled labelProfil , Labeled labelUsername , String currentPage) {
 		Utilitaire.setLabel(labelProfil, connectedUser.getEmployeProfil());
 		Utilitaire.setLabel(labelUsername, connectedUser.getFullName());
 	}
-	
+
 	/**
 	 * Get connected user getting data in Stage
 	 * @param stage
@@ -504,30 +504,30 @@ public class Utilitaire {
 	public static Utilisateur getConnectedUser(Stage stage) {
 		return (Utilisateur) stage.getUserData();
 	}
-	
+
 	public static void setDimensionStage(Stage stage ,double height , double width) {
 		stage.setHeight(height);
 		stage.setWidth(width);
 	}
-	
+
 	public static String getTypeManager(Utilisateur utilisateur) {
-		
+
 		String profil = utilisateur.getEmployeProfil();
-		
+
 		if (profil.equals(ChefService.class.getSimpleName())) {
 			return "Chef Service";
 		}
-		
+
 		if (profil.equals(Directeur.class.getSimpleName())) {
 			return "Directeur";
 		}
-		
+
 		if (profil.equals(DirecteurGeneral.class.getSimpleName())) {
 			return "Directeur General";
 		}
 		return null;
 	}
-	
+
 	public static String setEmployeeProfil(Utilisateur utilisateur) {
 		switch (utilisateur.getPassword()) {
 		case "admin":
@@ -545,24 +545,24 @@ public class Utilitaire {
 		}
 		return null;
 	}
-	
-	
+
+
 	public static void setTiteStage(Stage stage , String currentPage, Utilisateur userConnected) {
 		String space = "";
-		
+
 		if (userConnected.getEmployeProfil().equals(Administrateur.class.getSimpleName()))
 			space = "Admin";
 		else if (userConnected.getEmployeProfil().equals(Gestionnaire.class.getSimpleName()))
 			space = "Gestionnaire";
 		else
 			space = Utilitaire.getTypeManager(userConnected);
-		
-		
+
+
 		stage.setTitle(currentPage + " - " +
 				Utilitaire.setUserWindowTitle(userConnected , space)) ;
 	}
-	
-	
+
+
 	public static void initData(Utilisateur userConnected , Stage primaryStage , Label labelProfil , Label labelUsername , String currentPage) {
 		Utilitaire.initLabelData(userConnected, primaryStage, labelProfil, labelUsername, currentPage);
 		Utilitaire.setTiteStage(primaryStage, currentPage, userConnected);
@@ -573,49 +573,62 @@ public class Utilitaire {
 			button.setVisible(false);
 		}
 	}
-	
+
 	public static void setUserProfilePicture(String profile , ImageView imageView) {
-		
+
 		if (profile.equals(Administrateur.class.getSimpleName())) {
 			imageView.setImage(new Image(propertyManager.getApplicationUserProfilAdmin()));
 		}
-		
+
 	}
-	
+
 	public static String hashPassword(String password) {
 
-        MessageDigest md;
+		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-256");
-	        md.update(password.getBytes());
-	        byte[] byteData = md.digest();
-	
-	        //convertir le tableau de bits en une format hexadécimal
-	        StringBuffer sb = new StringBuffer();
-	        for (int i = 0; i < byteData.length; i++) {
-	         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-	        }
-	
-	        return sb.toString();
+			md.update(password.getBytes());
+			byte[] byteData = md.digest();
+
+			//convertir le tableau de bits en une format hexadécimal
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+
+			return sb.toString();
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	
+
+
 	public static String parseState(Date date) {
-		  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-		  return formatter.format(date);  
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		return formatter.format(date);  
 	}
-	
+
 	public static String getHourFromDate(Date date) {
-		  return (new SimpleDateFormat("HH:mm:ss")).format(date);  	 
+		return (new SimpleDateFormat("HH:mm:ss")).format(date);  	 
 	}
-	
+
 	public static String getFullDate(Date date) {
-		  return (new SimpleDateFormat("dd/MM/yyyy")).format(date);  
-		 
+		return (new SimpleDateFormat("dd/MM/yyyy")).format(date);  
+
+	}
+
+	public static void displayMessage(String classe, boolean status, String operation) {
+		String message  = classe;
+		if(status)
+		{
+			message += " a été " + operation + " avec success !";
+			Utilitaire.notification(NotificationType.INFO, "Information", message);
+		}else
+		{
+			message += classe + "a , n'été " + operation + " Echec de l'opération!";
+			Utilitaire.notification(NotificationType.ERROR, "Information", message);
+		}
 	}
 }

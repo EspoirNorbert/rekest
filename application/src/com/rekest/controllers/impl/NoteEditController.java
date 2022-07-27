@@ -4,6 +4,7 @@ package com.rekest.controllers.impl;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.rekest.entities.Demande;
 import com.rekest.entities.Note;
 
 import javafx.event.ActionEvent;
@@ -23,10 +24,16 @@ public class NoteEditController implements Initializable {
 	private boolean okClicked = false;
 
 	private Note note;
+	
+	private Demande demande;
 
 	public void setNote(Note note) {
 		this.note = note;
 		textAreaMessage.setText(note.getMessage());
+	}
+	
+	public void setDemande(Demande demande) {
+		this.demande = demande;
 	}
 
 	/**
