@@ -175,6 +175,17 @@ public class Utilitaire {
 		if (u instanceof DirecteurGeneral ) return "dg";
 		return null;
 	}
+	
+	public static String getEntityToCreate(Utilisateur u) {
+		if (u.getEmployeProfil() == "Administrateur") return "Administrateur";
+		if (u.getEmployeProfil() == "Employe") return "Employe";
+		if (u.getEmployeProfil() == "ChefService") return "ChefService";
+		if (u.getEmployeProfil() == "ChefDepartement") return "ChefDepartement";
+		if (u.getEmployeProfil() == "Gestionnaire") return "Gestionnaire";
+		if (u.getEmployeProfil() == "Directeur") return "Directeur";
+		if (u.getEmployeProfil() == "DirecteurGeneral") return "DirecteurGeneral";
+		return null;
+	}
 
 	/**
 	 * Charge FXML file into BorderPane 
@@ -440,6 +451,7 @@ public class Utilitaire {
 		profiles.add("Administrateur");
 		profiles.add("Employe");
 		profiles.add("ChefService");
+		profiles.add("ChefDepartement");
 		profiles.add("Gestionnaire");
 		profiles.add("Directeur");
 		profiles.add("DirecteurGeneral");
