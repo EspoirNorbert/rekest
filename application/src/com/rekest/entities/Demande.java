@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
@@ -23,6 +24,7 @@ import jakarta.persistence.Transient;
 
 @Entity
 public class Demande {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_demande")
@@ -50,10 +52,10 @@ public class Demande {
 	@JoinColumn(name="id_demande")
 	private List<Notification> notifications = new ArrayList<>();
 
-	@Transient
+	@ManyToOne
 	private Employe employe;
 	
-	@Transient
+	@ManyToOne
 	private Utilisateur utilisateur;
 	
 	@Transient
@@ -73,8 +75,10 @@ public class Demande {
 
 	public Demande() {
 		this.createdAt = new java.util.Date();
+		this.employe = null;
+		this.utilisateur = null;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -143,9 +147,7 @@ public class Demande {
 		this.notifications.remove(notification);
 	}
 
-	public static void copy(Demande demande, Demande entity) {
-
-	}
+	public static void copy(Demande demande, Demande entity) {}
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
@@ -162,10 +164,6 @@ public class Demande {
 	public String getEmployeString() {
 		return employe!= null? employe.getId() + " - " + employe.getFullName() : null;
 	}
-
-	public String getUserString() {
-		return utilisateur!= null? utilisateur.getId() + " - " + utilisateur.getFullName() : null;
-	}
 	
 	public Employe getEmploye() {
 		return employe;
@@ -180,23 +178,23 @@ public class Demande {
 	}
 
 	public String getNomEmploye() {
-		return this.getEmployeString();
+		return employe != null ? employe.getFullName() : null;
 	}
 
 	public void setNomEmploye(String nomEmploye) {
 		this.nomEmploye = nomEmploye;
 	}
 
-	public String getEmployeId() {
-		return String.valueOf(employe.getId());
+	public int getEmployeId() {
+		return this.employe.getId();
 	}
 
 	public void setEmployeId(String employeId) {
 		this.employeId = employeId;
 	}
 
-	public String getUtilisateurId() {
-		return String.valueOf(utilisateur.getId() == 0 ? 0 : utilisateur.getId());
+	public int getUtilisateurId() {
+		return this.utilisateur.getId();
 	}
 
 	public void setUtilisateurId(String utilisateurId) {
@@ -204,7 +202,7 @@ public class Demande {
 	}
 
 	public String getNomUtilisateur() {
-		return this.getUserString();
+		return this.employe.getFullName();
 	}
 
 	public void setNomUtilisateur(String nomUtilisateur) {
@@ -226,7 +224,5 @@ public class Demande {
 				+ produitId + ", nomEmploye=" + nomEmploye + ", employeId=" + employeId + ", utilisateurId="
 				+ utilisateurId + ", nomUtilisateur=" + nomUtilisateur + "]";
 	}
-	
-	
 	
 }

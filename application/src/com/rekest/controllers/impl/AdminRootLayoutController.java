@@ -121,6 +121,7 @@ public class AdminRootLayoutController implements Initializable , IController {
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		Utilitaire.setDimensionStage(primaryStage, 650, 1200);
+		this.primaryStage.setMaximized(true);
 		this.initData();
 	}
 

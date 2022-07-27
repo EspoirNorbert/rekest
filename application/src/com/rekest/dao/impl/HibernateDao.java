@@ -24,7 +24,7 @@ public class HibernateDao implements IDao{
 	private static Session session = null;
 	private static Transaction transaction = null;
 	private static HibernateDao daoInstance = null;
-	
+
 
 	protected HibernateDao() {}
 
@@ -41,10 +41,12 @@ public class HibernateDao implements IDao{
 			logger.info("Begin transaction.");// begin transaction
 			session.persist(entity);
 			transaction.commit();
-			
-		
+
 			logger.info("Record is Successully created");  //  end transaction
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 	}
@@ -59,6 +61,9 @@ public class HibernateDao implements IDao{
 			transaction.commit(); // Transaction Is Committed To Database
 			logger.info("Record is Successfully deleted.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 	}
@@ -72,6 +77,9 @@ public class HibernateDao implements IDao{
 			if (entity != null) logger.info("Record Successfully read.");
 			else logger.info("Record not found.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 		return entity;
@@ -88,6 +96,9 @@ public class HibernateDao implements IDao{
 			if (entity != null) logger.info("Record Successfully read.");
 			else logger.info("Record not found.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 		return entity;
@@ -106,6 +117,9 @@ public class HibernateDao implements IDao{
 			if (entities != null) logger.info("Records Successfully read.");
 			else logger.info("Records not found.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 		return entities;
@@ -123,6 +137,9 @@ public class HibernateDao implements IDao{
 			if (entities != null) logger.info("Records Successfully read.");
 			else logger.info("Records not found.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 		return entities;
@@ -140,6 +157,9 @@ public class HibernateDao implements IDao{
 			transaction.commit();
 			logger.info("Record Successfully updated.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 	}
@@ -162,7 +182,7 @@ public class HibernateDao implements IDao{
 		service.addEmploye(employe);
 		this.update(service);
 	}
-	
+
 	@Override
 	public void dissociateService(Employe employe, Service service) throws DAOException {
 		service.removeEmploye(employe);
@@ -174,23 +194,23 @@ public class HibernateDao implements IDao{
 		departement.addService(service);
 		this.update(departement);
 	}
-	
+
 	@Override
-	public Object validateCredential(String login, String password)  throws DAOException{
-		Object utilisateur = null;
+	public Utilisateur validateCredential(String login, String password)  throws DAOException{
+		Utilisateur utilisateur = null;
 		String whereClause = "where login = " + "'"+login+"'"+ " and password = " +"'"+password+"'"; 
 		try {
 			session = HibernateSession.getSession();
 			@SuppressWarnings("deprecation")
 			Query<?> query = session.createQuery("From Utilisateur " + whereClause); 
-			utilisateur =  query.uniqueResult();
-			if (utilisateur != null) {
+			utilisateur =  (Utilisateur) query.uniqueResult();
+			if (utilisateur != null  && utilisateur.isEnable()) {
 				logger.info("Utilisateur trouver !");
 				return utilisateur;
-			}		
+			}  
 			else {
-				logger.info("utilisateur non");
-				return utilisateur;
+				logger.info("Utilisateur non trouvé !");
+				return null;
 			}
 		} catch (Exception e) {
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
@@ -224,6 +244,9 @@ public class HibernateDao implements IDao{
 			if (entity != null) logger.info("Record Successfully read.");
 			else logger.info("Record not found.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 		return entity;
@@ -241,6 +264,9 @@ public class HibernateDao implements IDao{
 			if (entity != null) logger.info("Record Successfully read.");
 			else logger.info("Record not found.");
 		} catch (Exception e) {
+			if (transaction != null)
+				transaction.rollback();
+
 			throw new DAOException("ERROR:" + e.getClass() + ":" + e.getMessage());
 		}
 		return entity;

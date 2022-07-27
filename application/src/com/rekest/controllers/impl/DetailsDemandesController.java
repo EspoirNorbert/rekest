@@ -4,11 +4,15 @@ package com.rekest.controllers.impl;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.rekest.entities.Demande;
-import com.rekest.entities.Departement;
 import com.rekest.entities.Note;
+import com.rekest.entities.Notification;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
+import com.rekest.utils.PropertyManager;
 import com.rekest.utils.Utilitaire;
 
 import javafx.collections.FXCollections;
@@ -19,13 +23,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class DetailsDemandesController implements Initializable {
 
+	/**
+	 * Loggers
+	 */
+	public final static Logger logger = LogManager.getLogger(DetailsDemandesController.class);
+	
 	@FXML
 	private Label demandeID;
 
@@ -50,9 +63,11 @@ public class DetailsDemandesController implements Initializable {
 	@FXML
 	private ListView<Note> listViewNotes;
 
-	private ObservableList<Note> noteList ;
+	/**
+	 * ObservableList
+	*/
+	private ObservableList<Note> noteList =  FXCollections.observableArrayList();;
 
-	
 	public void setNoteList(ObservableList<Note> noteList) {
 		this.noteList = noteList;
 	}
@@ -91,11 +106,11 @@ public class DetailsDemandesController implements Initializable {
 	 * @param department
 	 */
 	public void setDemande(Demande demande) {
+		this.demande = demande;
 		Utilitaire.setLabel(demandeID, String.valueOf(demande.getId()));
-		/*Utilitaire.setLabel(labelNomEmploye, demande.getNomEmploye());
 		Utilitaire.setLabel(labelNomProduit, demande.getProduit().getNom());
 		Utilitaire.setLabel(labelNomEmploye, demande.getNomUtilisateur());
-		*/
+		Utilitaire.setLabel(labelNomUtilisateur, demande.getNomEmploye());
 		Utilitaire.setLabel(labelEtat, demande.getEtat());
 		Utilitaire.setLabel(demandeState, "[" + demande.getEtat() + "]");
 	}
@@ -110,20 +125,23 @@ public class DetailsDemandesController implements Initializable {
 	}
 
 	@FXML
-	void handleClickedRejecter(ActionEvent event) {
-
-	}
+	void handleClickedRejecter(ActionEvent event) {}
 
 	@FXML
 	void handleClickedSoumettre(ActionEvent event) {
 		Note tempNote = new Note();
+		
 		boolean okClicked = showNoteEditDialog(tempNote, "Creation d'une note ");
 		if (okClicked) {
+			//logger.info("Note created {}" , tempNote.getMessage());
+			//logger.info("Note associe a la demande {} ", demande.getId());
 			Boolean statut = feature.createNote(tempNote , demande);
 			if(statut) {
 				//refreshCount();
 				initListView();
+				Utilitaire.displayMessage(Note.class.getSimpleName(), true, "creation");
 			}
+			
 		}
 	}
 
@@ -142,7 +160,6 @@ public class DetailsDemandesController implements Initializable {
 			noteEditController.setDialogStage(dialogStage);
 			noteEditController.setNote(note);
 		
-
 			// Show the dialog and wait until the user closes it
 			Utilitaire.showDialog(dialogStage);
 
@@ -169,6 +186,30 @@ public class DetailsDemandesController implements Initializable {
 		for (Note note : notes) {
 			System.out.println(note);
 		}
+	}
+
+	public void loadNotifications() {
+		noteList.clear();
+		feature.listNotes().forEach(note -> noteList.add(note));
+
+		listViewNotes.setCellFactory(new Callback<ListView<Note>, ListCell<Note>>() {
+
+			@Override
+			public ListCell<Note> call(ListView<Note> param) {
+				ListCell<Note> cell = new ListCell<Note>() {
+
+					protected void updateItem(Note item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null) {
+							setGraphic(new ImageView(new Image(PropertyManager.getInstance().getApplicationIcon())));
+							setText(item.getMessage() + "laissé par " + item.getDemande().getUtilisateur().getFullName());
+						}
+					};
+				};
+				return cell;
+			}
+		});
+		listViewNotes.setItems(noteList);
 	}
 
 }

@@ -23,31 +23,31 @@ import javafx.stage.Stage;
 
 public class DemandeEditDialogController {
 
-	@FXML
-	private Button btnAnnuler;
+	/**
+	 * Composants FXML
+	 */
+	@FXML private Button btnAnnuler;
 
-	@FXML
-	private Button btnSoumettre;
+	@FXML private Button btnSoumettre;
 
-	@FXML
-	private ComboBox<String> comboBoxEmploye;
+	@FXML private ComboBox<String> comboBoxEmploye;
 
-	@FXML
-	private ComboBox<String> comboBoxProduit;
+	@FXML private ComboBox<String> comboBoxProduit;
 
-	@FXML
-	private ComboBox<String> comboBoxRecepteur;
+	@FXML private ComboBox<String> comboBoxRecepteur;
 
-	@FXML
-	private Label labelNomFenetre;
-
-
-	private Stage dialogStage;
 	
+	/**
+	 * Stage et les attributs
+	 */
+	private Stage dialogStage;
 	private Demande demande;
-
+	private Utilisateur auth;
 	private boolean okClicked = false;
 
+	/**
+	 * Features
+	 */
 	private IFeature feature = Feature.getCurrentInstance();
 
 	/**
@@ -73,8 +73,15 @@ public class DemandeEditDialogController {
 	public void setDemande(Demande demande) {
 		this.demande = demande;
 	}
-
-
+	
+	/**
+	 * Set auth user
+	 * @param auth
+	 */
+	public void setAuth(Utilisateur auth) {
+		this.auth = auth;
+	}
+	
 	@FXML
 	void handleClickedRejecter(ActionEvent event) {
 		dialogStage.close();
@@ -83,11 +90,9 @@ public class DemandeEditDialogController {
 	@FXML
 	void handleClickedSoumettre(ActionEvent event) {
 		if (isInputValid()) {
-
 			demande.setProduit(getCurrentComboBoxProduit());
-			demande.setUtilisateur(getCurrentComboBoxUser());
 			demande.setEmploye(getCurrentComboBoxEmploye());
-
+			demande.setUtilisateur(auth);
 			okClicked = true;
 			dialogStage.close();
 		}
@@ -121,26 +126,10 @@ public class DemandeEditDialogController {
 		comboBoxEmploye.setItems(FXCollections.observableArrayList(this.serializeEmployes(employeList)));
 
 		if(this.demande!=null && this.demande.getEmployeString()!=null) {
-			comboBoxProduit.setValue(this.demande.getEmployeString());
+			comboBoxEmploye.setValue(this.demande.getEmployeString());
 		}
 
 	}
-
-	/**
-	 * Initialize the value of combox box employees
-	 * 
-	 */
-	public void setUsers(){
-
-		this.setUserList(feature.loadUtilisateursObservableList());
-
-		comboBoxEmploye.setItems(FXCollections.observableArrayList(this.serializeUsers(userList)));
-
-		if(this.demande!=null && this.demande.getUserString()!=null) {
-			comboBoxProduit.setValue(this.demande.getUserString());
-		}
-	}
-
 
 
 	/**
@@ -215,8 +204,8 @@ public class DemandeEditDialogController {
 	public void setUserList(ObservableList<Utilisateur> userList) {
 		this.userList = userList;
 	}
-
-
+	
+	
 	public Produit getCurrentComboBoxProduit() {
 		Produit tempProduit = null ;
 		for (Produit produit : getProduitList()) {
@@ -269,11 +258,6 @@ public class DemandeEditDialogController {
 			errorMessage += "Le produit est invalide!\n";
 		}
 
-		/*
-		if (comboBoxRecepteur.getValue() == null || comboBoxRecepteur.getValue().length() == 0) {
-			errorMessage += "L'utilisateur est invalide!\n";
-		}*/
-
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
@@ -287,4 +271,10 @@ public class DemandeEditDialogController {
 			return false;
 		}
 	}
+
+	public void setNotes() {
+		
+	}
+	
+	
 }

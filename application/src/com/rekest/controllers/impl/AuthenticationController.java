@@ -10,6 +10,7 @@ import com.rekest.controllers.IController;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.ChefService;
+import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.Directeur;
 import com.rekest.entities.employes.DirecteurGeneral;
 import com.rekest.entities.employes.Gestionnaire;
@@ -17,8 +18,8 @@ import com.rekest.entities.employes.Utilisateur;
 import com.rekest.enums.NotificationType;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
-import com.rekest.helpers.IRekestData;
-import com.rekest.helpers.RekestData;
+//import com.rekest.helpers.IRekestData;
+//import com.rekest.helpers.RekestData;
 import com.rekest.utils.PropertyManager;
 import com.rekest.utils.Utilitaire;
 import com.rekest.utils.Validator;
@@ -41,7 +42,7 @@ public class AuthenticationController implements Initializable , IController {
 	@FXML
 	private PasswordField txtPassword;
 
-	private IRekestData data = new RekestData();
+	//private IRekestData data = new RekestData();
 
 	private IFeature service = Feature.getCurrentInstance();
 
@@ -110,7 +111,10 @@ public class AuthenticationController implements Initializable , IController {
 					mainController.initAdminRootLayout(connectedUser);
 				} 
 
-				if (profil.equals(ChefService.class.getSimpleName()) ||
+				if (
+						profil.equals(ChefService.class.getSimpleName()) 
+						||
+						profil.equals(ChefDepartement.class.getSimpleName()) ||
 						profil.equals(Directeur.class.getSimpleName()) ||
 						profil.equals(DirecteurGeneral.class.getSimpleName())||
 						profil.equals(ChefDepartement.class.getSimpleName())

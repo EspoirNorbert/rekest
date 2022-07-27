@@ -8,13 +8,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Notification {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name="id_notification")
 	private int id;
 	
@@ -24,9 +26,12 @@ public class Notification {
 	private boolean isRead = false;
 	
 	@Basic
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_at")
 	private Date createdAt;
+	
+	@ManyToOne
+	private Demande demande;
 	
 	public Notification() {}
 	
@@ -73,6 +78,12 @@ public class Notification {
 				+ "]";
 	}
 	
+	public Demande getDemande() {
+		return demande;
+	}
 	
+	public void setDemande(Demande demande) {
+		this.demande = demande;
+	}
 	
 }
