@@ -126,7 +126,7 @@
                         <Insets right="15.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <ComboBox fx:id="comboBoxDepartement" prefHeight="26.0" prefWidth="335.0" promptText="- Departement -" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <!-- <ComboBox fx:id="comboBoxDepartement" prefHeight="26.0" prefWidth="335.0" promptText="- Departement -" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <GridPane.margin>
                         <Insets right="15.0" />
                      </GridPane.margin>
@@ -155,7 +155,7 @@
                      <GridPane.margin>
                         <Insets right="15.0" />
                      </GridPane.margin>
-                  </TextField>
+                  </TextField> -->
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />

@@ -82,7 +82,7 @@ public class EmployeEditDialogController {
 	private IFeature feature = Feature.getCurrentInstance();
 
 	private Employe employe;
-
+	
 	private boolean okClicked = false;
 
 
@@ -93,14 +93,9 @@ public class EmployeEditDialogController {
 	public void setDialogStage(Stage dialogStage, String title) {
 		this.dialogStage = dialogStage;
 		labelFenetre.setText(title);
-		labelLogin.setVisible(false);
-		labelDepartement.setVisible(false);
-		labelPassword.setVisible(false);
-		textFieldLogin.setVisible(false);
-		textFieldPassword.setVisible(false);
-		comboBoxDepartement.setVisible(false);
 
 	}
+	
 
 	/**
 	 * Sets the employe to be edited in the dialog.
@@ -125,6 +120,7 @@ public class EmployeEditDialogController {
 	 * Initialize the value of combox box service
 	 * 
 	 */
+	
 	public void setServices(){
 
 		this.setServicesList(feature.loadServicesObservableList());
@@ -148,6 +144,7 @@ public class EmployeEditDialogController {
 			comboBoxProfil.setValue(this.employe.getEmployeProfil());
 
 	}
+	
 
 	/**
 	 * Returns true if the employe clicked OK, false otherwise.
