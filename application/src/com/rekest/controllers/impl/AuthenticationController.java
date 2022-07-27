@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.rekest.controllers.IController;
 import com.rekest.entities.employes.Administrateur;
+import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.ChefService;
 import com.rekest.entities.employes.Directeur;
 import com.rekest.entities.employes.DirecteurGeneral;
@@ -15,7 +16,6 @@ import com.rekest.entities.employes.Gestionnaire;
 import com.rekest.entities.employes.Utilisateur;
 import com.rekest.enums.NotificationType;
 import com.rekest.feature.IFeature;
-
 import com.rekest.feature.impl.Feature;
 import com.rekest.helpers.IRekestData;
 import com.rekest.helpers.RekestData;
@@ -26,9 +26,9 @@ import com.rekest.utils.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AuthenticationController implements Initializable , IController {
@@ -112,7 +112,9 @@ public class AuthenticationController implements Initializable , IController {
 
 				if (profil.equals(ChefService.class.getSimpleName()) ||
 						profil.equals(Directeur.class.getSimpleName()) ||
-						profil.equals(DirecteurGeneral.class.getSimpleName())) {
+						profil.equals(DirecteurGeneral.class.getSimpleName())||
+						profil.equals(ChefDepartement.class.getSimpleName())
+						) {
 					   mainController.initManagerRootLayout(connectedUser);
 				}
 
