@@ -63,7 +63,6 @@ public class Utilisateur extends Employe {
 		this.adresse = adresse;
 		this.createdAt = new java.util.Date();
 		this.setEmployeProfil();
-		Utilitaire.generateLoginAndPassword(this);
 	}
 	
 	public Utilisateur(String nom, String prenom, String login, String password) {
@@ -87,7 +86,7 @@ public class Utilisateur extends Employe {
 	}
 	
 	public void setPassword(String password) {
-		this.password = Utilitaire.hashPassword(password);
+		this.password = password;
 	}
 	
 	@Override

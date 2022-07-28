@@ -112,7 +112,6 @@ public class UtilisateurEditDialogController {
 	private void setStateDepartement(Boolean state) {
 		labelDepartement.setVisible(state);
 		comboBoxDepartement.setVisible(state);
-
 	}
 
 	private void setStateService(Boolean state) {

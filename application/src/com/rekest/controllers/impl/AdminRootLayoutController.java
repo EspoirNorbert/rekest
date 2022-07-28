@@ -143,7 +143,6 @@ public class AdminRootLayoutController implements Initializable , IController {
 	void handleClickedDemande(MouseEvent event) {
 		Utilitaire.loadPageInRootLayout(rootLayout, "Demandes",userConnected);
 		Utilitaire.setTiteStage(primaryStage , "Demandes" , userConnected);
-	
 	}
 
 	@FXML

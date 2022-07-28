@@ -1450,7 +1450,7 @@ public class Feature implements IFeature {
 	@Override
 	public boolean createDemande (Utilisateur utilisateur, Demande demande , Employe employe)   {
 		try {
-			demande.setEtat("Creé");
+			demande.setEtat("Crée");
 			utilisateur.addDemandeCreee(demande);
 			
 			if (employe != null)

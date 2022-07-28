@@ -30,6 +30,8 @@ public class NotificationController implements Initializable {
 
 	private ObservableList<Notification> notificationList = FXCollections.observableArrayList();
 
+	@FXML private Label lableCountNotificationsLus;
+	
 	@FXML private Label labelDate;
 
 	@FXML private Label labelHeure;
