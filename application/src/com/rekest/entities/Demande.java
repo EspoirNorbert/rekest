@@ -178,7 +178,13 @@ public class Demande {
 	}
 
 	public String getNomEmploye() {
-		return employe != null ? employe.getFullName() : null;
+		if (employe != null) {
+			if (utilisateur.getId() == employe.getId())
+				return "Vous";
+			else
+				return employe.getFullName();
+		}
+		return null;
 	}
 
 	public void setNomEmploye(String nomEmploye) {
@@ -202,7 +208,13 @@ public class Demande {
 	}
 
 	public String getNomUtilisateur() {
-		return this.employe.getFullName();
+		if (utilisateur != null) {
+			if (utilisateur.getId() == this.getEmployeId())
+				return "Vous";
+			else
+				return utilisateur.getFullName();
+		}
+		return null;
 	}
 
 	public void setNomUtilisateur(String nomUtilisateur) {

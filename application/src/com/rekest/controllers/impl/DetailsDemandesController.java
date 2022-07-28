@@ -141,11 +141,12 @@ public class DetailsDemandesController implements Initializable {
 			//logger.info("Note created {}" , tempNote.getMessage());
 			//logger.info("Note associe a la demande {} ", demande.getId());
 			Boolean statut = feature.createNote(auth , tempNote , demande);
-			if(statut) {
+			
+			/*if(statut) {
 				//refreshCount();
 				initListView();
 				Utilitaire.displayMessage(Note.class.getSimpleName(), true, "creation");
-			}
+			}*/
 			
 		}
 	}

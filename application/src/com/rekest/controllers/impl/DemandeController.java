@@ -90,8 +90,8 @@ public class DemandeController implements Initializable {
 		colomnProduitID.setCellValueFactory(new PropertyValueFactory<>("produitId"));
 		columnEmployeID.setCellValueFactory(new PropertyValueFactory<>("employeId"));
 		columnEmploye.setCellValueFactory(new PropertyValueFactory<>("nomEmploye"));
-		columnUtilisateur.setCellValueFactory(new PropertyValueFactory<>("utilisateurId"));
-		columnUtilisateurID.setCellValueFactory(new PropertyValueFactory<>("nomUtilisateur"));
+		columnUtilisateurID.setCellValueFactory(new PropertyValueFactory<>("utilisateurId"));
+		columnUtilisateur.setCellValueFactory(new PropertyValueFactory<>("nomUtilisateur"));
 		columnEtat.setCellValueFactory(new PropertyValueFactory<>("etat"));
 	}
 
