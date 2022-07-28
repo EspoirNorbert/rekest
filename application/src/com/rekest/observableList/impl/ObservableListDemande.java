@@ -11,8 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ObservableListDemande implements IObservableList<Demande> {    
-	
-    private ObservableList<Demande> demandeData = FXCollections.observableArrayList();
+
+	private ObservableList<Demande> demandeData = FXCollections.observableArrayList();
 
 	@Override
 	public ObservableList<Demande> getData() {
@@ -30,19 +30,19 @@ public class ObservableListDemande implements IObservableList<Demande> {
 
 	@Override
 	public void update(Demande entity) {
-		 int index = demandeData.lastIndexOf(entity);
-	        if (index >= 0) {
-	            Demande.copy(demandeData.get(index), entity);            
-	        }
+		int index = demandeData.lastIndexOf(entity);
+		if (index >= 0) {
+			Demande.copy(demandeData.get(index), entity);            
+		}
 	}
 
 	@Override
 	public void delete(int id) {
 		Predicate<Demande> predicate = person -> (person.getId() == id);
-        Optional<Demande> person = demandeData.stream().filter(predicate).findFirst();
-        if (person != null) {
-            demandeData.remove(person.get());
-        }
+		Optional<Demande> person = demandeData.stream().filter(predicate).findFirst();
+		if (person != null) {
+			demandeData.remove(person.get());
+		}
 	}
 
 	@Override
@@ -59,9 +59,15 @@ public class ObservableListDemande implements IObservableList<Demande> {
 	public void addAll(List<Object> entities) {
 		 for(Object obj : entities) {
 	            if (obj instanceof Demande) {
-	                demandeData.add((Demande)obj);
+	            	demandeData.add((Demande)obj);
 	            }
 	        }
+	}
+	
+	public void addAllVersion2(List<Demande> demandes) {
+		for (Demande demande : demandes) {
+			demandeData.add(demande);
+		}
 	}
 
 	@Override

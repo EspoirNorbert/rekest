@@ -4,7 +4,6 @@ package com.rekest.controllers.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.rekest.entities.Demande;
 import com.rekest.entities.Produit;
 import com.rekest.entities.employes.Employe;

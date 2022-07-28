@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.rekest.entities.Demande;
 import com.rekest.entities.Note;
-import com.rekest.entities.Notification;
+import com.rekest.entities.employes.Utilisateur;
 import com.rekest.feature.IFeature;
 import com.rekest.feature.impl.Feature;
 import com.rekest.utils.PropertyManager;
@@ -78,6 +78,7 @@ public class DetailsDemandesController implements Initializable {
 	
 	private Stage dialogStage;
 	private Demande demande;
+	private Utilisateur auth;
 	
 	private boolean okClicked = false;
 
@@ -87,6 +88,10 @@ public class DetailsDemandesController implements Initializable {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+	}
+	
+	public void setAuth(Utilisateur auth) {
+		this.auth = auth;
 	}
 
 	private NoteEditController noteEditController;
@@ -135,7 +140,7 @@ public class DetailsDemandesController implements Initializable {
 		if (okClicked) {
 			//logger.info("Note created {}" , tempNote.getMessage());
 			//logger.info("Note associe a la demande {} ", demande.getId());
-			Boolean statut = feature.createNote(tempNote , demande);
+			Boolean statut = feature.createNote(auth , tempNote , demande);
 			if(statut) {
 				//refreshCount();
 				initListView();

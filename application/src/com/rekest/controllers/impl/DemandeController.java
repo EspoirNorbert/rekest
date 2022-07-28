@@ -72,13 +72,13 @@ public class DemandeController implements Initializable {
 	private DetailsDemandesController detailsDemandesController;
 
 	private ObservableList<Demande> demandes = FXCollections.observableArrayList();
-
 	private NotificationManager notificationManager = new NotificationManager();
+	private DemandeEditDialogController demandeEditDialogController;
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initProperties();
-		addDemandeObservableListToTheTable();
 		refreshCount();
 		addListeners();
 	}
@@ -108,19 +108,38 @@ public class DemandeController implements Initializable {
 			if (profil.equals(Gestionnaire.class.getSimpleName())) {
 				Utilitaire.hideButton(btnExporter , btnImprimer ,btnValider , btnRejeter);
 			}
+			
+			if (profil.equals(ChefService.class.getSimpleName()) 
+					||
+					profil.equals(ChefDepartement.class.getSimpleName()) ||
+					profil.equals(Directeur.class.getSimpleName()) ||
+					profil.equals(DirecteurGeneral.class.getSimpleName())||
+					profil.equals(ChefDepartement.class.getSimpleName())) {
+				Utilitaire.hideButton(btnCloturer);
+			}
 		}
 	}
 
 	public void setConnectedUser(Utilisateur auth) {
 		this.auth = auth;
 		initHideField();
+		addDemandeObservableListToTheTable();
 	}
 
 
-	private DemandeEditDialogController demandeEditDialogController;
+	
 
 	private void addDemandeObservableListToTheTable() {
-		setDemandes(feature.loadDemandesObservableList());
+		if (
+			auth.getEmployeProfil().equals(Directeur.class.getSimpleName())
+			|| auth.getEmployeProfil().equals(DirecteurGeneral.class.getSimpleName())
+			|| auth.getEmployeProfil().equals(Gestionnaire.class.getSimpleName())
+		) {
+			setDemandes(feature.loadDemandesObservableList());
+		}else {
+			setDemandes(feature.loadDemandeByUtilisateurObservableList(auth));
+		}
+		
 		tableViewDemandes.setItems(getDemandes());
 
 		if (getDemandes().size() > 0) 
@@ -135,7 +154,9 @@ public class DemandeController implements Initializable {
 	}
 
 	@FXML
-	void handleClickedCloturer(ActionEvent event) {}
+	void handleClickedCloturer(ActionEvent event) {
+		responseDemande("Cloturer");
+	}
 
 	@FXML
 	void handleClickedExporter(ActionEvent event) {}
@@ -179,30 +200,35 @@ public class DemandeController implements Initializable {
 
 		else if (response.equals("Valider"))
 			changeStateText  = "Approuvée";
+		
+		else if (response.equals("Cloturer"))
+			changeStateText = "Cloturée";
 
 		else {
 			Utilitaire.notification(NotificationType.ERROR, "Statut Invalid", 
-					"Seule Approuver & Rejeter sont authorisée");
+					"Seule Les actions Valider | Rejeter | Cloturer sont authorisées");
 			return ;
 		}
 
 		if(employeProfil.equals(ChefService.class.getSimpleName())) {
-			feature.requestDemande(demand, changeStateText + "N1");
+			feature.requestDemande(demand, changeStateText + " N1");
 			sendNotificationToChefDepartement(demand ,"Une demandé a été " + changeStateText + " par vous !");
 		}
 
 		if(employeProfil.equals(ChefDepartement.class.getSimpleName())) {
-			feature.requestDemande(demand,changeStateText+ "N2");
-			// sendNotificationToDirection(demand, changeStateText);
+			feature.requestDemande(demand,changeStateText+ " N2");
 		} 
 
 		if(employeProfil.equals(Directeur.class.getSimpleName())) {
-			feature.requestDemande(demand,changeStateText+ "N3");
+			feature.requestDemande(demand,changeStateText+ " N3");
 		} 
 
 		if(employeProfil.equals(DirecteurGeneral.class.getSimpleName())) {
-			feature.requestDemande(demand,changeStateText+ "N4");
-			feature.creerNotification(null);
+			feature.requestDemande(demand,changeStateText+ " N4");
+		}
+		
+		if(employeProfil.equals(Gestionnaire.class.getSimpleName())) {
+			feature.requestDemande(demand,changeStateText);
 		}
 	}
 
@@ -233,11 +259,9 @@ public class DemandeController implements Initializable {
 		Demande tempDemande = new Demande();
 		boolean okClicked = showDemandeEditDialog(tempDemande, "Creation d'une demande");
 		if (okClicked) {
-			Boolean statut = feature.createDemande(tempDemande.getUtilisateur(),  
-					tempDemande , tempDemande.getEmploye());
+			Boolean statut = feature.createDemande(tempDemande, auth, auth);
 			if(statut) {
 				refreshCount();
-
 			} else {
 				Utilitaire.notification(NotificationType.ERROR, "Creation d'une demane", 
 						"Une erreur est arrivé dans la creation de la demande .");
@@ -327,6 +351,7 @@ public class DemandeController implements Initializable {
 			detailsDemandesController = loader.getController();
 			detailsDemandesController.setDialogStage(dialogStage);
 			detailsDemandesController.setDemande(demand);
+			detailsDemandesController.setAuth(auth);
 			//detailsDemandesController.setNotes();
 			// Show the dialog and wait until the user closes it
 			Utilitaire.showDialog(dialogStage);

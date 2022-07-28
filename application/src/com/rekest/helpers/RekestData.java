@@ -34,7 +34,6 @@ import com.rekest.feature.impl.Feature;
 
 import com.rekest.exeptions.DAOException;
 
-import com.rekest.utils.Utilitaire;
 
 public class RekestData implements IRekestData {
 
@@ -48,26 +47,8 @@ public class RekestData implements IRekestData {
 
 	@Override
 	public void initAdmins() {
-		try {
-			Service service = new Service("Informatique");
-			dao.save(service);
-			Administrateur defaultAdmin = createDefaultAdmin();
-			defaultAdmin.setService(service);
-			dao.save(defaultAdmin);
-			for (int i = 0; i <= 3; i++) {
-				
-				Administrateur admin = new Administrateur(
-						faker.name().lastName(),
-						faker.name().firstName(),
-						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
-				
-				admin.setService(service);
-				
-				dao.save(admin);
-			}
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
+		Administrateur defaultAdmin = createDefaultAdmin();
+		feature.createUtilisateur(defaultAdmin);
 	}
 
 	@Override
@@ -80,59 +61,14 @@ public class RekestData implements IRekestData {
 	}
 
 	@Override
-	public void initEmployes() {
-		try {
-			for (int i = 0; i <= 10; i++) {
-				Employe employe = new Employe(
-						faker.name().lastName(),
-						faker.name().firstName(),
-						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
-				dao.save(employe);
-			}
-		} catch (DAOException e) {
-			System.err.println(e.getMessage());
-		}
-	}
+	public void initEmployes() {}
 
 
 	@Override
-	public void initGestionnaire() {
-		List<Gestionnaire> gestionnaires = new ArrayList<>();
-		for (int i = 0; i <=1; i++) {
-			gestionnaires.add(new Gestionnaire(faker.name().firstName(), 
-					faker.name().lastName(),
-					faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress()));
-
-		}
-		// For each admin in ArrayList we add in database
-		gestionnaires.forEach(gestionnaire -> {
-			logger.info("{}" , gestionnaire.getFullName());
-			Boolean resultat = feature.createUtilisateur(gestionnaire);
-			if (resultat)
-				logger.info("Departement {} was created successfully ", gestionnaire.getFullName());
-
-		});
-	}
+	public void initGestionnaire() {}
 
 	@Override
-	public void initChefServices() {
-		List<ChefService> chefServices = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			chefServices.add(new ChefService(faker.name().firstName(), 
-					faker.name().lastName(),
-					faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress()));
-
-		}
-		// For each admin in ArrayList we add in database
-		chefServices.forEach(chefService -> {
-			logger.info("{}" , chefService.getFullName());
-			Boolean resultat = feature.createUtilisateur(chefService);
-			if (resultat)
-				logger.info("Departement {} was created successfully ", chefService.getFullName());
-
-		});
-
-	}
+	public void initChefServices() {}
 
 	@Override
 	public void initChefDepartement() {}
@@ -146,52 +82,11 @@ public class RekestData implements IRekestData {
 
 
 	@Override
-	public void initDepartement() {
-		List<Departement> departements = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			departements.add(new Departement(faker.commerce().department()));
-		}
-		// For each admin in ArrayList we add in database
-		departements.forEach(departement -> {
-			logger.info("{}" , departement.getNom());
-			Boolean resultat = feature.createDepartement(departement);
-			if (resultat)
-				logger.info("Departement {} was created successfully ", departement.getNom());
-
-		});
-	}
+	public void initDepartement() {}
 
 
 	@Override
-	public void initService() {
-		try {
-			for (int i = 0; i <= 3; i++) {
-				ChefService chefService = new ChefService(faker.name().firstName(), faker.name().lastName(),
-						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
-			
-				dao.save(chefService);
-
-				ChefDepartement chefDefpartement = 
-						new ChefDepartement(faker.name().firstName(), faker.name().lastName(),
-						faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());	
-				
-				dao.save(chefDefpartement);
-
-				Departement department = new Departement(faker.commerce().department());
-				Service service = new Service(faker.commerce().department());
-
-				service.setChefService(chefService);
-				dao.save(service);
-
-				department.addService(service);
-				department.setChefDepartement(chefDefpartement);
-				
-				dao.save(department);	
-			}
-		} catch (DAOException e) {
-			System.err.println(e.getMessage());
-		}
-	}
+	public void initService() {}
 
 
 
@@ -207,55 +102,18 @@ public class RekestData implements IRekestData {
 	}
 
 	@Override
-	public void initProduit() {
-		List<Produit> produits = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			Produit p = new Produit(faker.commerce().productName(), 
-					Integer.parseInt(faker.commerce().price().replace(",", "")), 
-					new Random().nextInt() * 2);
-		
-			p.setType("Materiel");
-			produits.add(p);
-		}
-		// For each admin in ArrayList we add in database
-		produits.forEach(produit -> {
-			logger.info("{}" , produit.getNom());
-			Boolean resultat = feature.createProduit(produit);
-			if (resultat)
-				logger.info("Produit {} was created successfully ", produit.getNom());
-
-		});
-	}
+	public void initProduit() {}
 
 	@Override
 	public void initDemande() {}
 
 	@Override
-	public void initManagers() {
-		try {
-			Directeur directeur = new Directeur(faker.name().firstName(), 
-						faker.name().lastName(),faker.phoneNumber().cellPhone(), faker.internet().emailAddress(), faker.address().fullAddress());
-			dao.save(directeur);
-			
-			DirecteurGeneral directeurGeneral = new DirecteurGeneral(faker.name().firstName(),
-					faker.name().lastName(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress(),faker.address().fullAddress());
-			
-			dao.save(directeurGeneral);
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
-	}
+	public void initManagers() {}
 
 	@Override
 	public void initAllEntity() {
 		this.initAdmins();
-		this.initEmployes();
-		this.initProduit();
-		this.initManagers();
-		//this.initDepartement();
-		this.initService();
 		this.initRole();
-		
 	}
 
 

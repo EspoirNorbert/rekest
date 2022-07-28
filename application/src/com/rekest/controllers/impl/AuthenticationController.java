@@ -10,7 +10,6 @@ import com.rekest.controllers.IController;
 import com.rekest.entities.employes.Administrateur;
 import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.ChefService;
-import com.rekest.entities.employes.ChefDepartement;
 import com.rekest.entities.employes.Directeur;
 import com.rekest.entities.employes.DirecteurGeneral;
 import com.rekest.entities.employes.Gestionnaire;
@@ -54,7 +53,6 @@ public class AuthenticationController implements Initializable , IController {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		logger.info("Fenetre reï¿½ue {}" , this.primaryStage.getTitle() );
 	}
 
 	public void setConnectedUser(Utilisateur utilisateur) {
@@ -71,7 +69,7 @@ public class AuthenticationController implements Initializable , IController {
 					hash);
 
 			if (user!= null) {
-				logger.info("{} connectï¿½ avec success", user.getEmployeProfil());
+				logger.info("{} connecté avec success", user.getEmployeProfil());
 				clearField();
 				this.setConnectedUser(user);
 				this.primaryStage.hide();

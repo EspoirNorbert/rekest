@@ -42,7 +42,7 @@ public class NotificationController implements Initializable {
 
 	private IFeature feature = Feature.getCurrentInstance();
 
-	private Utilisateur connectedUser;
+	private Utilisateur auth;
 
 	private Stage primaryStage;
 
@@ -52,13 +52,13 @@ public class NotificationController implements Initializable {
 		this.primaryStage = primaryStage;
 	}
 
-	public void setConnectedUser(Utilisateur connectedUser) {
-		this.connectedUser = connectedUser;
+	public void setConnectedUser(Utilisateur auth) {
+		this.auth = auth;
+		loadNotifications();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		loadNotifications();
 		listenerNotification();	
 		initDetailsNotification();
 	}
@@ -112,7 +112,8 @@ public class NotificationController implements Initializable {
 
 	public void loadNotifications(){
 		notificationList.clear();
-		feature.listerNotifications().forEach(notif -> notificationList.add(notif));
+		
+		feature.listNotificationsByUtilisateur(auth).forEach(notif -> notificationList.add(notif));
 
 		listViewNotifications.setCellFactory(new Callback<ListView<Notification>, ListCell<Notification>>() {
 

@@ -16,8 +16,6 @@
 		create-drop -->
         <property name="hibernate.show_sql">true</property>
 
-        
-
 		<mapping class="com.rekest.entities.employes.Employe" />
 		<mapping class="com.rekest.entities.employes.Utilisateur" />
 		<mapping class="com.rekest.entities.employes.Gestionnaire" />
