@@ -259,7 +259,7 @@ public class DemandeController implements Initializable {
 		Demande tempDemande = new Demande();
 		boolean okClicked = showDemandeEditDialog(tempDemande, "Creation d'une demande");
 		if (okClicked) {
-			Boolean statut = feature.createDemande(tempDemande, auth, auth);
+			Boolean statut = feature.createDemande(auth, tempDemande,tempDemande.getEmploye());
 			if(statut) {
 				refreshCount();
 			} else {

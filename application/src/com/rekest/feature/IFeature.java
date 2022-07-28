@@ -1148,7 +1148,7 @@ public Service rechercherNotification( Integer primaryKey)   ;
 	public  Object validateCredential(String login, String password)  ;
 	
 	/**
-	 * Method qui permet de definir la reponse de la demande (rejeter , cloturÃ©e ...).
+	 * Method qui permet de definir la reponse de la demande (rejeter , cloturée ...).
 	 * Returns true if it succeeded, else false.
 	 *
 	 * @param demande
@@ -1235,6 +1235,12 @@ public Service rechercherNotification( Integer primaryKey)   ;
 	 * 
 	 */
 	default void initAllEntity() {}
+
+	public Boolean createNote(Utilisateur auth, Note tempNote, Demande demande);
+
+	ObservableList<Demande> loadDemandeByUtilisateurObservableList(Utilisateur auth);
+
+	public List<Notification> listNotificationsByUtilisateur(Utilisateur auth);
 
 	
 	

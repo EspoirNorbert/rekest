@@ -61,8 +61,14 @@ public class Feature implements IFeature {
 	private ObservableListChefDepartement observableListChefDepartement ;
 	private ObservableListUtilisateur observableListUtilisateur;
 	private ObservableListNotification observableListNotification;
-
+	private ObservableListDemande observableListDemandeByUtilisateur ;
+	private ObservableListNotification observableListNotificationByUtilisateur;
+	
+	
 	private Feature () {
+		observableListDemandeByUtilisateur = new ObservableListDemande();
+		observableListNotification = new ObservableListNotification();
+		observableListNotificationByUtilisateur = new ObservableListNotification();
 		observableListDepartement = new ObservableListDepartement ();
 		observableListEmploye = new ObservableListEmploye ();
 		observableListProduit = new ObservableListProduit ();
@@ -1444,7 +1450,7 @@ public class Feature implements IFeature {
 	@Override
 	public boolean createDemande (Utilisateur utilisateur, Demande demande , Employe employe)   {
 		try {
-			demande.setEtat("Created");
+			demande.setEtat("Creé");
 			utilisateur.addDemandeCreee(demande);
 			
 			if (employe != null)
@@ -1460,7 +1466,7 @@ public class Feature implements IFeature {
 				Service service = utilisateur.getService();
 				ChefService chef = service.getChefService();
 
-				demande.setEtat("Submited");
+				demande.setEtat("soumise");
 				notifManager.createNotification(chef , 
 						demande ,
 						"Une nouvelle demande a été soumise a votre appreciation !");
@@ -1997,6 +2003,27 @@ public class Feature implements IFeature {
 
 	}
 
+	@Override
+	public ObservableList<Demande> loadDemandeByUtilisateurObservableList(Utilisateur auth) {
+		observableListDemandeByUtilisateur.clear ();
+		observableListDemandeByUtilisateur.addAllVersion2(auth.getDemandes_soumises());
+
+		return observableListDemandeByUtilisateur.getData ();
+	}
+
+	@Override
+	public Boolean createNote(Utilisateur auth, Note tempNote, Demande demande) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Notification> listNotificationsByUtilisateur(Utilisateur auth) {
+		return auth.getNotification();
+	}
+
+
+
 
 	/*
 	 * 
@@ -2008,31 +2035,26 @@ public class Feature implements IFeature {
 		clearDemandeList ();
 		getCurrentDemandeObservableList ().addAll (demandes);    
 	}
-
 		@Override
 	public boolean setProduitList (List<Produit> produits) {
 		clearProduitList ();
 		getCurrentProduitObservableList ().addAll (produits);    
 	}
-
 		@Override
 	public boolean setEmployeList (List<Employe> employes) {
 		clearEmployeList ();
 		getCurrentEmployeObservableList ().addAll (employes);    
 	}
-
 		@Override
 	public boolean setServiceList (List<Service> services) {
 		clearServiceList ();
 		getCurrentServiceObservableList ().addAll (services);    
 	}
-
 		@Override
 	public boolean setServiceList (List<Service> services) {
 		clearServiceList ();
 		getCurrentServiceObservableList ().addAll (services);    
 	}
-
 		@Override
 	public boolean setServiceList (List<Service> services) {
 		clearServiceList ();
